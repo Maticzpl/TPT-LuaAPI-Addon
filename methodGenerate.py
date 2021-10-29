@@ -55,9 +55,9 @@ class MethodGen(GenModule):
                 out += "\n"
 
         if len(wikiData.methods) == 0:
-            out += f"function {section.name}.{method.name}() end\n"
+            out += f"function {section.name}.{method.name}(...) end\n"
         elif len(wikiData.methods) == 1:                
-            out += f"function {section.name}.{wikiData.methods[0]} end\n"
+            out += f"function {section.name}.{wikiData.methods[0]}\n{wikiData.methodContents[0]}end\n"
         else:
             for i in range(len(wikiData.methods)):
                 comment = wikiData.comments[i + 1]
@@ -67,8 +67,9 @@ class MethodGen(GenModule):
                         out += "\n"
                     
                 wikiMethodName = wikiData.methods[i]
+                methodContents = wikiData.methodContents[i]
 
-                out += f"function {section.name}.{wikiMethodName} end\n"
+                out += f"function {section.name}.{wikiMethodName}\n{methodContents} end\n"
         
         return out
 

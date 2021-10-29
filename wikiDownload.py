@@ -8,10 +8,13 @@ possibleTypes = r"nil|number|table|boolean|type|object|string"
 class GetCommentsReturnType:
     def __init__(self):
         self.comment = ""
+        self.methodContent = ""
+
         self.methods = []
         self.comments = []
+        self.methodContents = []
 
-
+# WIKI DOWNLOAD
 def get_from_page(suffix: str):   
     wikiLink[suffix.lower()] = f'https://powdertoy.co.uk/Wiki/W/Lua_API:{suffix}.html'
     req = requests.get(wikiLink[suffix.lower()])
@@ -84,12 +87,64 @@ def get_short(section):
         return "evt"
     return section
 
+# TODO: support for no overload methods like renderer.grid
+# RETURN TYPE SECTION
+def type_to_dummy_val(type:str):
+    if type == "string":
+        return "\"\""
+    if type == "boolean":
+        return "false"
+    if type == "number":
+        return "0"
+
+    return "None"
+
+def find_return_types(wikiMethod: str,section :str,sectionAlias:str,method :str,ret:GetCommentsReturnType):
+    regx = r"(?:string|boolean|number).*?(?= "+section+r"| "+sectionAlias+r"\."+method+r")"
+    found = re.findall(regx,wikiMethod)
+
+    if len(found) == 0:
+        return ""
+
+    methodIn = ""
+
+    returnType = found[0]
+
+    if "," in returnType:
+        returnType = re.sub(r"\, +",",",returnType) #Delete spaces after comma
+
+        methodIn += "local ret = {}\n"
+        for objPart in returnType.split(','):
+            split = objPart.split(" ")
+            if len(split) > 1:
+                type = split[0]
+                name = split[1]
+
+                dummyVal = type_to_dummy_val(type)
+                if dummyVal == "None":
+                    continue
+
+                methodIn += f"ret.{name} = {dummyVal}\n"
+            # else it will be an empty object so can also work as an array
+                
+    else:
+        returnType = re.sub(r"\, +",",",returnType)
+        dummyVal = type_to_dummy_val(returnType)
+        if dummyVal == "None":
+            return ""
+
+        methodIn += f"local ret = {dummyVal}\n"
+    
+    methodIn += "return ret\n"
+    return methodIn
 
 
 
 def find_wiki_link(ret: GetCommentsReturnType,section,method,code):
     ret.comment += f"\n--{wikiLink[section]}#{section}.{method}"
 
+
+# FIND METHOD
 def find_methods(ret: GetCommentsReturnType,section,method):
     regx = r"(?<=--).+?\."+method+r"\((?:\w+ (?:\d|\w)+(?:\,|\s)*)+\)"
 
@@ -101,25 +156,17 @@ def find_methods(ret: GetCommentsReturnType,section,method):
     for wikiMethod in methodsFromWiki:
 
         wikiMethod = wikiMethod.replace("?","_optional")
-        
+
         sectionAlias = get_short(section)
+
+        # Generate return types inside methods
+        methodInside = find_return_types(wikiMethod,section,sectionAlias,method,ret)       
+        ret.methodContents.append(methodInside)
 
         wikiMethod = re.sub(r"(?<!\()(?:"+possibleTypes+r"|\.\.\.).*?("+section+r"|"+sectionAlias+r")\.","",wikiMethod,flags=re.IGNORECASE)
         wikiMethod = re.sub(r"(?<=\w) (?=\w)","_",wikiMethod)
 
         ret.methods.append(re.sub(r"("+section+r"|"+sectionAlias+r")\.","",wikiMethod))
-
-def handle_special_chars(ret: GetCommentsReturnType):
-    #TODO: Handle code blocks where tabs are detected
-
-    ret.comment = ret.comment.replace(">","\\>")
-    #(?<=--)[ \t]+
-    # WHY LOOKAROUND CANT BE VARIABLE WIDTH qwq
-    ret.comment = re.sub(r"(?<=--)[ \t]{4}","\t",ret.comment)
-
-    # TODO to terminate bulletpoint use "\n--  "
-    ret.comment = re.sub(r"(?<=--[ \t][ \t])[ \t]|(?<=--[ \t])[ \t]|(?<=--)[ \t]"," * ",ret.comment)    
-    
 
 def try_get_method(section,method):
     ret = GetCommentsReturnType()
@@ -156,10 +203,25 @@ def try_get_method(section,method):
     handle_special_chars(ret)
 
     ret.comment = re.sub(r"\n{2,}","\n",ret.comment)
+
     find_methods(ret,section,method)
     
 
     return ret
+
+
+# COMMENT PARSE
+def handle_special_chars(ret: GetCommentsReturnType):
+    #TODO: Handle code blocks where tabs are detected
+
+    ret.comment = ret.comment.replace(">","\\>")
+    #(?<=--)[ \t]+
+    # WHY LOOKAROUND CANT BE VARIABLE WIDTH qwq
+    ret.comment = re.sub(r"(?<=--)[ \t]{4}","\t",ret.comment)
+
+    # TODO to terminate bulletpoint use "\n--  "
+    ret.comment = re.sub(r"(?<=--[ \t][ \t])[ \t]|(?<=--[ \t])[ \t]|(?<=--)[ \t]"," * ",ret.comment)    
+    
 
 # TODO list:
 # Blocks of code in comments are ugly (use ``` ```)
