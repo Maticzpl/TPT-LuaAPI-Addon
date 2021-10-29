@@ -161,7 +161,7 @@ def try_get_method(section,method):
 
     return ret
 
-# Bug list:
+# TODO list:
 # Blocks of code in comments are ugly (use ``` ```)
 # Return type intelisense: (dummy returns for tables,numbers,strings etc.)
-# There are absoluetly no types like Slider etc
+# Add support to classes like Slider in UI

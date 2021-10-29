@@ -1,12 +1,21 @@
 import  os
-from    typing         import   Dict
+from    typing              import   Dict
 
-import  methodGenerate as       method
-from    methodGenerate import   LoopData
-import  constGenerate  as       constants
-import  wikiDownload   as       wiki
+from    generatorModule     import   LoopData
+
+from    methodGenerate      import   MethodGen
+from    constGenerate       import   ConstGen
+from    sectionGenerator    import   SectionGen
+
+import  wikiDownload   as        wiki
 
 def parseSource(src):
+    modules = [
+        SectionGen(),
+        MethodGen(),
+        ConstGen()
+    ]
+
     out = ""
 
     ld = LoopData()
@@ -23,12 +32,11 @@ def parseSource(src):
         ld.line = ld.lines[ld.lineNum]
         #Here ends the boilerplate
 
-        method.parseSource(ld)
-        constants.parseSource(ld)
-        
+        for module in modules:
+            module.parseSource(ld)
 
-    out += method.generateLUA(ld)
-    out += constants.generateLUA(ld)
+    for module in modules:   
+        out += module.generateLua(ld)
 
     out += ld.otherOut
     return out

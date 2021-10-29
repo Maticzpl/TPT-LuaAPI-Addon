@@ -1,43 +1,39 @@
-from    methodGenerate import   LoopData
-#from wikiDownload import try_get_field
+from generatorModule import GenModule,LoopData,Constant
+import re
 
-class Constant:
-    section: str
-    name: str
+class ConstGen(GenModule):
 
-def handle_setconst(ld: LoopData):    
-    if ld.lastSectionUsed == '':
-        return
+    def __handle_setconst(self,ld: LoopData):    
+        if ld.lastSectionUsed == '':
+            return
 
+        split = re.sub(r" |\t","",ld.line)
+        split = split.split(",")
 
-    split = ld.line .replace(" ", "")
-    split = split   .replace("\t", "")
-    split = split.split(",")
+        newElement = Constant()
 
-    newElement = Constant()
-    #SETCONST(l, XRES);
-    #           >    <
-    newElement.name = split[1].split(')')[0]
-    newElement.section = ld.sections[ld.lastSectionUsed].name
+        #SETCONST(l, XRES);
+        #           >    <
+        newElement.name = split[1].split(')')[0]
+        newElement.section = ld.sections[ld.lastSectionUsed].name
 
-    ld.constants.append(newElement)
+        ld.constants.append(newElement)
 
 
-def parseSource(ld: LoopData):    
-    if ld.line.find("SETCONST") != -1:
-        handle_setconst(ld)
+    def parseSource(self,ld: LoopData):    
+        if ld.line.find("SETCONST") != -1:
+            self.__handle_setconst(ld)
 
+    def generateLua(self,ld: LoopData):
+        out = ""
 
-def generateLUA(ld: LoopData):
-    out = ""
+        for constant in ld.constants:        
+            print(f"Generating {constant.section}.{constant.name}")
 
-    for constant in ld.constants:        
-        print(f"Generating {constant.section}.{constant.name}")
-
-        #out += try_get_field(constant.section,constant.name)
-        out += f"{constant.section}.{constant.name} = nil\n"
-    
-    return out
+            #out += try_get_field(constant.section,constant.name)
+            out += f"{constant.section}.{constant.name} = nil\n"
+        
+        return out
 
 
 
