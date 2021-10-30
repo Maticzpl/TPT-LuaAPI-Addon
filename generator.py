@@ -1,16 +1,17 @@
 import  os
-from    typing              import   Dict
+from    typing   import   List
+from    wikiScraper.downloadWikiPages  import   WikiDownloader
 
-from    generatorModule     import   LoopData
+from    generators.generatorModule     import   LoopData
 
-from    methodGenerate      import   MethodGen
-from    constGenerate       import   ConstGen
-from    sectionGenerator    import   SectionGen
+from    generators.methodGenerate      import   MethodGen
+from    generators.constGenerate       import   ConstGen
+from    generators.sectionGenerator    import   SectionGen
 
-import  wikiDownload   as        wiki
+
 
 def parseSource(src):
-    modules = [
+    modules:List[MethodGen] = [
         SectionGen(),
         MethodGen(),
         ConstGen()
@@ -30,7 +31,6 @@ def parseSource(src):
             break
 
         ld.line = ld.lines[ld.lineNum]
-        #Here ends the boilerplate
 
         for module in modules:
             module.parseSource(ld)
@@ -47,7 +47,7 @@ luaAPIimplementation = open("./cppsource/LuaScriptInterface.cpp", "r")
 
 outFS = open("intelisense.lua", "w")
 
-wiki.fetch_wiki_data()
+WikiDownloader.fetch_wiki_data()
 
 outFS.write(parseSource(luaAPIimplementation.read()))
 outFS.close()

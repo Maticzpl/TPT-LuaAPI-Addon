@@ -1,4 +1,4 @@
-from generatorModule import GenModule,LoopData,Constant
+from generators.generatorModule import GenModule,LoopData,Constant
 import re
 
 class ConstGen(GenModule):

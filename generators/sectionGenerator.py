@@ -1,4 +1,4 @@
-from generatorModule import GenModule,LoopData,Method,Section
+from generators.generatorModule import GenModule,LoopData,Method,Section
 import re
 
 

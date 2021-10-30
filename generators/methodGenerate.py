@@ -1,7 +1,7 @@
-import wikiDownload
+from wikiScraper.wikiMethods import WikiMethods
 import re
 
-from generatorModule import GenModule,LoopData,Method,Section
+from generators.generatorModule import GenModule,LoopData,Method,Section
 
 class MethodGen(GenModule):
 
@@ -47,7 +47,7 @@ class MethodGen(GenModule):
 
     def __generate_method(self,section,method):
         out = ""
-        wikiData = wikiDownload.try_get_method(section.name,method.name)
+        wikiData = WikiMethods.try_get_method(section.name,method.name)
 
         if wikiData.comment != "":
             out += wikiData.comment
@@ -59,6 +59,7 @@ class MethodGen(GenModule):
         elif len(wikiData.methods) == 1:                
             out += f"function {section.name}.{wikiData.methods[0]}\n{wikiData.methodContents[0]}end\n"
         else:
+            out += "\n" # separate the full comment
             for i in range(len(wikiData.methods)):
                 comment = wikiData.comments[i + 1]
                 if comment != "  \n--":
@@ -69,7 +70,7 @@ class MethodGen(GenModule):
                 wikiMethodName = wikiData.methods[i]
                 methodContents = wikiData.methodContents[i]
 
-                out += f"function {section.name}.{wikiMethodName}\n{methodContents} end\n"
+                out += f"function {section.name}.{wikiMethodName}\n{methodContents}end\n"
         
         return out
 
