@@ -4,6 +4,27 @@
 --If you want to disable deprecation warning, put the line below in yoru file (with three dashes instead of 2)
 --@diagnostic disable:deprecated
 
+---@alias WallType
+---|0 WL_ERASE	
+---|1 WL_WALLELEC	
+---|2 WL_EWALL	
+---|3 WL_DETECT	
+---|4 WL_STREAM	
+---|5 WL_FAN		
+---|6 WL_ALLOWLIQUID
+---|7 WL_DESTROYALL
+---|8 WL_WALL		
+---|9 WL_ALLOWAIR	
+---|10 WL_ALLOWPOWDER
+---|11 WL_ALLOWALLELEC
+---|12 WL_EHOLE	
+---|13 WL_ALLOWGAS	
+---|14 WL_GRAV		
+---|15 WL_ALLOWENERGY
+---|16 WL_BLOCKAIR	
+---|17 WL_ERASEALL	
+---|18 WL_STASIS	
+
 -- tpt.*
 --#region
 
@@ -27,19 +48,19 @@
 
     --Draw text to the screen (for one frame, only useful in scripts)  
     --### **REPLACED BY `gfx.drawText`**
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@param text string  
     ---@deprecated
     function tpt.drawtext(x, y, text)
     end
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@param text string  
-    ---@param red number  
-    ---@param green number  
-    ---@param blue number  
-    ---@param alpha number?
+    ---@param red   integer  
+    ---@param green integer  
+    ---@param blue  integer  
+    ---@param alpha integer?
     ---@deprecated
     function tpt.drawtext(x, y, text, red, green, blue, alpha)
     end
@@ -50,9 +71,10 @@
     --``` 
     --Returns the index of the newly created particle.  
     --### **REPLACED BY `sim.partCreate`**
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@param type string  
+    ---@return integer
     ---@deprecated
     function tpt.create(x, y, type)
     end
@@ -125,10 +147,10 @@
     --```  
     --tpt.set_pressure(nil,nil,nil,nil,200)  
     --```  
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     ---@param value number  
     function tpt.set_pressure(x, y, width, height, value)
     end
@@ -156,15 +178,15 @@
     --```  
     --tpt.set_gravity(nil, nil, nil, nil, 1000)  
     --```  
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     ---@param value number?
     function tpt.set_gravity(x, y, width, height, value)
     end
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     function tpt.set_gravity(x, y)
     end
 
@@ -185,14 +207,14 @@
     --```  
     --tpt.reset_gravity_field(100, 100, 200, 200) 
     --```  
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     function tpt.reset_gravity_field(x, y, width, height)
     end
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     function tpt.reset_gravity_field(x, y)
     end
 
@@ -211,10 +233,10 @@
     --```    
     --tpt.reset_velocity(100,100,1,1)  
     --```  
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     function tpt.reset_velocity(x, y, width, height)
     end
     function tpt.reset_velocity()
@@ -222,6 +244,8 @@
 
     --Removes electrified wires from the simulation, resetting to the original material  
     function tpt.reset_spark() end
+
+    --TODO: figure out if any of those are intengers
 
     --Sets various properties of particles for given criteria  
     ---@param property string  
@@ -274,97 +298,107 @@
     ---@param type string  
     function tpt.set_property(property, value, x, y, width, height, type)
     end
+
     ---@param property string  
-    ---@param index number  
+    ---@param index integer  
     function tpt.get_property(property, index)
     end
     ---@param property string  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     function tpt.get_property(property, x, y)
     end
 
     --Sets the wall at a position. Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.  
-    ---@param x number  
-    ---@param y number  
-    ---@param walltype number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param walltype WallType|integer  
     function tpt.set_wallmap(x, y, walltype)
     end
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
-    ---@param walltype number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
+    ---@param walltype WallType|integer    
     function tpt.set_wallmap(x, y, width, height, walltype)
+    end
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
+    ---@param fanVelocityX number  
+    ---@param fanVelocityY number  
+    ---@param walltype WallType|integer    
+    function tpt.set_wallmap(x, y, width, height, walltype, fanVelocityX, fanVelocityY)
     end
 
     --Gets the wall at a position. Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@return integer
     function tpt.get_wallmap(x,y) end
 
     --Sets the "electricity" flag for a wall at a position. This flag is usually set when walls are sparked. The value is decremented by 1 every frame, just like SPRK .life, and when it reaches 0 the wall is "unsparked". Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.  
-    ---@param x number  
-    ---@param y number  
-    ---@param walltype number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param walltype WallType|integer  
     function tpt.set_elecmap(x, y, walltype)
     end
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
-    ---@param walltype number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
+    ---@param walltype WallType|integer    
     function tpt.set_elecmap(x, y, width, height, walltype)
     end
 
     --Gets the "electricity" flag for a wall at a position. This flag is usually set when walls are sparked. Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     function tpt.get_elecmap(x, y)
     end
 
     --Draws a pixel on the screen (for one frame, only useful in scripts)  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     function tpt.drawpixel(x, y)
     end
-    ---@param x number  
-    ---@param y number  
-    ---@param red number  
-    ---@param green number  
-    ---@param blue number  
-    ---@param alpha number?  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param red integer  
+    ---@param green integer  
+    ---@param blue integer  
+    ---@param alpha integer?  
     function tpt.drawpixel(x, y, red, green, blue, alpha)
     end
 
     --Draws a rectangle on the screen (for one frame, only useful in scripts)  
     --### **REPLACED BY `gfx.drawRect`**
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     ---@deprecated
     function tpt.drawrect(x, y, width, height)
     end
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
-    ---@param red number  
-    ---@param green number  
-    ---@param blue number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
+    ---@param red integer  
+    ---@param green integer  
+    ---@param blue integer  
     ---@deprecated
     function tpt.drawrect(x, y, width, height, red, green, blue)
     end
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
-    ---@param red number  
-    ---@param green number  
-    ---@param blue number  
-    ---@param alpha number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
+    ---@param red integer  
+    ---@param green integer  
+    ---@param blue integer  
+    ---@param alpha integer  
     ---@deprecated
     function tpt.drawrect(x, y, width, height, red, green, blue, alpha)
     end
@@ -372,21 +406,21 @@
     --Draws a filled in rectangle on the screen (for one frame, only useful in scripts)  
     --Because tpt.fillrect is slightly broken in tpt, the coordinates will be off. It fills the rectangle from (x+1, y+1) to (x+w-1, y+h-1)  
     --### **REPLACED BY `gfx.fillRect`**
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     ---@deprecated
     function tpt.fillrect(x, y, width, height)
     end
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
-    ---@param red number  
-    ---@param green number  
-    ---@param blue number  
-    ---@param alpha number?
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
+    ---@param red integer  
+    ---@param green integer  
+    ---@param blue integer  
+    ---@param alpha integer?
     ---@deprecated
     function tpt.fillrect(x, y, width, height, red, green, blue, alpha)
     end
@@ -404,10 +438,10 @@
     ---@param y1 number  
     ---@param x2 number  
     ---@param y2 number  
-    ---@param red number  
-    ---@param green number  
-    ---@param blue number  
-    ---@param alpha number?  
+    ---@param red integer  
+    ---@param green integer  
+    ---@param blue integer  
+    ---@param alpha integer?  
     ---@deprecated
     function tpt.drawline(x1, y1, x2, y2, red, green, blue, alpha)
     end
@@ -415,9 +449,9 @@
     --Measures (in pixels) the width of a given string. Returns a number.  
     --### **REPLACED BY `gfx.textSize`**
     ---@param text string  
+    ---@return integer
     ---@deprecated
     function tpt.textwidth(text)
-        return 0
     end
 
     --Returns the current username.  
@@ -427,12 +461,12 @@
 
     --Delete a specific particle, or a particle at a location.  
     --### **REPLACED BY `sim.partKill`**
-    ---@param index number  
+    ---@param index integer  
     ---@deprecated
     function tpt.delete(index)
     end
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@deprecated
     function tpt.delete(x, y)
     end
@@ -462,7 +496,7 @@
     --Returns the number of particles currently on the screen. 
     --### **REPLACED BY `sim.NUM_PARTS`**
     ---@deprecated
-    ---@return number
+    ---@return integer
     function tpt.get_numOfParts() 
     end
 
@@ -569,6 +603,19 @@
     ---@deprecated
     function tpt.decorations_enable() end
 
+    ---@alias DisplayMode
+    ---|0 Velocity
+    ---|1 Pressure
+    ---|2 Persistent
+    ---|3 Fire
+    ---|4 Blob
+    ---|5 Heat
+    ---|6 Fancy
+    ---|7 Nothing
+    ---|8 Heat Gradient
+    ---|9 Life Gradient
+    ---|10 Alternate Velocity 
+
     --Changes activated display mode.  
     --There's 11 display modes, detailed here https://github.com/ThePowderToy/The-Powder-Toy/blob/f54189a97f6d80181deb4f6d952ccf10f0e59ccf/src/graphics/Renderer.cpp#L2587-L2644  
     --Note that the order of display modes is shifted by 1 making velocity mode first and alternative velocity last.
@@ -585,7 +632,7 @@
     -- - 8 = Heat Gradient
     -- - 9 = Life Gradient
     -- - 10 = Alternate Velocity
-    ---@param display integer  
+    ---@param display DisplayMode  
     function tpt.display_mode(display)
     end
 
@@ -605,7 +652,7 @@
 
     --Changes the strength of the games glowing effects. `tpt.setfire(1)` is default.  
     ---@param strength number  
-    function tpt.setfire(strength)
+    function tpt.setfire(strength)  
     end
 
     --Sets the "debug mode". It works using bitmasks, so you can turn on multiple debug features at the same time.  
@@ -639,17 +686,17 @@
     --```  
     --tpt.getscript(number scriptID, string filename, number runScript, number confirmPrompt)  
     --```  
-    ---@param id number  
+    ---@param id integer  
     ---@param name string  
-    ---@param runImmediately number?  
-    ---@param confirm number?  
+    ---@param runImmediately integer?  
+    ---@param confirm integer?  
     function tpt.getscript(id, name, runImmediately, confirm) end
 
     --Changes a few special properties as to what size the game renders at.  
     --Scale is a multiplier by which every pixel shall get multiplied at, currently it can either be 1 (612x384) or 2 (1224x768).   
     --Full screen is a toggle (0 or 1) that enables "kiosk mode", which basically scales the game up to fill the screen and makes the rest of the edge black.  
-    ---@param scale number  
-    ---@param fullscreen number  
+    ---@param scale integer  
+    ---@param fullscreen integer  
     function tpt.setwindowsize(scale, fullscreen)
     end
 
@@ -691,10 +738,17 @@
     ---@return integer
     function tpt.element(elementname)
     end
-    ---@param elementid number  
+    ---@param elementid integer  
     ---@return string
     function tpt.element(elementid)
     end
+
+    ---@alias ElemFuncReplace
+    ---|1 Call after original
+    ---|2 Overwrite original
+    ---|3 Call before original
+
+    --Maybe deprecated? Idk if you can do calling before / after using anything else
 
     --Allows you to replace or add on to an element's update function.  
     --Write a function like normal, and then put its name into this command. Use `tpt.element("...")` or `tpt.el.dust.id` for el_number.  
@@ -705,12 +759,8 @@
     --new function arguments: index, x, y, surround_space, nt  
     --Returns: return 1 from your function if the particle is killed.  
     ---@param newfunction function  
-    ---@param el_number number  
-    function tpt.element_func(newfunction, el_number)
-    end
-    ---@param newfunction function  
-    ---@param el_number number  
-    ---@param replace number  
+    ---@param el_number integer  
+    ---@param replace ElemFuncReplace?  
     function tpt.element_func(newfunction, el_number, replace)
     end
 
@@ -744,8 +794,10 @@
     --You can combine them in any way you want, you probably need more than one anyway. Radioactive elements default to PMODE_FLAT+PMODE_GLOW, liquids to PMODE_FLAT+PMODE_BLUR, and gasses to FIRE_BLEND+DECO_FIRE, with a firea of 125 and firer/g/b of colr/g/b divided by 2  
     --See this for a picture of what they look like:   
     --https://powdertoy.co.uk/Wiki/W/File:Particle_Drawing_Modes.png.html  
+    --### **REPLACED by `elem.property`**  
     ---@param newfunction function  
-    ---@param el_number number  
+    ---@param el_number integer  
+    ---@deprecated
     function tpt.graphics_func(newfunction, el_number)
     end
 
@@ -766,7 +818,7 @@
     --tpt.setdrawcap  
     --Changes the rate that particle graphics and the UI render to the screen. This is separate from the fpscap, which only affects the simulation. The drawcap allows TPT to skip drawing every frame. This may increase the framerate in some instances.  
     --The default is set to the maximum refresh rate of all attached monitors.  
-    ---@param drawcap number  
+    ---@param drawcap integer  
     function tpt.setdrawcap(drawcap) end
 
 
@@ -785,7 +837,7 @@
     function tpt.perfectCircleBrush(enabled) end
 --#endregion
 
--- interface.*
+-- ui.*
 -- TODO: add missing stuff from classes + stuff like @class
 --#region
 
@@ -807,23 +859,22 @@
         end
 
         --Returns the width and height of the component  
-        ---@return number, number 
-        function Component:size()    
-            return 0, 0
+        ---@return integer, integer 
+        function Component:size()
         end
         --Sets the size of the component to be width by height  
-        ---@param width number  
-        ---@param height number  
+        ---@param width integer  
+        ---@param height integer  
         function Component:size(width, height)
         end
 
         --Sets the position of the component to be x, y  
-        ---@param x number  
-        ---@param y number  
+        ---@param x integer  
+        ---@param y integer  
         function Component:position(x,y)    
         end
         --Returns the x and y coord of the component  
-        ---@return number, number 
+        ---@return integer, integer 
         function Component:position()   
         end
     --#endregion
@@ -836,10 +887,10 @@
         Button = {}
 
         --Extends Component, fires "action" when clicked  
-        ---@param x number  
-        ---@param y number  
-        ---@param width number  
-        ---@param height number  
+        ---@param x integer  
+        ---@param y integer  
+        ---@param width integer  
+        ---@param height integer  
         ---@param text string?  
         ---@param tooltip string?  
         ---@return Button
@@ -888,11 +939,11 @@
         ProgressBar = {}
 
         --Extends Component, used to indicate progress for long running tasks  
-        ---@param x number  
-        ---@param y number  
-        ---@param width number  
-        ---@param height number  
-        ---@param progress number  
+        ---@param x integer  
+        ---@param y integer  
+        ---@param width integer  
+        ---@param height integer  
+        ---@param progress integer  
         ---@param status string  
         ---@return ProgressBar
         function ProgressBar:new(x, y, width, height, progress, status)
@@ -900,11 +951,11 @@
 
         --Progress ranges from 0 to 100, but a special case of -1 will change the behaviour of the progress bar to intermediate (constantly scrolling to indicate progress)  
         --Returns the progress value  
-        ---@return number
+        ---@return integer
         function ProgressBar:progress()
         end
         --Sets the progress value  
-        ---@param progress number  
+        ---@param progress integer  
         function ProgressBar:progress(progress)
         end
 
@@ -912,7 +963,6 @@
         --Returns the progress bar status  
         ---@return string
         function ProgressBar:status()
-            return ""
         end
         --Sets the progress bar status  
         ---@param status string  
@@ -928,16 +978,16 @@
         Slider = {}
 
         --Extends Component, fires "onValueChanged" when the value is changed (i.e used by the user)  
-        ---@param x number  
-        ---@param y number  
-        ---@param width number  
-        ---@param height number  
-        ---@param steps number?  
+        ---@param x integer  
+        ---@param y integer  
+        ---@param width integer  
+        ---@param height integer  
+        ---@param steps integer?  
         ---@return Slider
         function Slider:new(x, y, width, height, steps)
         end
 
-        ---@alias SliderCallback fun(sender: Slider, value : number)
+        ---@alias SliderCallback fun(sender: Slider, value : integer)
 
         --Sets the listener for slider actions  
         ---@param actionListener SliderCallback  
@@ -945,20 +995,20 @@
         end
 
         --Returns the value of the slider  
-        ---@return number
+        ---@return integer
         function Slider:value()
         end
         --Sets the value of the slider  
-        ---@param value number  
+        ---@param value integer  
         function Slider:value(value)
         end
 
         --Returns the number of steps the slider has  
-        ---@return number
+        ---@return integer
         function Slider:steps()
         end
         --Sets the number of steps for the slider  
-        ---@param steps number  
+        ---@param steps integer  
         function Slider:steps(steps)
         end
     --#endregion
@@ -971,10 +1021,10 @@
         Checkbox = {}
 
         --Extends Component, fires "action" when the checkbox is checked or unchecked  
-        ---@param x number  
-        ---@param y number  
-        ---@param width number  
-        ---@param height number  
+        ---@param x integer  
+        ---@param y integer  
+        ---@param width integer  
+        ---@param height integer  
         ---@param text string?  
         ---@return Checkbox
         function Checkbox:new(x, y, width, height, text)
@@ -1014,10 +1064,10 @@
         Label = {}
 
         --Extends Component, is a simple selectable, readonly text field  
-        ---@param x number  
-        ---@param y number  
-        ---@param width number  
-        ---@param height number  
+        ---@param x integer  
+        ---@param y integer  
+        ---@param width integer  
+        ---@param height integer  
         ---@param text string?  
         ---@return Label
         function Label:new(x, y, width, height, text)
@@ -1041,10 +1091,10 @@
         Textbox = {}
 
         --Extends Component, is a text input field, the placeholder text is shown if the component is no focused and contains no text  
-        ---@param x number  
-        ---@param y number  
-        ---@param width number  
-        ---@param height number  
+        ---@param x integer  
+        ---@param y integer  
+        ---@param width integer  
+        ---@param height integer  
         ---@param text string?
         ---@param placeholder string? 
         ---@return Textbox
@@ -1085,10 +1135,10 @@
         Window = {}
 
         --A modal form to display components, using -1 for either x or y values will centre the Window on that axis.  
-        ---@param x number  
-        ---@param y number  
-        ---@param width number  
-        ---@param height number 
+        ---@param x integer  
+        ---@param y integer  
+        ---@param width integer  
+        ---@param height integer 
         ---@return Window 
         function Window:new(x, y, width, height)
         end
@@ -1156,10 +1206,10 @@
     --nil interface.textInputRect(number x, number y, number w, number h)  
     --``` 
     --Enables composition, for multi-byte unicode characters.  
-    ---@param x number  
-    ---@param y number  
-    ---@param w number  
-    ---@param h number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param w integer  
+    ---@param h integer  
     function interface.textInputRect(x, y, w, h)
     end
 
@@ -1174,11 +1224,11 @@
     --number[] sim.partNeighbors(number x, number y, number radius, [number type])  
     --```  
     --Returns a list of particles indexes(starting at 0) that neighbour the given coordinates that matches the given type (if it is specified) The resulting list does not contain the "origin particle"  
-    ---@param x number  
-    ---@param y number  
-    ---@param radius number  
-    ---@param type number?  
-    ---@return number[]
+    ---@param x integer  
+    ---@param y integer  
+    ---@param radius integer  
+    ---@param type integer?  
+    ---@return (integer|nil)[]
     function simulation.partNeighbors(x, y, radius, type)
     end
     
@@ -1186,11 +1236,11 @@
     --number[] sim.partNeighbours(number x, number y, number radius, [number type])  
     --```  
     --Returns a list of particles indexes(starting at 0) that neighbour the given coordinates that matches the given type (if it is specified) The resulting list does not contain the "origin particle"  
-    ---@param x number  
-    ---@param y number  
-    ---@param radius number  
-    ---@param type number?  
-    ---@return number[]
+    ---@param x integer  
+    ---@param y integer  
+    ---@param radius integer  
+    ---@param type integer?  
+    ---@return (integer|nil)[]
     function simulation.partNeighbours(x, y, radius, type)
     end
 
@@ -1198,8 +1248,8 @@
     --nil sim.partChangeType(number index, number type)  
     --```  
     --Reliably change the type of a particle, this method avoids the side effects created by changing the type directly with the "partProperty" method.  
-    ---@param index number  
-    ---@param type number  
+    ---@param index integer  
+    ---@param type integer  
     function simulation.partChangeType(index, type)
     end
 
@@ -1209,25 +1259,43 @@
     --```  
     --Create a single particle at location x, y. Returns the index of the new particle, or a negative number on failure.   
     --Possible values for index are:  
-    -- 1. Normal particle creation. This is the most useful value. No particle is created if position x, y is occupied and the requested new particle type cannot pass through the particle that is already there.  
-    -- 2. Create particle as though it was drawn by the user with the brush. Usually not useful.  
-    -- 3. Create particle without checking for collisions with existing particles. In most cases, this is a bad idea, since a lot of elements don't work properly when there are multiple particles in the same place. Particles may also turn into BHOL if there are too many in the same place. The exception to this is elements that have been specifically designed to cope with this (such as multiple energy particles like PHOT and NEUT in the same place).     
+    --> **-1** Normal particle creation. This is the most useful value. No particle is created if position x, y is occupied and the requested new particle type cannot pass through the particle that is already there.  
+    --> **-2** Create particle as though it was drawn by the user with the brush. Usually not useful.  
+    --> **-3** Create particle without checking for collisions with existing particles. In most cases, this is a bad idea, since a lot of elements don't work properly when there are multiple particles in the same place. Particles may also turn into BHOL if there are too many in the same place. The exception to this is elements that have been specifically designed to cope with this (such as multiple energy particles like PHOT and NEUT in the same place).     
     --
     --Particle index >= 0: Overwrite an existing particle with a new particle. At the moment no collision checking is performed, so the same considerations apply as for index=-3. It is usually safe if the new particle is in the same location as the old one. This is roughly equivalent to calling `sim.partKill` then `sim.partCreate(-3, ...)`.  
-    ---@param index number  
-    ---@param x number  
-    ---@param y number  
-    ---@param type number      
-    ---@return number
+    ---@param index integer  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param type integer      
+    ---@return integer
     function simulation.partCreate(index, x, y, type)
     end
+
+    ---@alias PartProperty
+    ---|"type"
+    ---|"life"
+    ---|"ctype"
+    ---|"x"
+    ---|"y"
+    ---|"vx"
+    ---|"vy"
+    ---|"temp"
+    ---|"tmp3"
+    ---|"tmp4"
+    ---|"flags"
+    ---|"tmp"
+    ---|"tmp2"
+    ---|"dcolour"
+    ---|"pavg0" DEPRECATED. USE TMP3
+    ---|"pavg1" DEPRECATED. USE TMP4
 
     --```  
     --nil sim.partProperty(number index, object field, object value)  
     --```  
     --Set the property value on a particle specified by index  
-    ---@param index number  
-    ---@param field string  
+    ---@param index integer  
+    ---@param field PartProperty  
     ---@param value any  
     function simulation.partProperty(index, field, value)
     end
@@ -1236,8 +1304,8 @@
     --```  
     --Get the property value on a particle specified by the index  
     --The "field" may be a field name or field ID, see FIELD constants below for valid fields.  
-    ---@param index number  
-    ---@param field string  
+    ---@param index integer  
+    ---@param field PartProperty  
     ---@return any
     function simulation.partProperty(index, field)
     end
@@ -1247,7 +1315,7 @@
     --number x, number y sim.partPosition(number index)  
     --```  
     --Get the location of the particle at the specified index 
-    ---@param index number  
+    ---@param index integer  
     ---@return number, number
     function simulation.partPosition(index)
     end
@@ -1268,9 +1336,9 @@
     -- end  
     --end  
     --```  
-    ---@param x number  
-    ---@param y number  
-    ---@return number
+    ---@param x integer  
+    ---@param y integer  
+    ---@return integer
     function simulation.partID(x, y)
     end
 
@@ -1279,11 +1347,11 @@
     --nil sim.partKill(number x, number y)  
     --```  
     --Reliably delete a particle at a specified index or location, this method avoids the side effects created by changing the type to 0/DEFAULT_PT_NONE with the "partProperty" method  
-    ---@param index number  
+    ---@param index integer  
     function simulation.partKill(index)
     end
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     function simulation.partKill(x, y)
     end
 
@@ -1292,24 +1360,24 @@
     --number sim.pressure(number x, number y)  
     --```  
     --Returns a value on the pressure map.  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@return number
     function simulation.pressure(x, y)
     end
     --```  
-    --nil sim.pressure(number x, number y, number pressure, [number width, number height])  
+    --nil sim.pressure(number x, number y, [number width, number height], number pressure)  
     --```  
     --Sets values on the pressure map.  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     ---@param pressure number  
-    ---@param width number  
-    ---@param height number  
-    function simulation.pressure(x, y, pressure, width, height)
+    function simulation.pressure(x, y, width, height, pressure)
     end
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@param pressure number  
     function simulation.pressure(x, y, pressure)
     end
@@ -1319,24 +1387,24 @@
     --number sim.ambientHeat(number x, number y)  
     --```  
     --Returns a value on the ambient heat map (the temperature of the air at that point).   
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@return number
     function simulation.ambientHeat(x, y)
     end
     --```  
-    --nil sim.ambientHeat(number x, number y, number temp, [number width, number height])  
+    --nil sim.ambientHeat(number x, number y, [number width, number height], number temp)  
     --```  
     --Sets values on the ambient heat map. 
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     ---@param temp number  
-    ---@param width number  
-    ---@param height number  
-    function simulation.ambientHeat(x, y, temp, width, height)
+    function simulation.ambientHeat(x, y, width, height, temp)
     end
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@param temp number  
     function simulation.ambientHeat(x, y, temp)
     end
@@ -1345,24 +1413,24 @@
     --number sim.velocityX(number x, number y)  
     --```  
     --Returns an X value on the velocity map.  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@return number
     function simulation.velocityX(x, y)
     end
     --```  
-    --nil sim.velocityX(number x, number y, [number value], [number width, number height])  
+    --nil sim.velocityX(number x, number y, [number width, number height], number value)  
     --```  
     --Sets X values on the velocity map.  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     ---@param value number  
-    ---@param width number  
-    ---@param height number  
-    function simulation.velocityX(x, y, value, width, height)
+    function simulation.velocityX(x, y, width, height, value)
     end
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@param value number  
     function simulation.velocityX(x, y, value)
     end
@@ -1371,24 +1439,24 @@
     --number sim.velocityY(number x, number y)  
     --```  
     --Returns an Y value on the velocity map.  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@return number
     function simulation.velocityY(x, y)
     end
     --```  
-    --nil sim.velocityY(number x, number y, [number value], [number width, number height])  
+    --nil sim.velocityY(number x, number y, [number width, number height], number value)  
     --```  
     --Sets Y values on the velocity map.  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     ---@param value number  
-    ---@param width number  
-    ---@param height number  
-    function simulation.velocityY(x, y, value, width, height)
+    function simulation.velocityY(x, y, width, height, value)
     end
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@param value number  
     function simulation.velocityY(x, y, value)
     end
@@ -1397,31 +1465,38 @@
     --nil sim.gravMap(number x, number y, [number width, number height, [number value]])  
     --```  
     --Returns the newtonian gravity at the given coordinates in the simulation. If given a value, will set the newtonian gravity at those coordinates. Width and height refer to the rectangle of affected cells, starting with the coords. If not given, they will default to 1,1.  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@return number
     function simulation.gravMap(x, y)
     end
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     ---@param value number  
     function simulation.gravMap(x, y, width, height, value)
     end
+    ---@param x integer  
+    ---@param y integer  
+    ---@param value number  
+    function simulation.gravMap(x, y, value)
+    end
 
+
+    --TODO: look into if its an iterator
 
     --```  
     --number sim.createParts(number x, number y, [number rx], [number ry], [number type], [number brush], [number flag])  
     --```  
     --Does something.  
-    ---@param x number  
-    ---@param y number  
-    ---@param rx number?  
-    ---@param ry number?  
-    ---@param type number?  
-    ---@param brush number? 
-    ---@param flag number?  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param rx integer?  
+    ---@param ry integer?  
+    ---@param type integer?  
+    ---@param brush integer? 
+    ---@param flag integer?  
     ---@return number
     function simulation.createParts(x, y, rx, ry, type, brush, flag)
     end
@@ -1433,15 +1508,15 @@
     --Creates a line of of either the user's currently selected type or the type specified at the specified coordinates.  
     --rx and ry describe the radius of the brush used. Default radius is 5, 5.  
     --flag refers to particle replacement flags.  
-    ---@param x1 number  
-    ---@param y1 number  
-    ---@param x2 number  
-    ---@param y2 number  
-    ---@param rx number?  
-    ---@param ry number?  
-    ---@param type number?  
-    ---@param brush number? 
-    ---@param flag number?  
+    ---@param x1 integer  
+    ---@param y1 integer  
+    ---@param x2 integer  
+    ---@param y2 integer  
+    ---@param rx integer?  
+    ---@param ry integer?  
+    ---@param type integer?  
+    ---@param brush integer? 
+    ---@param flag integer?  
     function simulation.createLine(x1, y1, x2, y2, rx, ry, type, brush, flag) end
 
 
@@ -1450,27 +1525,28 @@
     --```  
     --Creates a filled box of either the user's currently selected type or the type specified at the specified coordinates.  
     --flag refers to particle replacement flags.  
-    ---@param x1 number  
-    ---@param y1 number  
-    ---@param x2 number  
-    ---@param y2 number  
-    ---@param type number?  
-    ---@param flag number?  
+    ---@param x1 integer  
+    ---@param y1 integer  
+    ---@param x2 integer  
+    ---@param y2 integer  
+    ---@param type integer?  
+    ---@param flag integer?  
     function simulation.createBox(x1, y1, x2, y2, type, flag)
     end
 
+    --TODO: look into if its an iterator
 
     --```  
     --number sim.floodParts(number x, number y, [number type], [number cm?], [number flag])  
     --```  
     --Flood fills either the user's currently selected type or the type specified at the coordinates given.  
     --flag refers to particle replacement flags.  
-    ---@param x number  
-    ---@param y number  
-    ---@param type number?  
-    ---@param cm number?  
-    ---@param flag number?  
-    ---@return number
+    ---@param x integer  
+    ---@param y integer  
+    ---@param type integer?  
+    ---@param cm integer?  
+    ---@param flag integer?  
+    ---@return integer
     function simulation.floodParts(x, y, type, cm, flag)
     end
 
@@ -1480,11 +1556,11 @@
     --number sim.createWalls(number x, number y, [number rx], [number ry], [number walltype])  
     --```  
     --Does something  
-    ---@param x number  
-    ---@param y number  
-    ---@param rx number?  
-    ---@param ry number?  
-    ---@param walltype number?  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param rx integer?  
+    ---@param ry integer?  
+    ---@param walltype WallType?  
     ---@return number
     function simulation.createWalls(x, y, rx, ry, walltype)
     end
@@ -1495,13 +1571,13 @@
     --```  
     --Creates a line of either the specified walltype or the type of the basic wall at the specified particle coordinates.  
     --Note: the coordinates might change from particle coordinates to map coordinates in the future.  
-    ---@param x1 number  
-    ---@param y1 number  
-    ---@param x2 number  
-    ---@param y2 number  
-    ---@param rx number?  
-    ---@param ry number?  
-    ---@param walltype number?  
+    ---@param x1 integer  
+    ---@param y1 integer  
+    ---@param x2 integer  
+    ---@param y2 integer  
+    ---@param rx integer?  
+    ---@param ry integer?  
+    ---@param walltype WallType?  
     function simulation.createWallLine(x1, y1, x2, y2, rx, ry, walltype)
     end
 
@@ -1510,39 +1586,42 @@
     --```  
     --Creates a filled box of either the specified walltype or the type of the basic wall at the specified particle coordinates.  
     --Note: the coordinates might change from particle coordinates to map coordinates in the future.  
-    ---@param x1 number  
-    ---@param y1 number  
-    ---@param x2 number  
-    ---@param y2 number  
-    ---@param walltype number?  
+    ---@param x1 integer  
+    ---@param y1 integer  
+    ---@param x2 integer  
+    ---@param y2 integer  
+    ---@param walltype WallType?  
     function simulation.createWallBox(x1, y1, x2, y2, walltype)
     end
 
+    --TODO: look into if its an iterator
 
     --```  
     --number sim.floodWalls(number x, number y, [number walltype], [number bm?])  
     --```  
     --Flood fills either the specified walltype or the type of the basic wall at the specified particle coordinates.  
     --Note: the coordinates might change from particle coordinates to map coordinates in the future.  
-    ---@param x number  
-    ---@param y number  
-    ---@param walltype number?  
-    ---@param bm number?  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param walltype WallType?  
+    ---@param bm integer?  
     ---@return number
     function simulation.floodWalls(x, y, walltype, bm)
     end
 
+    -- TODO: Alias with all tools
+    --TODO: look into if its an iterator
 
     --```  
     --number sim.toolBrush(number x, number y, [number rx], [number ry], [number tool], [number brush], [number strength])  
     --```  
     --Performs the given tool (HEAT, COOL, AIR, etc) on the given coordinates with the given brush size. The brush types are 0 (circle), 1 (square) and 2 (triangle).  
-    ---@param x number  
-    ---@param y number  
-    ---@param rx number?  
-    ---@param ry number?  
-    ---@param tool number?  
-    ---@param brush number?  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param rx integer?  
+    ---@param ry integer?  
+    ---@param tool integer?  
+    ---@param brush integer?  
     ---@param strength number?  
     ---@return number
     function simulation.toolBrush(x, y, rx, ry, tool, brush, strength)
@@ -1554,14 +1633,14 @@
     --type sim.toolLine(number x1, number y1, number x2, number y2, [number rx], [number ry], [number tool], [number brush], [number strength])  
     --```  
     --Does something  
-    ---@param x1 number  
-    ---@param y1 number  
-    ---@param x2 number  
-    ---@param y2 number  
-    ---@param rx number?  
-    ---@param ry number?  
-    ---@param tool number?  
-    ---@param brush number?  
+    ---@param x1 integer  
+    ---@param y1 integer  
+    ---@param x2 integer  
+    ---@param y2 integer  
+    ---@param rx integer?  
+    ---@param ry integer?  
+    ---@param tool integer?  
+    ---@param brush integer?  
     ---@param strength number?  
     function simulation.toolLine(x1, y1, x2, y2, rx, ry, tool, brush, strength)
     end
@@ -1571,11 +1650,11 @@
     --type sim.toolBox(number x1, number y1, number x2, number y2, [number tool], [number strength])  
     --```  
     --Does something  
-    ---@param x1 number  
-    ---@param y1 number  
-    ---@param x2 number  
-    ---@param y2 number  
-    ---@param tool number?  
+    ---@param x1 integer  
+    ---@param y1 integer  
+    ---@param x2 integer  
+    ---@param y2 integer  
+    ---@param tool integer?  
     ---@param strength number?  
     function simulation.toolBox(x1, y1, x2, y2, tool, strength)
     end
@@ -1585,16 +1664,16 @@
     --```  
     --Does something  
     --tool refers to decoration tools.  
-    ---@param x number  
-    ---@param y number  
-    ---@param rx number?  
-    ---@param ry number?  
-    ---@param r number?  
-    ---@param g number?  
-    ---@param b number?  
-    ---@param a number?  
-    ---@param tool number?  
-    ---@param brush number?  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param rx integer?  
+    ---@param ry integer?  
+    ---@param r integer?  
+    ---@param g integer?  
+    ---@param b integer?  
+    ---@param a integer?  
+    ---@param tool integer?  
+    ---@param brush integer?  
     function simulation.decoBrush(x, y, rx, ry, r, g, b, a, tool, brush)
     end
 
@@ -1605,18 +1684,18 @@
     --Changes the decoration color of all particles in the line specified.  
     --rx and ry describe the radius of the brush used. Default radius is 5, 5.  
     --tool refers to decoration tools.  
-    ---@param x1 number  
-    ---@param y1 number  
-    ---@param x2 number  
-    ---@param y2 number  
-    ---@param rx number?  
-    ---@param ry number?  
-    ---@param r number?  
-    ---@param g number?  
-    ---@param b number?  
-    ---@param a number?  
-    ---@param tool number?  
-    ---@param brush number?  
+    ---@param x1 integer  
+    ---@param y1 integer  
+    ---@param x2 integer  
+    ---@param y2 integer  
+    ---@param rx integer?  
+    ---@param ry integer?  
+    ---@param r integer?  
+    ---@param g integer?  
+    ---@param b integer?  
+    ---@param a integer?  
+    ---@param tool integer?  
+    ---@param brush integer?  
     function simulation.decoLine(x1, y1, x2, y2, rx, ry, r, g, b, a, tool, brush)
     end
 
@@ -1626,23 +1705,24 @@
     --```  
     --Changes the decoration color of all particles in the specified coordinates.  
     --tool refers to decoration tools.  
-    ---@param x1 number  
-    ---@param y1 number  
-    ---@param x2 number  
-    ---@param y2 number  
-    ---@param r number?  
-    ---@param g number?  
-    ---@param b number?  
-    ---@param a number?  
-    ---@param tool number?  
+    ---@param x1 integer  
+    ---@param y1 integer  
+    ---@param x2 integer  
+    ---@param y2 integer  
+    ---@param r integer?  
+    ---@param g integer?  
+    ---@param b integer?  
+    ---@param a integer?  
+    ---@param tool integer?  
     function simulation.decoBox(x1, y1, x2, y2, r, g, b, a, tool)
     end
+
 
     --```  
     --number sim.decoColor()  
     --```  
     --Returns the currently selected decoration color.  
-    ---@return number
+    ---@return integer
     function simulation.decoColor()
     end
     --```  
@@ -1650,28 +1730,43 @@
     --``` 
     --Sets the selected decoration color to color.  
     --color is in the format 0xAARRGGBB  
-    ---@param color number  
+    ---@param color integer  
     function simulation.decoColor(color)
     end
     --```  
     --nil sim.decoColor(number r, number g, number b, [number a])  
     --```  
     --Sets the selected decoration color to r,g,b,a  
-    ---@param r number  
-    ---@param g number  
-    ---@param b number  
-    ---@param a number?  
+    ---@param r integer  
+    ---@param g integer  
+    ---@param b integer  
+    ---@param a integer?  
     function simulation.decoColor(r, g, b, a)
     end
 
     --```  
+    --number sim.decoColour()  
+    --```  
+    --Returns the currently selected decoration color.  
+    ---@return integer
+    function simulation.decoColour()
+    end
+    --```  
+    --nil sim.decoColour(number color)  
+    --``` 
+    --Sets the selected decoration color to color.  
+    --color is in the format 0xAARRGGBB  
+    ---@param colour integer  
+    function simulation.decoColour(colour)
+    end
+    --```  
     --nil sim.decoColour(number r, number g, number b, [number a])  
     --```  
     --Sets the selected decoration color to r,g,b,a  
-    ---@param r number  
-    ---@param g number  
-    ---@param b number  
-    ---@param a number?  
+    ---@param r integer  
+    ---@param g integer  
+    ---@param b integer  
+    ---@param a integer?  
     function simulation.decoColour(r, g, b, a)
     end
 
@@ -1679,12 +1774,12 @@
     -- nil sim.floodDeco(number x, number y, number r, number g, number b, number a) 
     --```  
     --Flood fills the color at position x, y with another color. Note: Color at position includes console overlay.  
-    ---@param x number  
-    ---@param y number  
-    ---@param r number  
-    ---@param g number  
-    ---@param b number  
-    ---@param a number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param r integer  
+    ---@param g integer  
+    ---@param b integer  
+    ---@param a integer  
     function simulation.floodDeco(x, y, r, g, b, a) end
 
 
@@ -1698,10 +1793,10 @@
     --nil sim.clearRect(number x, number y, number width, number height)  
     --```  
     --Clears all particles in a rectangle starting at x, y down and to the right width and height pixels respectively.  
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     function simulation.clearRect(x, y, width, height) end
     
 
@@ -1723,14 +1818,14 @@
     --```  
     --Creates a stamp of the specified coordinates. Coordinates default to entire simulation.  
     --Returns the stamp id created.  
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
-    ---@return number
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
+    ---@return string
     function simulation.saveStamp(x, y, width, height)
     end
-    ---@return number
+    ---@return string
     function simulation.saveStamp()
     end
 
@@ -1740,14 +1835,14 @@
     --``` 
     --Loads a stamp identified by filename or ID, and places it at position x,y. Filenames should be given without stamps/ or the .stm suffix. On success, returns 1. On failure, returns nil and the failure reason as a string.  
     ---@param filename string  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@return number | nil, string | nil
     function simulation.loadStamp(filename, x, y)
     end
-    ---@param id number  
-    ---@param x number  
-    ---@param y number  
+    ---@param id integer  
+    ---@param x integer  
+    ---@param y integer  
     ---@return number | nil, string | nil
     function simulation.loadStamp(id, x, y)
     end
@@ -1760,6 +1855,9 @@
     ---@param name string  
     function simulation.deleteStamp(name)
     end
+    ---@param id integer  
+    function simulation.deleteStamp(id)
+    end
 
 
     --```  
@@ -1767,9 +1865,9 @@
     --```  
     --Loads the save associated with the specified SaveID.  
     --If hideDescription is non zero, the information for the save is not shown.  
-    ---@param SaveID number  
-    ---@param hideDescription number?  
-    ---@param history number?  
+    ---@param SaveID integer  
+    ---@param hideDescription integer?  
+    ---@param history integer?  
     function simulation.loadSave(SaveID, hideDescription, history)
     end
 
@@ -1785,7 +1883,7 @@
     --number, number sim.getSaveID()  
     --```  
     --Returns the save ID and the history offset of the currently loaded save or nil if the simulation is not a downloaded save. The history offset can be used with loadSave.  
-    ---@return number, number
+    ---@return integer, integer
     function simulation.getSaveID() 
     end
 
@@ -1794,9 +1892,9 @@
     --number, number sim.adjustCoords(number x, number y)  
     --```  
     --Actually this is more of a UI method than a simulation method. Given a mouse position x, y in the window, this function returns the corresponding coordinates in the simulation (taking into account the visibility and position of the zoom window, if applicable). 
-    ---@param x number  
-    ---@param y number  
-    ---@return number, number
+    ---@param x integer  
+    ---@param y integer  
+    ---@return integer, integer
     function simulation.adjustCoords(x, y)
     end
 
@@ -1805,10 +1903,10 @@
     --nil sim.prettyPowders(mode)  
     --```  
     --Sets whether the "pretty powders mode" (powders, such as SAND or BCOL, will be assigned random deco values) is on or off. When called with no arguments, returns a value determining whether it is on or off.  
-    ---@return number
+    ---@return integer
     function simulation.prettyPowders() 
     end
-    ---@param mode number  
+    ---@param mode integer  
     function simulation.prettyPowders(mode) end
 
 
@@ -1816,39 +1914,42 @@
     --number sim.gravityGrid()  
     --```  
     --Returns the current setting for drawing the gravity grid. More of a renderer setting than a simulation setting.  
-    ---@return number
+    ---@return integer
     function simulation.gravityGrid()
     end
     --```  
     --nil sim.gravityGrid(number mode)  
     --```  
     --Sets the setting for drawing the gravity grid to mode.  
-    ---@param mode number  
+    ---@param mode integer  
     function simulation.gravityGrid(mode)
     end
-
 
     --```  
     --number sim.edgeMode()  
     --```  
     --Returns the current Edge Mode  
-    ---@return number
+    ---@return integer
     function simulation.edgeMode()
     end
     --```  
     --nil sim.edgeMode(number mode)  
     --```  
     --Sets the current Edge Mode to mode. 0 means normal, 1 creates a wall all the way round the edge of the simulation. 
-    ---@param mode number  
+    ---@param mode integer  
     function simulation.edgeMode(mode)
     end
 
+    ---@alias GravityMode
+    ---|0 Normal, vertical gravity
+    ---|1 No gravity
+    ---|2 Radial gravity  
 
     --```  
     --number sim.gravityMode()  
     --```  
     --Returns the current gravity simulation mode.  
-    ---@return number
+    ---@return GravityMode
     function simulation.gravityMode()
     end
     --```  
@@ -1858,16 +1959,33 @@
     -- - 0 Normal, vertical gravity   
     -- - 1 No gravity  
     -- - 2 Radial gravity  
-    ---@param mode number  
+    ---@param mode GravityMode  
     function simulation.gravityMode(mode)
     end
+
+
+    --TODO: Add docs once its added on wiki
+    ---@param x number?
+    ---@param y number
+    function simulation.customGravity(x, y)        
+    end
+    ---@return number, number
+    function simulation.customGravity(x, y)        
+    end
+
+    ---@alias AirMode
+    ---|0 Normal  
+    ---|1 Pressure off  
+    ---|2 Velocity off  
+    ---|3 Velocity and pressure off  
+    ---|4 No update   
 
 
     --```  
     --number sim.airMode()  
     --```  
     --Returns the current Air Simulation Mode.  
-    ---@return number
+    ---@return AirMode
     function simulation.airMode()
     end
     --```  
@@ -1880,7 +1998,7 @@
     -- - 2 Velocity off  
     -- - 3 Velocity and pressure off  
     -- - 4 No update  
-    ---@param mode number  
+    ---@param mode AirMode  
     function simulation.airMode(mode)
     end
 
@@ -1889,14 +2007,14 @@
     --number sim.waterEqualisation()  
     --```  
     --Returns the current Water equalisation setting.  
-    ---@return number
+    ---@return integer
     function simulation.waterEqualisation()
     end
     --```  
     --nil sim.waterEqualisation(number setting)  
     --```  
     --Set the Water equalisation setting to setting.  
-    ---@param setting number  
+    ---@param setting integer  
     function simulation.waterEqualisation(setting)
     end
 
@@ -1921,10 +2039,15 @@
     --number sim.elementCount(number type)  
     --```  
     --Returns the number of particles of the specified type in the simulation.  
-    ---@param type number  
-    ---@return number
+    ---@param type integer  
+    ---@return integer
     function simulation.elementCount(type)
     end
+
+    ---@alias CanMoveMethod
+    ---|0 Bounce off the obstacle  
+    ---|1 Swap places with the obstacle  
+    ---|2 Move over the obstacle  
 
     --```  
     --simulation.can_move(number movingElementID, number obstacleElementID, number method)  
@@ -1933,17 +2056,17 @@
     -- - 0 bounce off the obstacle  
     -- - 1 swap places with the obstacle  
     -- - 2 move over the obstacle  
-    ---@param movingElementID number  
-    ---@param obstacleElementID number  
-    ---@param method number  
+    ---@param movingElementID integer  
+    ---@param obstacleElementID integer  
+    ---@param method CanMoveMethod  
     function simulation.can_move(movingElementID, obstacleElementID, method) end
     --```  
     --number simulation.can_move(number movingElementID, number obstacleElementID)  
     --```  
     --Returns what a particle does when it hits another particle while moving, a method like above.  
-    ---@param movingElementID number  
-    ---@param obstacleElementID number  
-    ---@return number
+    ---@param movingElementID integer  
+    ---@param obstacleElementID integer  
+    ---@return CanMoveMethod
     function simulation.can_move(movingElementID, obstacleElementID) 
     end
 
@@ -1958,32 +2081,32 @@
     --    sim.partCreate(-1, x, y, elem.DEFAULT_PT_DUST)  
     --end  
     --```  
-    ---@param x number  
-    ---@param y number  
-    ---@return fun(): number, number
+    ---@param x integer  
+    ---@param y integer  
+    ---@return fun(): integer, integer
     function simulation.brush(x, y) end
-    ---@param x number  
-    ---@param y number  
-    ---@param brushWidth number  
-    ---@param brushHeight number  
-    ---@param brushID number?  
-    ---@return fun(): number, number
+    ---@param x integer  
+    ---@param y integer  
+    ---@param brushWidth integer  
+    ---@param brushHeight integer  
+    ---@param brushID integer?  
+    ---@return fun(): integer, integer
     function simulation.brush(x, y, brushWidth, brushHeight, brushID) end
 
     --```  
     --function sim.parts()  
     --```  
     --Returns an iterator over particle indexes that can be used in lua for loops  
-    ---@return fun(): number
+    ---@return fun(): integer
     function simulation.parts() end
 
     --```  
     --number sim.pmap(number x, number y)  
     --```  
     --Get the index of the particle at the specified position. Returns 0 if there is no particle there. This function is very similar to sim.partID, but excludes energy particles (such as PHOT, NEUT, ELEC).  
-    ---@param x number  
-    ---@param y number  
-    ---@return number
+    ---@param x integer  
+    ---@param y integer  
+    ---@return integer
     function simulation.pmap(x, y)
     end
 
@@ -1991,9 +2114,9 @@
     --number sim.photons(number x, number y)  
     --```  
     --Get the index of the energy particle at the specified position. Returns 0 if there is no particle there. This function is very similar to sim.pmap  
-    ---@param x number  
-    ---@param y number  
-    ---@return number
+    ---@param x integer  
+    ---@param y integer  
+    ---@return integer
     function simulation.photons(x, y)
     end
 
@@ -2014,16 +2137,16 @@
     -- sim.partProperty(i, sim.FIELD_TEMP, 9999)  
     --end  
     --```  
-    ---@param x number  
-    ---@param y number  
-    ---@param rx number  
-    ---@param ry number  
-    ---@param type number?  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param rx integer  
+    ---@param ry integer  
+    ---@param type integer?  
     ---@return fun(): number, number, number
     function simulation.neighbors(x, y, rx, ry, type)
     end
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@return fun(): number, number, number
     function simulation.neighbors(x, y)
     end
@@ -2034,10 +2157,10 @@
     --sim.framerender(number frames)  
     --```  
     --Advances the simulation the given number of frames, even when paused. If called with no arguments, returns the number of frames currently to be rendered. Usually is 0.  
-    ---@param frames number  
+    ---@param frames integer  
     function simulation.framerender(frames)
     end
-    ---@return number
+    ---@return integer
     function simulation.framerender()
     end
 
@@ -2046,14 +2169,14 @@
     --number sim.gspeed()  
     --```  
     --Returns the current GoL speed  
-    ---@return number
+    ---@return integer
     function simulation.gspeed()
     end
     --```  
     --nil sim.gspeed(number newSpeed)  
     --```  
     --Sets the current GoL speed. This is the number of frames between GoL updates. Default is one, larger numbers make it slower.  
-    ---@param newSpeed number  
+    ---@param newSpeed integer  
     function simulation.gspeed(newSpeed)
     end
 
@@ -2070,14 +2193,14 @@
     --Returns the current replace mode flags.  
     --If the first bit of that number is set (flags = 1), replace mode is enabled.  
     --If the second bit is set (flags = 2), specific delete is enabled.  
-    ---@return number
+    ---@return integer
     function simulation.replaceModeFlags() 
     end
     --```  
     --nil sim.replaceModeFlags(number flags)  
     --```  
     --Sets the replace mode flags.  
-    ---@param flags number  
+    ---@param flags integer  
     function simulation.replaceModeFlags(flags) end
 
     ---@alias GOL {name: string, rulestr: string, rule: number, color1: number, color2: number}
@@ -2113,7 +2236,7 @@
     --boolean sim.removeCustomGol(string name)  
     --```  
     --Removes all custom game of life types with the specified name. Returns true if any were removed.  
-    ---@param name number  
+    ---@param name string  
     ---@return boolean
     function simulation.removeCustomGol(name) end
 --#endregion
@@ -2603,10 +2726,10 @@
     ---@param x number  
     ---@param y number  
     ---@param text string  
-    ---@param r number  
-    ---@param g number  
-    ---@param b number  
-    ---@param a number?  
+    ---@param r integer  
+    ---@param g integer  
+    ---@param b integer  
+    ---@param a integer?  
     function graphics.drawText(x, y, text, r, g, b, a)
     end
     ---@param x number  
@@ -2623,10 +2746,10 @@
     ---@param y1 number  
     ---@param x2 number  
     ---@param y2 number  
-    ---@param r number  
-    ---@param g number  
-    ---@param b number  
-    ---@param a number?  
+    ---@param r integer  
+    ---@param g integer  
+    ---@param b integer  
+    ---@param a integer?  
     function graphics.drawLine(x1, y1, x2, y2, r, g, b, a)
     end
     ---@param x1 number  
@@ -2644,10 +2767,10 @@
     ---@param y number  
     ---@param width number  
     ---@param height number  
-    ---@param r number  
-    ---@param g number  
-    ---@param b number  
-    ---@param a number?  
+    ---@param r integer  
+    ---@param g integer  
+    ---@param b integer  
+    ---@param a integer?  
     function graphics.drawRect(x, y, width, height, r, g, b, a)
     end
     ---@param x number  
@@ -2665,10 +2788,10 @@
     ---@param y number  
     ---@param width number  
     ---@param height number  
-    ---@param r number  
-    ---@param g number  
-    ---@param b number  
-    ---@param a number?  
+    ---@param r integer  
+    ---@param g integer  
+    ---@param b integer  
+    ---@param a integer?  
     function graphics.fillRect(x, y, width, height, r, g, b, a)
     end
     ---@param x number  
@@ -2686,10 +2809,10 @@
     ---@param y number  
     ---@param radiusW number  
     ---@param radiusH number  
-    ---@param r number  
-    ---@param g number  
-    ---@param b number  
-    ---@param a number?  
+    ---@param r integer  
+    ---@param g integer  
+    ---@param b integer  
+    ---@param a integer?  
     function graphics.drawCircle(x, y, radiusW, radiusH, r, g, b, a)
     end
     ---@param x number  
@@ -2707,10 +2830,10 @@
     ---@param y number  
     ---@param radiusW number  
     ---@param radiusH number  
-    ---@param r number  
-    ---@param g number  
-    ---@param b number  
-    ---@param a number?  
+    ---@param r integer  
+    ---@param g integer  
+    ---@param b integer  
+    ---@param a integer?  
     function graphics.fillCircle(x, y, radiusW, radiusH, r, g, b, a)
     end
     ---@param x number  
@@ -2734,10 +2857,10 @@
     --graphics.getHexColor( [number r], [number g], [number b], [number a])  
     --```  
     --Converts color to hex.  
-    ---@param r number  
-    ---@param g number  
-    ---@param b number  
-    ---@param a number?
+    ---@param r integer  
+    ---@param g integer  
+    ---@param b integer  
+    ---@param a integer?
     ---@return number  
     function graphics.getHexColor(r, g, b, a)
     end
