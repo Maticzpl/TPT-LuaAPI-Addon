@@ -1,5 +1,6 @@
 ---@meta
 ---@diagnostic disable:lowercase-global
+---@diagnostic disable:duplicate-set-field
 
 --If you want to disable deprecation warning, put the line below in yoru file (with three dashes instead of 2)
 --@diagnostic disable:deprecated
@@ -30,19 +31,26 @@
 
     tpt = {
         -- Particle type selected under LMB  
-        selectedl = 0,
+        ---@type string
+        selectedl = nil,
         -- Particle type selected under RMB  
-        selectedr = 0,
+        ---@type string
+        selectedr = nil,
         -- Particle type selected under MMB  
-        selecteda = 0,
+        ---@type string
+        selecteda = nil,
         
-        selectedreplace = 0,
+        ---@type string
+        selectedreplace = nil,
 
         --Brush X size  
+        ---@type integer
         brushx = 0,
         --Brush Y size  
+        ---@type integer
         brushy = 0,
         --Brush shape ID (0 circle, 1 square, 2 triangle)  
+        ---@type integer
         brushID = 0,
     }
 
@@ -472,23 +480,23 @@
     end
 
     --Ask the user to input some text. Returns a string of what ever the user says. The argument "text" is pre-entered text (optional).  
-    ---@param title string  
-    ---@param message string  
+    ---@param title string?  
+    ---@param message string?  
     ---@param text string?  
     ---@return string
     function tpt.input(title, message, text)
     end
 
     --Display an OK-Only message box with a title and message.  
-    ---@param title string  
-    ---@param message string  
+    ---@param title string?  
+    ---@param message string?  
     function tpt.message_box(title, message)
     end
 
     --Display an confirm message box with a title and message. Returns true if the button with button_name is clicked, returns false if Cancel is clicked.  
-    ---@param title string  
-    ---@param message string  
-    ---@param button_name string  
+    ---@param title string?  
+    ---@param message string?  
+    ---@param button_name string?  
     ---@return boolean
     function tpt.confirm(title, message,button_name)
     end
@@ -1272,7 +1280,8 @@
     function simulation.partCreate(index, x, y, type)
     end
 
-    ---@alias PartProperty
+    ---@alias PartProperty    
+    ---|integer
     ---|"type"
     ---|"life"
     ---|"ctype"
@@ -2016,6 +2025,21 @@
     --Set the Water equalisation setting to setting.  
     ---@param setting integer  
     function simulation.waterEqualisation(setting)
+    end    
+
+    --```  
+    --number sim.waterEqualization()  
+    --```  
+    --Returns the current Water equalization setting.  
+    ---@return integer
+    function simulation.waterEqualization()
+    end
+    --```  
+    --nil sim.waterEqualization(number setting)  
+    --```  
+    --Set the Water equalization setting to setting.  
+    ---@param setting integer  
+    function simulation.waterEqualization(setting)
     end
 
 
@@ -2239,6 +2263,61 @@
     ---@param name string  
     ---@return boolean
     function simulation.removeCustomGol(name) end
+
+    --```  
+    --number sim.lastUpdatedID()
+    --```  
+    --Returns the last updated particle ID, if the simulation is currently being stepped through particle-by-particle (either using sim.updateUpTo or user input with tpt.setdebug(0x8)). If subframe particle debugging isn't active, returns nil.
+    ---@return integer
+    function simulation.lastUpdatedID() end
+
+    --```  
+    --nil sim.updateUpTo()
+    --```  
+    --Updates the simulation, but only up to the specified particle ID. Works as if shift+f is pressed while in particle debug mode (tpt.setdebug(0x8)). If no arguments are passed in, updates to the end of the frame.
+    function simulation.updateUpTo() end
+    --```  
+    --nil sim.updateUpTo(number ID)
+    --```  
+    --Updates the simulation, but only up to the specified particle ID. Works as if shift+f is pressed while in particle debug mode (tpt.setdebug(0x8)). If no arguments are passed in, updates to the end of the frame.
+    ---@param ID integer  
+    function simulation.updateUpTo(ID) end
+
+    --```  
+    --number sim.temperatureScale()
+    --```  
+    -- Sets the temperature scale to use in the HUD. If called with no arguments, returns the current scale.
+    -- - 0 Kelvin
+    -- - 1 Celicus
+    -- - 2 Farenheit
+    ---@return integer
+    function simulation.temperatureScale() end
+    --```  
+    --nil sim.temperatureScale(number scale)
+    --```  
+    -- Sets the temperature scale to use in the HUD. If called with no arguments, returns the current scale.
+    -- - 0 Kelvin
+    -- - 1 Celicus
+    -- - 2 Farenheit
+    ---@param scale integer
+    function simulation.temperatureScale(scale) end
+
+
+    --```  
+    --boolean sim.historyRestore()
+    --```  
+    --Tries restoring a history snapshot (ctrl+z). Returns true on success, or false if there is no history to restore.
+    ---@return boolean
+    function simulation.historyRestore() end
+
+    --```  
+    --boolean sim.historyForward()
+    --```  
+    --Tries restoring a redo snapshot (ctrl+y). Returns true on success, or false if there is no redo history to restore.
+    ---@return boolean
+    function simulation.historyForward() end
+
+
 --#endregion
 
 -- ren.*
@@ -2292,7 +2371,6 @@
         --#### These should be used in lua graphics functions to set how particles will be drawn. Effects like fire, glowing, and flares are set here. How a particle is actually rendered depends on the current render and display modes.  
         EFFECT_DBGLINES	= 0x08000000,	    --> Draw lines between particles of the same type with similar temperatures. Used by WIFI and portals to draw lines between particles of the same channel when in debug mode.  
 
-
         --#### These are the values used and returned by ren.renderMode. They are combinations of the above values, and sometimes overlap. All source definitions also include OPTIONS and PSPEC_STICKMAN (so that options can always be set and stickmen are always rendered), but they are not listed here.  
         --> In source code `PMODE_SPARK | PMODE_FLARE | PMODE_LFLARE`  
         --> Used in all display modes except for heat, nothing, heat gradient, and life gradient. Turns on all basic effects like flares and portal effects.  
@@ -2321,7 +2399,6 @@
         --> In source code `PMODE_FLAT`	  
         --> Not used at all, but would make sure at least each individual pixel gets drawn.  
         RENDER_NONE	= 0xf201,   
-
 
         --#### These are the values used and returned by ren.displayMode. They can be set together, although no official display mode does this.  
         --> Cracker air display mode, used in alternate velocity display.  
@@ -2365,6 +2442,7 @@
         COLOUR_BASC = nil,	        
     }
 
+
     --```  
     --table ren.renderModes()  
     --ren.renderModes(table newModes)  
@@ -2381,10 +2459,10 @@
     --```  
     --ren.renderModes({ren.RENDER_BLOB, ren.RENDER_EFFE})  
     --```  
-    ---@param newModes number[]  
+    ---@param newModes integer[]  
     function renderer.renderModes(newModes)
     end
-    ---@return number[]
+    ---@return integer[]
     function renderer.renderModes()
     end
 
@@ -2405,10 +2483,10 @@
     --```  
     --ren.displayModes({ren.DISPLAY_AIRC, ren.DISPLAY_PERS})  
     --```  
-    ---@param newModes number[]  
+    ---@param newModes integer[]  
     function renderer.displayModes(newModes)
     end
-    ---@return number[]
+    ---@return integer[]
     function renderer.displayModes()
     end
 
@@ -2417,13 +2495,11 @@
     --ren.colorMode(number colourMode)  
     --```  
     --This function takes one optional integer and sets which colour modes the currently appIying render mode uses. If the function is called with no arguments, it returns the current colour mode as an integer as well.  
-    --A colour mode is basically a description of how particles are drawn. The other details which are considered when particles are drawn are fire mode, pixel mode and effect mode (rare cases like portals).  
-    --On the bottom of this page there's a list of descriptions of what each colour mode does.  
-    ---@return number
+    --A colour mode is basically a description of how particles are drawn. The other details which are considered when particles are drawn are fire mode, pixel mode and effect mode (rare cases like portals).   
+    ---@return integer
     function renderer.colorMode() 
-        return 0
     end
-    ---@param colorMode number  
+    ---@param colorMode integer  
     function renderer.colorMode(colorMode) 
     end
     --```  
@@ -2432,11 +2508,10 @@
     --```  
     --This function takes one optional integer and sets which colour modes the currently appIying render mode uses. If the function is called with no arguments, it returns the current colour mode as an integer as well.  
     --A colour mode is basically a description of how particles are drawn. The other details which are considered when particles are drawn are fire mode, pixel mode and effect mode (rare cases like portals).  
-    --On the bottom of this page there's a list of descriptions of what each colour mode does.  
-    ---@return number
+    ---@return integer
     function renderer.colourMode() 
     end
-    ---@param colourMode number  
+    ---@param colourMode integer  
     function renderer.colourMode(colourMode) 
     end
 
@@ -2446,10 +2521,10 @@
     --ren.decorations(number decoSetting)  
     --```  
     --If called with no arguments, returns a 0 or a 1 representing the current deco mode setting. If a number is passed in, turns decorations on or off.  
-    ---@param decoSetting number  
+    ---@param decoSetting integer  
     function renderer.decorations(decoSetting)
     end
-    ---@return number
+    ---@return integer
     function renderer.decorations()
     end
 
@@ -2460,10 +2535,10 @@
     --```  
     --If called with no arguments, returns the current grid size (normally set with 'g'). Grid sizes range from 0 (no grid) to 9. Each size increases the number of pixels between lines by 4.  
     --If an argument is passed in, sets the current grid size. There are no checks to make sure it is in the valid range, but if negative numbers are passed in it may cause strange behavior.  
-    ---@param gridSize number  
+    ---@param gridSize integer  
     function renderer.grid(gridSize)
     end
-    ---@return number
+    ---@return integer
     function renderer.grid()
     end
 
@@ -2473,10 +2548,10 @@
     --ren.debugHUD(number debugSetting)  
     --```  
     --If called with no arguments, returns a 0 or a 1 representing whether the debug HUD (normally set with 'd') is on or off. If a number is passed in, turns the debug HUD on or off.  
-    ---@param debugSetting number  
+    ---@param debugSetting integer  
     function renderer.debugHUD(debugSetting)
     end
-    ---@return number
+    ---@return integer
     function renderer.debugHUD()
     end
 
@@ -2487,10 +2562,10 @@
     --```  
     --If called with no arguments, returns a 0 or a 1 representing whether the brush is currently shown. If a number is passed in, disables rendering the brush. This function is intended for recording scripts which want to hide the brush and other hud elements.  
     --
-    ---@param brushSetting number  
+    ---@param brushSetting integer  
     function renderer.showBrush(brushSetting)
     end
-    ---@return number
+    ---@return integer
     function renderer.showBrush()
     end
 
@@ -2515,27 +2590,28 @@
     --ren.zoomWindow(number x, number y, number zoomFactor)  
     --```  
     --The zoom window displays the magnified image. If called with no arguments, returns 4 numbers: left top corner X position, left top corner Y position, the zoom factor and the inner window size in pixels. If arguments are passed then the zoom window will be moved to the specified X and Y coordinates (from its top left corner) and change its zoom factor.  
-    ---@param x number  
-    ---@param y number  
-    ---@param zoomFactor number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param zoomFactor integer  
     function renderer.zoomWindow(x, y, zoomFactor) 
     end
-    ---@return number, number, number, number
+    ---@return integer x, integer y, integer zoomFactor, number windowSize
     function renderer.zoomWindow() 
     end
 
+    -- idk if window size should be int TODO: uhh figure this out
 
     --```  
     --number, number, number ren.zoomScope()  
     --ren.zoomScope(number x, number y, number size)  
     --```  
     --The zoom scope defines the area where to zoom in. If called with no arguments, returns 3 numbers: left top corner X position, left top corner Y position and its size. If arguments are passed then the zoom scope will be moved to the specified X and Y coordinates (from its top left corner). It will also make it span the amount of pixels specified by the 'size' argument equally in width and height.  
-    ---@return number, number, number
+    ---@return integer x, integer y, integer size
     function renderer.zoomScope() 
     end
-    ---@param x number  
-    ---@param y number  
-    ---@param size number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param size integer  
     function renderer.zoomScope(x, y, size) 
     end
 --#endregion
@@ -2591,6 +2667,8 @@
     ---|"Create"
     ---|"ChangeType"
 
+    --TODO: Figure out if any of those are ints
+
     -- `surround_space`	This is the number of particles with the same TYPE property in the Moore neighborhood surrounding the particle. Used primarily for GoL type elements.
     -- `nt`	This is the number of empty spaces in the Moore neighborhood surrounding the particle.
     ---@alias UpdateFunc fun(UPDATE_index:number, x:number, y:number, surround_space:number, nt:number): number|nil 
@@ -2613,7 +2691,7 @@
     --Returns -1 on failure (there are no free spaces to create a new element).  
     ---@param group string  
     ---@param name string  
-    ---@return number
+    ---@return integer
     function elements.allocate(group, name)
     end
 
@@ -2646,13 +2724,13 @@
     --table elements.element(number elementID)  
     --```  
     --Returns a table containing all of an element's properties (Name, Description, etc)  
-    ---@param elementID number  
+    ---@param elementID integer  
     ---@return Properties
     function elements.element(elementID)
     end
     --Sets the properties from the given table onto the element.  
     --These two functions are useful for copying or templating from already present elements, for example  
-    ---@param elementID number  
+    ---@param elementID integer  
     ---@param properties Properties  
     function elements.element(elementID, properties)
     end
@@ -2662,7 +2740,7 @@
     --object elements.property(number elementID, string property)  
     --```  
     --Gets the value of an element property  
-    ---@param elementID number  
+    ---@param elementID integer  
     ---@param property Property|string    
     ---@return any
     function elements.property(elementID, property)
@@ -2671,17 +2749,19 @@
     --elements.property(number elementID, string property, object value)  
     --```  
     --Sets the value of an element property  
-    ---@param elementID number  
+    -- replaceMethod applies only for property "Update"
+    ---@param elementID integer  
     ---@param property Property|string  
     ---@param value number|string|PropertyFunctions|any
-    function elements.property(elementID, property, value)
+    ---@param replaceMethod ElemFuncReplace?
+    function elements.property(elementID, property, value, replaceMethod)
     end
 
     --```  
     --elements.free(number elementID)  
     --```  
     --Free a previously allocated element, so it will disappear from the game. The element id will be freed and can used later by another script. elementID must be a non-default element (i.e you cannot free the default WATR element)  
-    ---@param elementID number  
+    ---@param elementID integer  
     function elements.free(elementID)
     end
 
@@ -2690,7 +2770,7 @@
     --elements.loadDefault(number elementID)  
     --```  
     --Reset an element to its original state before it was modified  
-    ---@param elementID number  
+    ---@param elementID integer  
     function elements.loadDefault(elementID)
     end
     --```  
@@ -2715,7 +2795,7 @@
     --```  
     --Returns the width and height of the specified text.  
     ---@param text string  
-    ---@return number, number 
+    ---@return integer, integer 
     function graphics.textSize(text)
     end
 
@@ -2723,8 +2803,8 @@
     --graphics.drawText(number x, number y, string text, [number r, number g, number b, [number a]])  
     --```  
     --Draws the specified text at (x,y). Providing the color is optional, if not provided defaults to white.  
-    ---@param x number  
-    ---@param y number  
+    ---@param x integer  
+    ---@param y integer  
     ---@param text string  
     ---@param r integer  
     ---@param g integer  
@@ -2742,20 +2822,20 @@
     --graphics.drawLine(number x1, number y1, number x2, number y2, [number r, number g, number b, [number a]])  
     --```  
     --Draws a line from (x1,y1) to (x2,y2). Providing the color is optional, if not provided defaults to white.  
-    ---@param x1 number  
-    ---@param y1 number  
-    ---@param x2 number  
-    ---@param y2 number  
+    ---@param x1 integer  
+    ---@param y1 integer  
+    ---@param x2 integer  
+    ---@param y2 integer  
     ---@param r integer  
     ---@param g integer  
     ---@param b integer  
     ---@param a integer?  
     function graphics.drawLine(x1, y1, x2, y2, r, g, b, a)
     end
-    ---@param x1 number  
-    ---@param y1 number  
-    ---@param x2 number  
-    ---@param y2 number  
+    ---@param x1 integer  
+    ---@param y1 integer  
+    ---@param x2 integer  
+    ---@param y2 integer      
     function graphics.drawLine(x1, y1, x2, y2)
     end
 
@@ -2763,20 +2843,20 @@
     --graphics.drawRect(number x, number y, number width, number height, [number r, number g, number b, [number a]])  
     --```  
     --Draws a hollow rectangle at (x,y) with the specified width and height. Providing the color is optional, if not provided defaults to white.  
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     ---@param r integer  
     ---@param g integer  
     ---@param b integer  
     ---@param a integer?  
     function graphics.drawRect(x, y, width, height, r, g, b, a)
     end
-    ---@param x number  
-    ---@param y number  
-    ---@param width number  
-    ---@param height number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param width integer  
+    ---@param height integer  
     function graphics.drawRect(x, y, width, height)
     end
 
@@ -2805,20 +2885,20 @@
     --graphics.drawCircle(number x, number y, number radiusW, number radiusH, [number r, number g, number b, [number a]])  
     --```  
     --Draws a hollow circle at (x,y) with radius of (radiusW,radiusH). Providing the color is optional, if not provided defaults to white.  
-    ---@param x number  
-    ---@param y number  
-    ---@param radiusW number  
-    ---@param radiusH number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param radiusW integer  
+    ---@param radiusH integer  
     ---@param r integer  
     ---@param g integer  
     ---@param b integer  
     ---@param a integer?  
     function graphics.drawCircle(x, y, radiusW, radiusH, r, g, b, a)
     end
-    ---@param x number  
-    ---@param y number  
-    ---@param radiusW number  
-    ---@param radiusH number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param radiusW integer  
+    ---@param radiusH integer  
     function graphics.drawCircle(x, y, radiusW, radiusH)
     end
 
@@ -2826,20 +2906,20 @@
     --graphics.fillCircle(number x, number y, number radiusW, number radiusH, [number r, number g, number b, [number a]])  
     --```  
     --Draws a filled circle at (x,y) with radius of (radiusW,radiusH). Providing the color is optional, if not provided defaults to white.  
-    ---@param x number  
-    ---@param y number  
-    ---@param radiusW number  
-    ---@param radiusH number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param radiusW integer  
+    ---@param radiusH integer  
     ---@param r integer  
     ---@param g integer  
     ---@param b integer  
     ---@param a integer?  
     function graphics.fillCircle(x, y, radiusW, radiusH, r, g, b, a)
     end
-    ---@param x number  
-    ---@param y number  
-    ---@param radiusW number  
-    ---@param radiusH number  
+    ---@param x integer  
+    ---@param y integer  
+    ---@param radiusW integer  
+    ---@param radiusH integer  
     function graphics.fillCircle(x, y, radiusW, radiusH)
     end
     
@@ -2847,8 +2927,8 @@
     --graphics.getColors(number color)  
     --```  
     --Converts color from hex. Return number r,g,b,a.  
-    ---@param color number  
-    ---@return number, number, number, number
+    ---@param color integer  
+    ---@return integer, integer, integer, integer
     function graphics.getColors(color)
     end
 
@@ -2861,9 +2941,24 @@
     ---@param g integer  
     ---@param b integer  
     ---@param a integer?
-    ---@return number  
+    ---@return integer  
     function graphics.getHexColor(r, g, b, a)
     end
+    
+    --```  
+    --graphics.setClipRect(number x, number y, [number w, number h])
+    --```  
+    --Sets the clip rect used while drawing graphics to the screen. Graphics drawn outside the given rectangle will be clipped out. The default clip rect is the entire screen, and clip rects will be reset to this after every frame.  
+    --Returns the old clip rect (x, y, w, h).
+    ---@param x integer?  
+    ---@param y integer?  
+    ---@param w integer?  
+    ---@param h integer?  
+    ---@return integer x, integer y, integer w, integer h 
+    function graphics.setClipRect(x, y, w, h)
+    end
+
+
 --#endregion
 
 -- fs.*
@@ -3120,7 +3215,7 @@
     ---|1 LEFT CLICK
     ---|2 MIDDLE CLICK
     ---|3 RIGHT CLICK
-    ---|number EXTRA BUTTONS
+    ---|integer EXTRA BUTTONS
 
     ---@enum EventType
     event = {
@@ -3193,19 +3288,27 @@
 
         --### close  
         --> This event is sent whenever the tpt window is about to close.  
-        close = 10
+        close = 10,
+
+        --### beforesim  
+        --> This event is sent once per frame, but only if the sim is unpaused or being stepped through using framestep or subframe particle debugging. It is sent before any particle simulation or air updates have been done.
+        beforesim = 11,
+
+        --### aftersim  
+        --> This event is sent once per frame, but only if the sim is unpaused or being stepped through using framestep or subframe particle debugging. It is sent after all particles have been simulated.
+        aftersim = 12,
     }
 
     --TODO add mouse up reason alias
 
-    ---@alias KeyPressCallback fun(KEYPRESS_key: Keycode?, scan: number?, rep: boolean?, shift: boolean?, ctrl: boolean?, alt: boolean?): boolean?
-    ---@alias KeyReleaseCallback fun(KEYRELEASE_key: Keycode?, scan: number?, rep: string?, shift: boolean?, ctrl: boolean?, alt: boolean?): boolean?
+    ---@alias KeyPressCallback fun(KEYPRESS_key: Keycode?, scan: integer?, rep: boolean?, shift: boolean?, ctrl: boolean?, alt: boolean?): boolean?
+    ---@alias KeyReleaseCallback fun(KEYRELEASE_key: Keycode?, scan: integer?, rep: string?, shift: boolean?, ctrl: boolean?, alt: boolean?): boolean?
     ---@alias TextInputCallback fun(TEXTINPUT_text: string?): boolean?
     ---@alias TextEditingCallback fun(TEXT_EDITING_text: string?): boolean?
-    ---@alias MouseDownCallback fun(MOUSE_DOWN_x: number?, y: number?, button: MouseButton?): boolean?
-    ---@alias MouseUpCallback fun(MOUSE_UP_x: number?, y: number?, button: MouseButton?, reason: number?): boolean?
-    ---@alias MouseMoveCallback fun(MOUSE_MOVE_x: number?, y: number?, dx: number?, dy: number?): boolean?
-    ---@alias MouseWheelCallback fun(MOUSE_WHEEL_x: number?, y: number?, dx: number?, dy: number?): boolean?
+    ---@alias MouseDownCallback fun(MOUSE_DOWN_x: integer?, y: integer?, button: MouseButton?): boolean?
+    ---@alias MouseUpCallback fun(MOUSE_UP_x: integer?, y: integer?, button: MouseButton?, reason: integer?): boolean?
+    ---@alias MouseMoveCallback fun(MOUSE_MOVE_x: integer?, y: integer?, dx: integer?, dy: integer?): boolean?
+    ---@alias MouseWheelCallback fun(MOUSE_WHEEL_x: integer?, y: integer?, d: integer?): boolean?
     --Rest is classified under function
        
 
@@ -3237,7 +3340,7 @@
     --event.getmodifiers()  
     --```  
     --Gets the current keyboard modifier state. Includes bits describing whether shift, ctrl, alt, caps lock, num lock, and other modifiers are pressed / set.  
-    ---@return number
+    ---@return integer
     function event.getmodifiers() 
     end
 --#endregion
@@ -3259,7 +3362,7 @@
     end
 
     --If the request is not dead, returns the size of the response body in bytes in the first return value (-1 if the size is not known), and the number of bytes received so far in the second. If the request is dead, returns nothing.  
-    ---@return number|nil, number|nil
+    ---@return integer|nil, integer|nil
     function HTTPRequest:progress()
     end
 
@@ -3269,7 +3372,7 @@
 
     --Finishes the request and returns the response body and the status code. Call this only when HTTPRequest:status returns "done". Does and returns nothing if the request is dead.  
     --Non-standard status codes of note are 601, which is returned by plain HTTP requests if TPT is built with ENFORCE_HTTPS, and 604, which is returned by all requests if TPT is built with NOHTTP. Note that both codes may be returned for other reasons.  
-    ---@return string, number
+    ---@return string, integer
     function HTTPRequest:finish()
     end
 
@@ -3312,8 +3415,8 @@
     -- bit.tobit(2147483647) --> bit.tobit(2^31 - 1) = 2147483647
     -- bit.tobit(2147483648) --> bit.tobit(2^31) = -2147483648
     --```
-    ---@param input number
-    ---@return number
+    ---@param input integer
+    ---@return integer
     function bit.tobit(input)    
     end
 
@@ -3333,8 +3436,8 @@
     -- bit.tohex(0xdeadbeef, -4) --> "BEEF"
     -- bit.tohex(0xdeadbeef, 25) --> "deadbeef"
     --```
-    ---@param input number
-    ---@param length number?
+    ---@param input integer
+    ---@param length integer?
     ---@return string
     function bit.tohex(input, length)    
     end
@@ -3349,8 +3452,8 @@
     -- ~ 0000 0000  0000 0000  0000 0000  0001 1001
     -- = 1111 1111  1111 1111  1111 1111  1110 0110
     --```
-    ---@param input number
-    ---@return number
+    ---@param input integer
+    ---@return integer
     function bit.bnot(input)    
     end
 
@@ -3366,8 +3469,8 @@
     -- :: 0001 1010
     --  = 0001 0000
     --```
-    ---@param ... number
-    ---@return number
+    ---@param ... integer
+    ---@return integer
     function bit.band(...)    
     end
 
@@ -3384,8 +3487,8 @@
     --  = 0111 1101
     --```
 
-    ---@param ... number
-    ---@return number
+    ---@param ... integer
+    ---@return integer
     function bit.bor(...)    
     end
 
@@ -3401,8 +3504,8 @@
     -- :: 1100 1100 
     --  = 1101 0110
     --```
-    ---@param ... number
-    ---@return number
+    ---@param ... integer
+    ---@return integer
     function bit.xor(...)    
     end
 
@@ -3422,9 +3525,9 @@
     -- bit.lshift(2, 34) --> 8
     --```
     -- Important note: the shift count has to be between 1 and 32. Otherwise the number will be modulus-ed to it.
-    ---@param input number
-    ---@param shift number
-    ---@return number
+    ---@param input integer
+    ---@param shift integer
+    ---@return integer
     function bit.lshift(input, shift)    
     end
 
@@ -3445,9 +3548,9 @@
     -- bit.rshift(4, 33) --> 2 
     -- ```
     -- Important note: the shift count has to be between 1 and 32. Otherwise the number will be modulus-ed to it.
-    ---@param input number
-    ---@param shift number
-    ---@return number
+    ---@param input integer
+    ---@param shift integer
+    ---@return integer
     function bit.rshift(input, shift)    
     end
 
@@ -3467,9 +3570,9 @@
     -- bit.arshift(32, 5) --> 1
     -- ```
     -- Important note: the shift count has to be between 1 and 32. Otherwise the number will be modulus-ed to it.  
-    ---@param input number
-    ---@param shift number
-    ---@return number
+    ---@param input integer
+    ---@param shift integer
+    ---@return integer
     function bit.arshift(input, shift)    
     end
 
@@ -3487,9 +3590,9 @@
     --  = 1111 0000 1111 0000 
     -- ```
     -- Important note: the rotation count has to be between 1 and 32. Otherwise the number will be modulus-ed to it.
-    ---@param input number
-    ---@param bits number
-    ---@return number
+    ---@param input integer
+    ---@param bits integer
+    ---@return integer
     function bit.rol(input, bits)    
     end
     -- ```
@@ -3506,9 +3609,9 @@
     --  = 1111 0000 1111 0000 
     -- ```
     -- Important note: the rotation count has to be between 1 and 32. Otherwise the number will be modulus-ed to it.
-    ---@param input number
-    ---@param bits number
-    ---@return number
+    ---@param input integer
+    ---@param bits integer
+    ---@return integer
     function bit.ror(input, bits)    
     end
 
@@ -3528,8 +3631,8 @@
     -- bit.tohex(bit.bswap(0xdeadbeef), -8) --> "EFBEADDE"
     -- bit.bswap(5) --> 83886080
     -- ```
-    ---@param input number
-    ---@return number
+    ---@param input integer
+    ---@return integer
     function bit.bswap(input)    
     end
 --#endregion
@@ -3542,57 +3645,81 @@ gfx = graphics
 fs = fileSystem
 plat = platform
 evt = event
-simulation.XRES = nil
-simulation.YRES = nil
-simulation.CELL = nil
-simulation.NT = nil
-simulation.ST = nil
-simulation.ITH = nil
-simulation.ITL = nil
-simulation.IPH = nil
-simulation.IPL = nil
-simulation.PT_NUM = nil
-simulation.R_TEMP = nil
-simulation.MAX_TEMP = nil
-simulation.MIN_TEMP = nil
-simulation.TOOL_HEAT = nil
-simulation.TOOL_COOL = nil
-simulation.TOOL_VAC = nil
-simulation.TOOL_AIR = nil
-simulation.TOOL_PGRV = nil
-simulation.TOOL_NGRV = nil
-simulation.TOOL_MIX = nil
-simulation.TOOL_CYCL = nil
-simulation.DECO_DRAW = nil
-simulation.DECO_CLEAR = nil
-simulation.DECO_ADD = nil
-simulation.DECO_SUBTRACT = nil
-simulation.DECO_MULTIPLY = nil
-simulation.DECO_DIVIDE = nil
-simulation.DECO_SMUDGE = nil
-simulation.PMAPBITS = nil
-simulation.PMAPMASK = nil
 
-elements.TYPE_PART = nil
-elements.TYPE_LIQUID = nil
-elements.TYPE_SOLID = nil
-elements.TYPE_GAS = nil
-elements.TYPE_ENERGY = nil
-elements.PROP_CONDUCTS = nil
-elements.PROP_BLACK = nil
-elements.PROP_NEUTPENETRATE = nil
-elements.PROP_NEUTABSORB = nil
-elements.PROP_NEUTPASS = nil
-elements.PROP_DEADLY = nil
-elements.PROP_HOT_GLOW = nil
-elements.PROP_LIFE = nil
-elements.PROP_RADIOACTIVE = nil
-elements.PROP_LIFE_DEC = nil
-elements.PROP_LIFE_KILL = nil
-elements.PROP_LIFE_KILL_DEC = nil
-elements.PROP_SPARKSETTLE = nil
-elements.PROP_NOAMBHEAT = nil
-elements.PROP_NOCTYPEDRAW = nil
+simulation.XRES = 612
+simulation.YRES = 384
+simulation.CELL = 4
+simulation.NT = -1
+simulation.ST = 512
+simulation.ITH = 10000
+simulation.ITL = -1
+simulation.IPH = 257
+simulation.IPL = -257
+simulation.PT_NUM = 512
+simulation.R_TEMP = 22
+simulation.MAX_TEMP = 9999
+simulation.MIN_TEMP = 0
+simulation.NUM_PARTS = nil
+
+simulation.TOOL_HEAT = 0
+simulation.TOOL_COOL = 1
+simulation.TOOL_AIR = 2
+simulation.TOOL_VAC = 3
+simulation.TOOL_PGRV = 4
+simulation.TOOL_NGRV = 5
+simulation.TOOL_MIX = 6
+simulation.TOOL_CYCL = 7
+simulation.TOOL_WIND = 10
+
+simulation.DECO_DRAW = 0
+simulation.DECO_CLEAR = 1
+simulation.DECO_ADD = 2
+simulation.DECO_SUBTRACT = 3
+simulation.DECO_MULTIPLY = 4
+simulation.DECO_DIVIDE = 5
+simulation.DECO_SMUDGE = 6
+
+simulation.FIELD_TYPE = 0
+simulation.FIELD_LIFE = 1
+simulation.FIELD_CTYPE = 2
+simulation.FIELD_X = 3
+simulation.FIELD_Y = 4
+simulation.FIELD_VX = 5
+simulation.FIELD_VY = 6
+simulation.FIELD_TEMP = 7
+simulation.FIELD_FLAGS = 8
+simulation.FIELD_TMP = 9
+simulation.FIELD_TMP2 = 10
+simulation.FIELD_DCOLOUR = 11
+simulation.FIELD_PAVG0 = 12
+simulation.FIELD_PAVG1 = 13
+
+simulation.PMAPMASK = 511
+simulation.PMAPBITS = 9
+
+
+elements.TYPE_PART = 1
+elements.TYPE_LIQUID = 2
+elements.TYPE_SOLID = 4
+elements.TYPE_GAS = 8
+elements.TYPE_ENERGY = 16
+
+elements.PROP_DRAWONCTYPE = 0
+elements.PROP_CONDUCTS = 32
+elements.PROP_BLACK = 64
+elements.PROP_NEUTPENETRATE = 128
+elements.PROP_NEUTABSORB = 256
+elements.PROP_NEUTPASS = 512
+elements.PROP_DEADLY = 1024
+elements.PROP_HOT_GLOW = 2048
+elements.PROP_LIFE = 4096
+elements.PROP_RADIOACTIVE = 8192
+elements.PROP_LIFE_DEC = 16384
+elements.PROP_LIFE_KILL = 32768
+elements.PROP_LIFE_KILL_DEC = 65536
+elements.PROP_SPARKSETTLE = 131072
+elements.PROP_NOAMBHEAT = 262144
+elements.PROP_NOCTYPEDRAW = 1048576
 
 elements.DEFAULT_PT_NONE = 0 
 elements.DEFAULT_PT_DUST = 1 
@@ -3787,43 +3914,46 @@ elements.DEFAULT_PT_ROCK = 190
 elements.DEFAULT_PT_LITH = 191
 
 --Set in `parts[i].flags`. Used by liquids and powders to speed up simulation by moving them less  
-elements.FLAG_STAGNANT = nil
+elements.FLAG_STAGNANT = 1
 --Set in `parts[i].flags`. Given to PHOT by PCLN and PBCN to fix gaps in lasers, only useable by energy particles  
-elements.FLAG_SKIPMOVE = nil
+elements.FLAG_SKIPMOVE = 2
 --Set in `parts[i].flags`. Used internally for water equalization  
 elements.FLAG_WATEREQUAL = nil
 --Set in `parts[i].flags`. Can be used to re-enable moving sponge  
-elements.FLAG_MOVABLE = nil
+elements.FLAG_MOVABLE = 8
 --Set in `parts[i].flags`. Re-enables deco on photons for compatibility. Defined as the same value as FLAG_MOVABLE (they only apply to different elements)  
-elements.FLAG_PHOTDECO = nil
+elements.FLAG_PHOTDECO = 8
 
 --#### Menu Sections  
-elements.SC_WALL = nil
+elements.SC_WALL = 0
 --#### Menu Sections  
-elements.SC_ELEC = nil
+elements.SC_ELEC = 1
 --#### Menu Sections  
-elements.SC_POWERED = nil
+elements.SC_POWERED = 2
 --#### Menu Sections  
-elements.SC_SENSOR = nil
+elements.SC_SENSOR = 3
 --#### Menu Sections  
-elements.SC_FORCE = nil
+elements.SC_FORCE = 4
 --#### Menu Sections  
-elements.SC_EXPLOSIVE = nil
+elements.SC_EXPLOSIVE = 5
 --#### Menu Sections  
-elements.SC_GAS = nil
+elements.SC_GAS = 6
 --#### Menu Sections  
-elements.SC_LIQUID = nil
+elements.SC_LIQUID = 7
 --#### Menu Sections  
-elements.SC_POWDERS = nil
+elements.SC_POWDERS = 8
 --#### Menu Sections  
-elements.SC_SOLIDS = nil
+elements.SC_SOLIDS = 9
 --#### Menu Sections  
-elements.SC_NUCLEAR = nil
+elements.SC_NUCLEAR = 10
 --#### Menu Sections  
-elements.SC_SPECIAL = nil
+elements.SC_SPECIAL = 11
 --#### Menu Sections  
-elements.SC_LIFE = nil
+elements.SC_LIFE = 12
 --#### Menu Sections  
-elements.SC_TOOL = nil
+elements.SC_TOOL = 13
+
+-- 14 is faviourites
+
 --#### Menu Sections  
-elements.SC_DECO = nil
+elements.SC_DECO = 15
