@@ -2,7 +2,7 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
---If you want to disable deprecation warning, put the line below in yoru file (with three dashes instead of 2)
+--If you want to disable deprecation warning, put the line below in your file (with three dashes instead of 2)
 --@diagnostic disable:deprecated
 
 ---@alias WallType
@@ -846,7 +846,6 @@
 --#endregion
 
 -- ui.*
--- TODO: add missing stuff from classes + stuff like @class
 --#region
 
     interface = {}
@@ -1151,6 +1150,28 @@
         function Window:new(x, y, width, height)
         end
 
+        -- Sets the window position. Both coordinates must be greater or equal to 1
+        ---@param x integer
+        ---@param y integer
+        function Window:position(x,y)            
+        end
+
+        -- Gets the window position
+        ---@return integer x, integer y
+        function Window:position()            
+        end
+
+        -- Sets the window size. Both arguments must be greater or equal to 10
+        ---@param w integer
+        ---@param h integer
+        function Window:size(w,h)            
+        end
+
+        -- Gets the window size
+        ---@return integer w, integer h
+        function Window:size()            
+        end
+
         --Add a component to the window (The component must not have already been added to another Window object)
         ---@param newComponent Component  
         function Window:addComponent(newComponent)
@@ -1160,6 +1181,66 @@
         ---@param component Component  
         function Window:removeComponent(component)
         end
+
+        -- TODO: descriptions for callbacks below
+
+        -- Triggers every frame that the window is drawn. Allows for using gfx together with ui
+        ---@param listener fun()
+        function Window:onDraw(listener)            
+        end
+
+        ---@param listener fun()
+        function Window:onInitialized(listener)            
+        end
+
+        ---@param listener fun()
+        function Window:onExit(listener)            
+        end
+
+        ---@param listener fun(deltaTime :number?)
+        function Window:onTick(listener)            
+        end
+
+        ---@param listener fun()
+        function Window:onFocus(listener)            
+        end
+
+        ---@param listener fun()
+        function Window:onBlur(listener)            
+        end
+
+        ---@param listener fun()
+        function Window:onTryExit(listener)            
+        end
+        
+        ---@param listener fun()
+        function Window:onTryOkay(listener)            
+        end
+        
+        ---@param listener MouseMoveCallback
+        function Window:onMouseMove(listener)            
+        end
+        
+        ---@param listener MouseDownCallback
+        function Window:onMouseDown(listener)            
+        end
+
+        ---@param listener MouseDownCallback
+        function Window:onMouseUp(listener)            
+        end
+
+        ---@param listener MouseWheelCallback
+        function Window:onMouseWheel(listener)            
+        end
+
+        ---@param listener KeyPressCallback
+        function Window:onKeyPress(listener)            
+        end
+
+        ---@param listener KeyPressCallback
+        function Window:onKeyRelease(listener)            
+        end
+
     --#endregion
 
     --```  
@@ -1973,13 +2054,21 @@
     end
 
 
-    --TODO: Add docs once its added on wiki
+    --```
+    --nil sim.customGravity(number x, number y)
+    --```
+    --Sets the custom gravity x and y values. Gravity mode must be set to "custom" to have any effect (see sim.gravityMode).
+    --If called with one argument, sets only Y component of the gravity
     ---@param x number?
     ---@param y number
     function simulation.customGravity(x, y)        
     end
+    --```
+    -- number, number sim.customGravity()
+    --```
+    --Returns the current custom gravity settings as x and y values. Left and up are negative x and negative y respectively.
     ---@return number, number
-    function simulation.customGravity(x, y)        
+    function simulation.customGravity()        
     end
 
     ---@alias AirMode
@@ -2599,8 +2688,6 @@
     function renderer.zoomWindow() 
     end
 
-    -- idk if window size should be int TODO: uhh figure this out
-
     --```  
     --number, number, number ren.zoomScope()  
     --ren.zoomScope(number x, number y, number size)  
@@ -2615,7 +2702,6 @@
     function renderer.zoomScope(x, y, size) 
     end
 --#endregion
-
 
 -- elem.*
 --#region
