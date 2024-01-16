@@ -1912,8 +1912,9 @@
     ---@param y integer  
     ---@param width integer  
     ---@param height integer  
+    ---@param includePressure boolean?
     ---@return string
-    function simulation.saveStamp(x, y, width, height)
+    function simulation.saveStamp(x, y, width, height, includePressure)
     end
     ---@return string
     function simulation.saveStamp()
@@ -1937,6 +1938,22 @@
     function simulation.loadStamp(id, x, y)
     end
 
+    ---```
+    ---sim.loadStamp(string filename, number x, number y, [boolean hflip, [number rotation, [boolean includePressure]]])
+    ---sim.loadStamp(number id, number x, number y, [boolean hflip, [number rotation, [boolean includePressure]]])
+    ---```
+    ---# **Upcoming in version 98.0**  
+    --- The following changes are applied to the stamp before pasting, in this order:  
+    --- - if hflip is true, a horizontal flip is applied to the save (same as pressing Shift+R when pasting)  
+    --- - if rotation is present, this number of 90-degree counterclockwise rotations are applied to the save (same as pressing R this many times when pasting)  
+    --- - if the position x,y is not CELL-aligned, the stamp is pasted with its top left corner at the nearest CELL-aligned position toward negative infinity, and the difference between this position and the requested one is achieved via "nudging" (same as pressing the arrow keys a few times when pasting)
+    ---@param filenameOrId string | number
+    ---@param x number
+    ---@param y number
+    ---@param hflip boolean?
+    ---@param rotation number?
+    ---@param includePressure boolean?
+    function simulation.loadStamp(filenameOrId, x, y, hflip, rotation, includePressure) end
 
     --```  
     --type sim.deleteStamp(string name)  
@@ -2406,6 +2423,56 @@
     ---@return boolean
     function simulation.historyForward() end
 
+    ---```
+    --- boolean sim.ensureDeterminism()
+    ---```
+    ---**Upcoming in version 98.0**
+    ---Fetch or set ensureDeterminism flag. When this flag is set, extra data is included in saves to ensure simulation RNG state is saved, along with other items needed to guarantee proper determinism upon loading the save. 
+    ---This is only useful for debugging, as different builds of the game may do things slightly differently on different machines. 
+    ---Further, Newtonian gravity is not deterministic with this flag enabled even in debugging scenarios. 
+    --- @return boolean
+    function simulation.ensureDeterminism() end
+    ---```
+    --- nil sim.ensureDeterminism(boolean flag)
+    ---```
+    ---**Upcoming in version 98.0**
+    ---Fetch or set ensureDeterminism flag. When this flag is set, extra data is included in saves to ensure simulation RNG state is saved, along with other items needed to guarantee proper determinism upon loading the save. 
+    ---This is only useful for debugging, as different builds of the game may do things slightly differently on different machines. 
+    ---Further, Newtonian gravity is not deterministic with this flag enabled even in debugging scenarios. 
+    --- @param flag boolean
+    function simulation.ensureDeterminism(flag) end
+
+    ---```
+    ---number simulation.hash()
+    ---```
+    ---**Upcoming in version 98.0**  
+    ---Returns a 32-bit int represending the hash of the simulation's current state.  
+    ---Nearly all state is included, including particles, air, gravity, frame count, and rng state.  
+    ---Frame count's inclusion means that the hash changes every frame, even while paused).  
+    ---@return number
+    function simulation.hash() end
+
+    ---```
+    ---number seed0Lower, number seed0Upper, number seed1Lower, number seed1Upper sim.randomSeed()
+    ---```
+    ---**Upcoming in version 98.0**  
+    ---Retrieve or set the seed used for the Simulation RNG. This RNG is used by TPT to generate random numbers during sim contexts. The renderer RNG and interface RNG are unaffected.  
+    ---Because seeds are 64 bits, they are fetched/set in two sets of 32 bits integers.  
+    ---@return number seed0Lower, number seed0Upper, number seed1Lower, number seed1Upper
+    function simulation.randomSeed() end
+    ---```
+    ---nil sim.randomSeed(number seed0Lower, number seed0Upper, number seed1Lower, number seed1Upper)
+    ---```
+    ---**Upcoming in version 98.0**  
+    ---Retrieve or set the seed used for the Simulation RNG. This RNG is used by TPT to generate random numbers during sim contexts. The renderer RNG and interface RNG are unaffected.  
+    ---Because seeds are 64 bits, they are fetched/set in two sets of 32 bits integers.  
+    ---@param seed0Lower number
+    ---@param seed0Upper number
+    ---@param seed1Lower number
+    ---@param seed1Upper number
+    function simulation.randomSeed(seed0Lower, seed0Upper, seed1Lower, seed1Upper) end
+
+
 
 --#endregion
 
@@ -2666,7 +2733,7 @@
     --ren.zoomEnabled(boolean zoomState)  
     --boolean ren.zoomEnabled()  
     --```  
-    --If called with no arguments, returns a booleanean indicating whether the zoom window is open or not. If a number is passed in, it shows or hides the zoom window  
+    --If called with no arguments, returns a boolean indicating whether the zoom window is open or not. If a number is passed in, it shows or hides the zoom window  
     ---@param zoomState boolean  
     function renderer.zoomEnabled(zoomState)
     end
@@ -3062,35 +3129,45 @@
     end
 
     --```  
-    --booleanean fs.exists(string path)  
+    --boolean fs.exists(string path)  
     --```  
-    --Returns a booleanean indicating whether "path" exists as either a file or folder 
+    --Returns a boolean indicating whether "path" exists as either a file or folder 
     ---@param path string  
     ---@return boolean
     function fileSystem.exists(path)
     end
 
     --```  
-    --booleanean fs.isFile(string path)  
+    --boolean fs.isFile(string path)  
     --```  
-    --Returns a booleanean indicating whether "path" exists as a file (i.e not a folder)  
+    --Returns a boolean indicating whether "path" exists as a file (i.e not a folder)  
     ---@param path string  
     ---@return boolean
     function fileSystem.isFile(path)
     end
 
     --```  
-    --booleanean fs.isDirectory(string path)  
+    --boolean fs.isDirectory(string path)  
     --```  
-    --Returns a booleanean indicating whether "path" exists as a folder (i.e not a file)  
+    --Returns a boolean indicating whether "path" exists as a folder (i.e not a file)  
     ---@param path string  
     ---@return boolean
     function fileSystem.isDirectory(path)
     end
 
+    --```  
+    --boolean fs.isLink(string path)  
+    --```  
+    --**Upcoming in version 98.0**  
+    --Returns a boolean indicating whether "path" is a symbolic link  
+    ---@param path string  
+    ---@return boolean
+    function fileSystem.isLink(path)
+    end
+
 
     --```  
-    --booleanean fs.makeDirectory(string path)  
+    --boolean fs.makeDirectory(string path)  
     --```  
     --Creates the folder "path", this function is not recursive and won't create parent directories (makeDirectory("parent/child") will fail if "parent" does not exist). This function returns true on success and false on failure. 
     ---@param path string  
@@ -3099,7 +3176,7 @@
     end
 
     --```  
-    --booleanean fs.removeDirectory(string path)  
+    --boolean fs.removeDirectory(string path)  
     --```  
     --Removes the empty folder specified by "path". This function returns true on success and false on failure.  
     ---@param path string  
@@ -3108,7 +3185,7 @@
     end
 
     --```  
-    --booleanean fs.removeFile(string path)  
+    --boolean fs.removeFile(string path)  
     --```  
     --Removes the file "path". This function returns true on success and false on failure. 
     ---@param path string  
@@ -3117,7 +3194,7 @@
     end
 
     --```  
-    --booleanean fs.move(string path, string newPath)  
+    --boolean fs.move(string path, string newPath)  
     --```  
     --Moves the file or folder specified by "path" to "newPath". This function returns true on success and false on failure. 
     ---@param path string  
@@ -3127,7 +3204,7 @@
     end
     
     --```  
-    --booleanean fs.copy(string path, string newPath)  
+    --boolean fs.copy(string path, string newPath)  
     --```  
     --Copies the file "path" to "newPath". This function returns true on success and false on failure.  
     ---@param path string  
@@ -3321,8 +3398,8 @@
         --> Arguments: key, scan, repeat, shift, ctrl, alt  
         -->> key is the key code, a number that is usually the ascii value for the key, but for non-printable characters it may be a high number. You can find a list of key codes here: https://wiki.libsdl.org/SDLKeycodeLookup  
         -->> scan is the scan code. This is a number that represents the physical location of a key on a keyboard. You can find a list of scan codes here: https://wiki.libsdl.org/SDLScancodeLookup  
-        -->> repeat is a booleanean that tells whether this is a key repeat event (sent every so often when the key is held down). You may want to ignore this event when it is just a key repeat event  
-        -->> shift / ctrl / alt are booleaneans that will tell you whether those modifiers are currently held  
+        -->> repeat is a boolean that tells whether this is a key repeat event (sent every so often when the key is held down). You may want to ignore this event when it is just a key repeat event  
+        -->> shift / ctrl / alt are booleans that will tell you whether those modifiers are currently held  
         keypress = 0,
 
         --### keyrelease   
@@ -3465,32 +3542,42 @@
     function HTTPRequest:cancel()
     end
 
-    --Finishes the request and returns the response body and the status code. Call this only when HTTPRequest:status returns "done". Does and returns nothing if the request is dead.  
-    --Non-standard status codes of note are 601, which is returned by plain HTTP requests if TPT is built with ENFORCE_HTTPS, and 604, which is returned by all requests if TPT is built with NOHTTP. Note that both codes may be returned for other reasons.  
-    ---@return string, integer
+    --- @alias HTTPHeaders { [1]: string, [2]: string }[]
+    --- @alias HTTPPostParams { [1]: string, [2]: string, [3]: string? }[]
+
+    ---Finishes the request and returns the response body, status code, and headers. Call this only when HTTPRequest:status returns "done". Does and returns nothing if the request is dead.  
+    ---Header data is returned as a collection of table objects. Each header is represented by a subtable t with t[1] containing the header name and t[2] containing the value.  
+    ---Non-standard status codes of note are 601, which is returned by plain HTTP requests if TPT is built with ENFORCE_HTTPS, and 604, which is returned by all requests if TPT is built with NOHTTP. Note that both codes may be returned for other reasons. 
+    ---@return string, integer, HTTPHeaders
     function HTTPRequest:finish()
     end
 
     --```  
-    --HTTPRequest http.get(string uri, [table headers])  
+    --HTTPRequest http.get(string uri, [table headers], [string verb])  
     --```  
-    --Constructs an HTTPRequest object and starts the underlying GET request immediately with the URI and headers supplied. The optional table argument is a collection of string key and string value pairs.  
+    --Constructs an HTTPRequest object and starts the underlying GET request immediately with the URI and headers supplied. The optional table argument is a collection of string key and string value pairs.   
+    --The optional verb argument will change this GET request into a custom request.  
+    --Headers can also be given as a collection of table objects, where t[1] is the header name and t[2] is the value. The optional verb argument will change this GET request into a custom request.  
     ---@param uri string  
-    ---@param headers table?  
+    ---@param headers HTTPHeaders?  
+    ---@param verb string?
     ---@return HTTPRequest
-    function http.get(uri, headers)
+    function http.get(uri, headers, verb)
     end
 
     --```  
-    --HTTPRequest http.post(string uri, table post_params, [table headers])  
+    --HTTPRequest http.post(string uri, [table post_params | string post_data], [table headers], [string verb])
     --```  
-    --Same as http.get, except the underlying request is a POST. Post parameters are passed in the extra table argument, a collection of string key and string value pairs.  
+    --Same as http.get, except the underlying request is a POST. Post parameters are passed in the extra table argument, a collection of string key and string value pairs. You can also pass in string data to make a non-multipart POST request, or omit the argument to make a POST request with no data. The optional verb argument will change this POST request into a custom request (such as DELETE, etc.).  
+    --post parameters and headers can also be given as a collection of table objects, where t[1] is the parameter name and t[2] is the value. For post parameters only, t[3] is optional and controls the filename.  
     ---@param uri string  
-    ---@param postParams table  
-    ---@param headers table?  
+    ---@param postParams HTTPPostParams | string?  
+    ---@param headers HTTPHeaders?  
+    ---@param verb string?  
     ---@return HTTPRequest
-    function http.post(uri, postParams, headers)
+    function http.post(uri, postParams, headers, verb)
     end
+
 --#endregion
 
 -- bit.*

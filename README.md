@@ -1,7 +1,7 @@
 # TPT-LuaAPI-Intelisense
 A .lua file with dummy methods and variables to provide intelisense in editors like vscode  
 
-Uses https://github.com/sumneko/lua-language-server/wiki/Annotations
+Uses https://luals.github.io/wiki/annotations/#annotations
 
 Feel free to contribute
 
