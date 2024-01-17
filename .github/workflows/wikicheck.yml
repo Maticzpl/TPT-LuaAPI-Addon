@@ -1,0 +1,53 @@
+name: Wiki Check
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run every Sunday at midnight (UTC)
+  workflow_dispatch:
+
+jobs:
+  wiki-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+          
+      - name: Check for keyword
+        run: |
+          KEYWORD="Lua API:"
+          URL="https://powdertoy.co.uk/Wiki/index.php?title=Special:RecentChanges&limit=500&days=17"
+          CHANGES=$(curl -s $URL)
+          
+          if [[ $CHANGES == *"$KEYWORD"* ]]; then
+              result=$(echo "$CHANGES" | grep "Lua_API" | sed -E 's/href="\/Wiki\/index\.php\?title=Lua_API:([a-zA-Z0-9_]+?)&amp;curid=([0-9]+?)&amp;diff=([0-9]+?)&amp;oldid=([0-9]+?)"/\n:!:!:Changes in \1. ID \2 \3 \4 \n/g' | grep ":!:!:Changes")
+              result=$(echo "$result" | cut -c 6- | awk '!seen[$0]++')
+              TOKEN=${{ secrets.ISSUE_TOKEN }}
+              REPO=${{ github.repository }}
+              declare -A issues
+          
+              echo "Getting existing issues"
+              issue_titles=$(curl -s -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $TOKEN" "https://api.github.com/repos/$REPO/issues?state=all&per_page=100")
+              # Extract issue titles and add them to the array
+              if [ -z "$issue_titles" ]; then
+                  echo "No issues found in the repository."
+              else
+                  while IFS= read -r ititle; do
+                      echo "Existing issue: $ititle"
+                      issues["$ititle"]=1
+                  done <<< "$(echo "$issue_titles" | jq -r '.[].title')"
+              fi
+          
+              echo "$result" | while IFS= read -r line; do
+                  TITLE=$(echo "$line" | sed -E 's/Changes in (.+?)\. ID ([0-9]+) ([0-9]+) ([0-9]+)/Changes in \1. ID \2 \4/g')
+                  BODY=$(echo "$line" | sed -E 's/Changes in (\w+?)\. ID ([0-9]+) ([0-9]+) ([0-9]+)/New changes to TPT wiki: https:\/\/powdertoy.co.uk\/Wiki\/index.php?title=Lua_API:\1\&curid=\2\&diff=\3\&oldid=\4/g')
+                  if [[ ! -v issues["$TITLE"] ]]; then
+                      echo "ISSUE $TITLE"
+                      curl -X POST -H "Authorization: token $TOKEN" -d "{\"title\":\"$TITLE\",\"body\":\"$BODY\"}" "https://api.github.com/repos/$REPO/issues"
+                      issues["$TITLE"]=1
+                  fi
+              done
+          else
+              echo "Keyword not found in the changes."
+          fi
+
