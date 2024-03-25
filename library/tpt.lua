@@ -2129,6 +2129,14 @@
     function simulation.loadStamp(id, x, y)
     end
 
+    --```
+    --table sim.listStamps()  
+    --```
+    --Returns a table of stamps, in order. Stamp names are 10 characters, with no .stm extention or stamps/ prefix.  
+    ---@return string[]
+    function simulation.listStamps()
+    end
+
     ---```
     ---sim.loadStamp(string filename, number x, number y, [boolean hflip, [number rotation, [boolean includePressure]]])
     ---sim.loadStamp(number id, number x, number y, [boolean hflip, [number rotation, [boolean includePressure]]])
@@ -2663,6 +2671,35 @@
     ---@param seed1Upper number
     function simulation.randomSeed(seed0Lower, seed0Upper, seed1Lower, seed1Upper) end
 
+    ---@alias Sign { id: integer, text: string?, x: integer?, y: integer?, justification: integer}
+    ---@alias JustModes
+    ---|`sim.signs.JUSTMODE_LEFT`
+    ---|`sim.signs.JUSTMODE_MIDDLE`
+    ---|`sim.signs.JUSTMODE_RIGHT`
+    ---|`sim.signs.JUSTMODE_NONE`
+
+    ---@type Sign[]|any
+    simulation.signs = nil
+    simulation.signs.MAX_SIGNS = 16
+    simulation.signs.JUSTMODE_LEFT = 0
+    simulation.signs.JUSTMODE_MIDDLE = 1
+    simulation.signs.JUSTMODE_RIGHT = 2
+    simulation.signs.JUSTMODE_NONE = 3
+    simulation.signs.NUM_JUSTMODES = 4
+
+    -- Deletes the sign at the specified sign id. 
+    ---@param signID integer
+    function simulation.signs.delete(signID)
+    end
+
+    -- Creates a new sign with the specified properties. Returns the sign ID, or nil if there are too many signs (the limit is 16). 
+    ---@param text string
+    ---@param x integer
+    ---@param y integer
+    ---@param justification JustModes
+    ---@return integer|nil
+    function simulation.signs.new(text, x, y, justification)
+    end
 
 
 --#endregion
@@ -4282,6 +4319,13 @@ simulation.FLAG_MOVABLE = 8
 simulation.FLAG_PHOTDECO = 8
 simulation.FLAG_SKIPMOVE = 2
 simulation.FLAG_STAGNANT = 1
+
+simulation.GRAV_VERTICAL = 0
+simulation.GRAV_OFF = 1
+simulation.GRAV_RADIAL = 2
+simulation.GRAV_CUSTOM = 3
+simulation.NUM_GRAVMODES = 4
+
 
 elements.TYPE_PART = 1 -- Used in powders.
 elements.TYPE_LIQUID = 2 -- Used in liquids.
