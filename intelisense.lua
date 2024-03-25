@@ -1302,6 +1302,197 @@
     function interface.textInputRect(x, y, w, h)
     end
 
+    
+    -- LuaLS doesn't like optionals that aren't last sooo multiple functions it is
+
+    --```
+    --interface.beginConfirm(title, message, buttonText, callback)  
+    --```
+    -- Opens a confirm prompt, and runs a callback after the user's input.  
+    --  - `title`: Header message for the confirm prompt. Default "Title"  
+    --  - `message`: Body message for the confirm prompt, can be multiple lines. Default "Message"  
+    --  - `buttonText`: Text to display for the confirm button. Default "Confirm"  
+    --  - `callback`: Callback function to run after the user gives input. Receives a single boolean as an argument.  
+    --  
+    -- Only the `callback` argument is required. The rest are optional. The final arg to the function will be used as the callback. If the user clicks "Confirm" or presses enter, `true` is passed in. If the user clicks "Cancel", presses escape, or closes the dialog any other way, `false` is passed.  
+    ---@param title string
+    ---@param message string
+    ---@param buttonText string
+    ---@param callback fun(confirmed: boolean)
+    function interface.beginConfirm(title, message, buttonText, callback) end
+    -- Opens a confirm prompt, and runs a callback after the user's input.  
+    --  - `title`: Header message for the confirm prompt. Default "Title"  
+    --  - `message`: Body message for the confirm prompt, can be multiple lines. Default "Message"  
+    --  - `buttonText`: Text to display for the confirm button. Default "Confirm"  
+    --  - `callback`: Callback function to run after the user gives input. Receives a single boolean as an argument.  
+    --  
+    -- Only the `callback` argumenu is required. The resu are optional. The final arg to the function will be used as the callback. If the user clicks "Confirm" or presses enter, `true` is passed in. If the user clicks "Cancel", presses escape, or closes the dialog any other way, `false` is passed.  
+    ---@param title string
+    ---@param message string
+    ---@param callback fun(confirmed: boolean)
+    function interface.beginConfirm(title, message, callback) end
+    -- Opens a confirm prompt, and runs a callback after the user's input.  
+    --  - `title`: Header message for the confirm prompt. Default "Title"  
+    --  - `message`: Body message for the confirm prompt, can be multiple lines. Default "Message"  
+    --  - `buttonText`: Text to display for the confirm button. Default "Confirm"  
+    --  - `callback`: Callback function to run after the user gives input. Receives a single boolean as an argument.  
+    --  
+    -- Only the `callback` argument is required. The rest are optional. The final arg to the function will be used as the callback. If the user clicks "Confirm" or presses enter, `true` is passed in. If the user clicks "Cancel", presses escape, or closes the dialog any other way, `false` is passed.  
+    ---@param title string
+    ---@param callback fun(confirmed: boolean)
+    function interface.beginConfirm(title, callback) end
+    -- Opens a confirm prompt, and runs a callback after the user's input.  
+    --  - `title`: Header message for the confirm prompt. Default "Title"  
+    --  - `message`: Body message for the confirm prompt, can be multiple lines. Default "Message"  
+    --  - `buttonText`: Text to display for the confirm button. Default "Confirm"  
+    --  - `callback`: Callback function to run after the user gives input. Receives a single boolean as an argument.  
+    --
+    -- Only the `callback` argument is required. The rest are optional. The final arg to the function will be used as the callback. If the user clicks "Confirm" or presses enter, `true` is passed in. If the user clicks "Cancel", presses escape, or closes the dialog any other way, `false` is passed.  
+    ---@param callback fun(confirmed: boolean)
+    function interface.beginConfirm(callback) end
+
+    
+    --```
+    --interface.beginInput(title, prompt, text, shadow, callback)  
+    --```
+    -- Opens an input prompt, and runs a callback after the user's input.  
+    --  - `title`: Header message for the input prompt. Default "Title"  
+    --  - `prompt`: Body message for the input prompt, can be multiple lines. Default "Enter some text:"  
+    --  - `text`: Default text for the textbox. Defaults to empty string.  
+    --  - `shadow`: Default shadow text displayed when textbox is empty and defocused. Defaults to empty string.  
+    --  - `callback`: Callback function to run after the user gives input. Receives either a string or nil as the only argument.  
+    --  
+    -- Only the `callback` argument is required. The rest are optional. The final arg to the function will be used as the callback. If the user clicks "Okay" or presses enter, the textbox's text is passed. If the user clicks "Cancel", presses escape, or closes the dialog any other way, `nil` is passed.  
+    ---@param title string
+    ---@param prompt string
+    ---@param text string
+    ---@param shadow string
+    ---@param callback fun(userInput: string?)
+    function interface.beginInput(title, prompt, text, shadow, callback)
+    end
+    -- Opens an input prompt, and runs a callback after the user's input.  
+    --  - `title`: Header message for the input prompt. Default "Title"  
+    --  - `prompt`: Body message for the input prompt, can be multiple lines. Default "Enter some text:"  
+    --  - `text`: Default text for the textbox. Defaults to empty string.  
+    --  - `shadow`: Default shadow text displayed when textbox is empty and defocused. Defaults to empty string.  
+    --  - `callback`: Callback function to run after the user gives input. Receives either a string or nil as the only argument.  
+    --  
+    -- Only the `callback` argument is required. The rest are optional. The final arg to the function will be used as the callback. If the user clicks "Okay" or presses enter, the textbox's text is passed. If the user clicks "Cancel", presses escape, or closes the dialog any other way, `nil` is passed.  
+    ---@param title string
+    ---@param prompt string
+    ---@param text string
+    ---@param callback fun(userInput: string?)
+    function interface.beginInput(title, prompt, text, callback)
+    end
+    -- Opens an input prompt, and runs a callback after the user's input.  
+    --  - `title`: Header message for the input prompt. Default "Title"  
+    --  - `prompt`: Body message for the input prompt, can be multiple lines. Default "Enter some text:"  
+    --  - `text`: Default text for the textbox. Defaults to empty string.  
+    --  - `shadow`: Default shadow text displayed when textbox is empty and defocused. Defaults to empty string.  
+    --  - `callback`: Callback function to run after the user gives input. Receives either a string or nil as the only argument.  
+    --  
+    -- Only the `callback` argument is required. The rest are optional. The final arg to the function will be used as the callback. If the user clicks "Okay" or presses enter, the textbox's text is passed. If the user clicks "Cancel", presses escape, or closes the dialog any other way, `nil` is passed.  
+    ---@param title string
+    ---@param prompt string
+    ---@param callback fun(userInput: string?)
+    function interface.beginInput(title, prompt, callback)
+    end
+    -- Opens an input prompt, and runs a callback after the user's input.  
+    --  - `title`: Header message for the input prompt. Default "Title"  
+    --  - `prompt`: Body message for the input prompt, can be multiple lines. Default "Enter some text:"  
+    --  - `text`: Default text for the textbox. Defaults to empty string.  
+    --  - `shadow`: Default shadow text displayed when textbox is empty and defocused. Defaults to empty string.  
+    --  - `callback`: Callback function to run after the user gives input. Receives either a string or nil as the only argument.  
+    --  
+    -- Only the `callback` argument is required. The rest are optional. The final arg to the function will be used as the callback. If the user clicks "Okay" or presses enter, the textbox's text is passed. If the user clicks "Cancel", presses escape, or closes the dialog any other way, `nil` is passed.  
+    ---@param title string
+    ---@param callback fun(userInput: string?)
+    function interface.beginInput(title, callback)
+    end
+    -- Opens an input prompt, and runs a callback after the user's input.  
+    --  - `title`: Header message for the input prompt. Default "Title"  
+    --  - `prompt`: Body message for the input prompt, can be multiple lines. Default "Enter some text:"  
+    --  - `text`: Default text for the textbox. Defaults to empty string.  
+    --  - `shadow`: Default shadow text displayed when textbox is empty and defocused. Defaults to empty string.  
+    --  - `callback`: Callback function to run after the user gives input. Receives either a string or nil as the only argument.  
+    --  
+    -- Only the `callback` argument is required. The rest are optional. The final arg to the function will be used as the callback. If the user clicks "Okay" or presses enter, the textbox's text is passed. If the user clicks "Cancel", presses escape, or closes the dialog any other way, `nil` is passed.  
+    ---@param callback fun(userInput: string?)
+    function interface.beginInput(callback)
+    end
+
+
+    --```
+    --interface.beginMessageBox(title, message, large, callback)  
+    --```
+    -- Opens a message box, and runs a callback after the user closes it.  
+    --  - `title`: Header message for the message box. Default "Title"  
+    --  - `message`: Body message for the message box, can be multiple lines. Default "Message"  
+    --  - `large`: boolean that controls if the message box should be a fixed-size larger variant, that is both taller and wider. Default false.  
+    --  - `callback`: Callback function to run after the user closes the message box. Runs no matter how it is closed, and takes no arguments.  
+    --  
+    --All arguments are optional. The final arg to the function will be used as the callback.  
+    ---@param title string
+    ---@param message string
+    ---@param large boolean
+    ---@param callback fun()
+    function interface.beginMessageBox(title, message, large, callback)
+    end
+    -- Opens a message box, and runs a callback after the user closes it.  
+    --  - `title`: Header message for the message box. Default "Title"  
+    --  - `message`: Body message for the message box, can be multiple lines. Default "Message"  
+    --  - `large`: boolean that controls if the message box should be a fixed-size larger variant, that is both taller and wider. Default false.  
+    --  - `callback`: Callback function to run after the user closes the message box. Runs no matter how it is closed, and takes no arguments.  
+    --  
+    --All arguments are optional. The final arg to the function will be used as the callback.  
+    ---@param title string
+    ---@param message string
+    ---@param callback fun()
+    function interface.beginMessageBox(title, message, callback)
+    end
+    -- Opens a message box, and runs a callback after the user closes it.  
+    --  - `title`: Header message for the message box. Default "Title"  
+    --  - `message`: Body message for the message box, can be multiple lines. Default "Message"  
+    --  - `large`: boolean that controls if the message box should be a fixed-size larger variant, that is both taller and wider. Default false.  
+    --  - `callback`: Callback function to run after the user closes the message box. Runs no matter how it is closed, and takes no arguments.  
+    --  
+    --All arguments are optional. The final arg to the function will be used as the callback.  
+    ---@param title string
+    ---@param callback fun()
+    function interface.beginMessageBox(title, callback)
+    end
+    -- Opens a message box, and runs a callback after the user closes it.  
+    --  - `title`: Header message for the message box. Default "Title"  
+    --  - `message`: Body message for the message box, can be multiple lines. Default "Message"  
+    --  - `large`: boolean that controls if the message box should be a fixed-size larger variant, that is both taller and wider. Default false.  
+    --  - `callback`: Callback function to run after the user closes the message box. Runs no matter how it is closed, and takes no arguments.  
+    --  
+    --All arguments are optional. The final arg to the function will be used as the callback.  
+    ---@param callback fun()
+    function interface.beginMessageBox(callback)
+    end
+
+    --```
+    --interface.beginThrowError(errorMessage, callback)  
+    --```
+    -- Opens an error dialog box, and runs a callback after the user closes it.  
+    --  - `errorMessage`: Body message for the error prompt, can be multiple lines. Default "Error Text"  
+    --  - `callback`: Callback function to run after the user closes the error prompt. Runs no matter how it is closed, and takes no arguments.  
+    --  
+    -- All arguments are optional. The final arg to the function will be used as the callback.   
+    ---@param errorMessage string
+    ---@param callback fun()
+    function interface.beginThrowError(errorMessage, callback)
+    end
+    -- Opens an error dialog box, and runs a callback after the user closes it.  
+    --  - `errorMessage`: Body message for the error prompt, can be multiple lines. Default "Error Text"  
+    --  - `callback`: Callback function to run after the user closes the error prompt. Runs no matter how it is closed, and takes no arguments.  
+    --  
+    -- All arguments are optional. The final arg to the function will be used as the callback.   
+    ---@param callback fun()
+    function interface.beginThrowError(callback)
+    end
+
 --#endregion
 
 -- sim.*
@@ -2913,7 +3104,7 @@
     --```  
     --elements.free(number elementID)  
     --```  
-    --Free a previously allocated element, so it will disappear from the game. The element id will be freed and can used later by another script. elementID must be a non-default element (i.e you cannot free the default WATR element)  
+    --Free a previously allocated element, so it will disappear from the game. The element id will be freed and can used later by another script. elementID must be a non-default element (e.g. you cannot free the default WATR element)  
     ---@param elementID integer  
     function elements.free(elementID)
     end
