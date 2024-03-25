@@ -4184,20 +4184,33 @@ fs = fileSystem
 plat = platform
 evt = event
 
-simulation.XRES = 612
-simulation.YRES = 384
-simulation.CELL = 4
-simulation.NT = -1
-simulation.ST = 512
-simulation.ITH = 10000
-simulation.ITL = -1
-simulation.IPH = 257
-simulation.IPL = -257
-simulation.PT_NUM = 512
-simulation.R_TEMP = 22
-simulation.MAX_TEMP = 9999
-simulation.MIN_TEMP = 0
-simulation.NUM_PARTS = nil
+simulation.XRES = 612 -- X Resolution of the sim
+simulation.YRES = 384 -- Y Resolution of the sim 
+simulation.CELL = 4 -- Size of a wall / air simulation block 
+simulation.XCELLS = 153 -- The number of cells in the X direction 
+simulation.YCELLS = 96 -- The number of cells in the Y direction 
+simulation.NCELL = 14688 -- The total number of cells in the simulation 
+simulation.MAX_PARTS = 235008 -- Maximum number of particles that can exist at once 
+simulation.MAX_VELOCITY = 10000 -- Particle velocity cap 
+simulation.ISTP = 2 -- Movement code step value. Particles scan their trajectory and only check for blockers each step. 
+simulation.CFDS = 1 -- Air sim related 
+simulation.NT = -1 -- No transition, used in *Transition [properties](https://powdertoy.co.uk/Wiki/W/Element_Properties.html)
+simulation.ST = 512 -- Special transition, used in *Transition properties, but there is no way to set a special transition handler from Lua 
+simulation.ITH = 10000 -- Impossible temperature high, used along with NT to disable transitions 
+simulation.ITL = -1 -- Impossible temperature low, used along with NT to disable transitions 
+simulation.IPH = 257 -- Impossible pressure high, used along with NT to disable transitions 
+simulation.IPL = -257 -- Impossible pressure low, used along with NT to disable transitions 
+simulation.PT_NUM = 512 -- Maximum number of element IDs. Does not reflect the current number of elements, only the maximum that can be enabled at one time. 
+simulation.R_TEMP = 22 -- Room temperature (22C), the default temperature for many elements 
+simulation.MAX_TEMP = 9999 -- Maximum allowable temperature of the sim, in Kelvin 
+simulation.MIN_TEMP = 0 -- Maximum allowable temperature of the sim, in Kelvin 
+simulation.MAX_PRESSURE = 256 -- Maximum allowable pressure of the sim 
+simulation.MIN_PRESSURE = -256 -- Minimum allowable pressure of the sim
+--### **REPLACED BY `sim.partCount`**
+---@deprecated
+simulation.NUM_PARTS = nil -- Not actually a constant, this is updated every frame to reflect the current number of particles in the sim. Deprecated by sim.partCount
+
+-- TODO: Use those below in function argument types
 
 simulation.TOOL_HEAT = 0
 simulation.TOOL_COOL = 1
@@ -4228,13 +4241,47 @@ simulation.FIELD_TEMP = 7
 simulation.FIELD_FLAGS = 8
 simulation.FIELD_TMP = 9
 simulation.FIELD_TMP2 = 10
-simulation.FIELD_DCOLOUR = 11
-simulation.FIELD_PAVG0 = 12
-simulation.FIELD_PAVG1 = 13
+simulation.FIELD_DCOLOUR = 13
+--### **REPLACED BY `sim.FIELD_TMP3`**
+---@deprecated
+simulation.FIELD_PAVG0 = 12 -- idk if value is correct
+simulation.FIELD_TMP3 = 11
+--### **REPLACED BY `sim.FIELD_TMP4`**
+---@deprecated
+simulation.FIELD_PAVG1 = 13-- idk if value is correct
+simulation.FIELD_TMP4 = 12
 
 simulation.PMAPMASK = 511
 simulation.PMAPBITS = 9
 
+simulation.BRUSH_CIRCLE = 0
+simulation.BRUSH_SQUARE = 1
+simulation.BRUSH_TRIANGLE = 2
+simulation.NUM_DEFAULTBRUSHES = 3
+--Number of total brushes, including any custom brushes 
+---@type integer 
+simulation.BRUSH_NUM = nil 
+
+simulation.EDGE_VOID = 0
+simulation.EDGE_SOLID = 1
+simulation.EDGE_LOOP = 2
+simulation.NUM_EDGEMODES = 3
+
+simulation.AIR_ON = 0
+simulation.AIR_PRESSUREOFF = 1
+simulation.AIR_VELOCITYOFF = 2
+simulation.AIR_OFF = 3
+simulation.AIR_NOUPDATE = 4
+simulation.NUM_AIRMODES = 5
+
+simulation.NUM_WALLS = 19
+---@type { [string]: integer } | { [integer]: string }
+simulation.walls = nil
+
+simulation.FLAG_MOVABLE = 8
+simulation.FLAG_PHOTDECO = 8
+simulation.FLAG_SKIPMOVE = 2
+simulation.FLAG_STAGNANT = 1
 
 elements.TYPE_PART = 1 -- Used in powders.
 elements.TYPE_LIQUID = 2 -- Used in liquids.
