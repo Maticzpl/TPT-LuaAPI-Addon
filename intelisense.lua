@@ -3011,6 +3011,46 @@
     ---|"Create"
     ---|"ChangeType"
 
+    ---@alias MenuSection
+    ---|`elem.SC_WALL`
+    ---|`elem.SC_ELEC`
+    ---|`elem.SC_POWERED`
+    ---|`elem.SC_SENSOR`
+    ---|`elem.SC_FORCE`
+    ---|`elem.SC_EXPLOSIVE`
+    ---|`elem.SC_GAS`
+    ---|`elem.SC_LIQUID`
+    ---|`elem.SC_POWDERS`
+    ---|`elem.SC_SOLIDS`
+    ---|`elem.SC_NUCLEAR`
+    ---|`elem.SC_SPECIAL`
+    ---|`elem.SC_LIFE`
+    ---|`elem.SC_TOOL`
+    ---|`elem.SC_DECO`
+
+    ---@alias PropertyProperty
+    ---|`elem.TYPE_PART`
+    ---|`elem.TYPE_LIQUID`
+    ---|`elem.TYPE_SOLID`
+    ---|`elem.TYPE_GAS`
+    ---|`elem.TYPE_ENERGY`
+    ---|`elem.PROP_CONDUCTS`
+    ---|`elem.PROP_BLACK`
+    ---|`elem.PROP_NEUTPENETRATE`
+    ---|`elem.PROP_NEUTABSORB`
+    ---|`elem.PROP_NEUTPASS`
+    ---|`elem.PROP_DEADLY`
+    ---|`elem.PROP_HOT_GLOW`
+    ---|`elem.PROP_LIFE`
+    ---|`elem.PROP_RADIOACTIVE`
+    ---|`elem.PROP_LIFE_DEC`
+    ---|`elem.PROP_LIFE_KILL`
+    ---|`elem.PROP_LIFE_KILL_DEC`
+    ---|`elem.PROP_SPARKSETTLE`
+    ---|`elem.PROP_NOAMBHEAT`
+    ---|`elem.PROP_DRAWONCTYPE`
+    ---|`elem.PROP_NOCTYPEDRAW `
+
     --TODO: Figure out if any of those are ints
 
     -- `surround_space`	This is the number of particles with the same TYPE property in the Moore neighborhood surrounding the particle. Used primarily for GoL type elements.
@@ -3026,101 +3066,171 @@
 
     ---@alias PropertyFunctions UpdateFunc|GraphicsFunc|CreateFunc|ChangeTypeFunc
 
-    --```  
-    --number elements.allocate(string group, string name)  
-    --```  
-    --Use this function to create a new element. This function will return the id of your element, and create a unique identifier that can be used to modify the properties later. The identifier is in the form GROUP_PT_NAME, where group is the name of the mod or script (or just anything unique, like your username), and name is the name of the element. For example, elements.allocate("mymod", "virus") would create the identifier MYMOD_PT_VIRUS.  
-    --The identifier is added as a constant in the elements table, so elements.MYMOD_PT_VIRUS would be equivalent to the new element's id, and can be used as the elementID argument to any of the functions below.  
-    --The new element is created with all the default properties, and won't be visible until you modify it to show up in the menu.  
-    --Returns -1 on failure (there are no free spaces to create a new element).  
+    ---@alias RunUpdateWhen `elements.UPDATE_AFTER`|`elements.UPDATE_REPLACE`|`elements.UPDATE_BEFORE`
+
+    --```
+    --elemNumber = elements.allocate(group, iname)  
+    --```
+    -- Create a new element.  
+    --  - `group`: string without underscores (`_`), the group the element belongs to; gets uppercased by the function  
+    --  - `iname`: string without underscores (`_`), the internal name of the element; gets uppercased by the function  
+    --  - `elemNumber`: the positive element number allocated for the element created, or `-1` on error, if there are no free element numbers left  
+    --  
+    -- `group` should be something unique to your script, and should be the same across the entire script. It is common to use a simpler version of your username or the script’s name, for example if your script is called Ultimate Chemistry Pack v3, you might use `"CHEMPACK3"` as the group name.  
+    --  
+    -- `iname` should be unique to the element within your script, and should ultimately resemble the [`Name` property](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.property) of the element. For example, if your element’s name is C-6 you should use `C6` as the internal name.  
+    --  
+    -- The resulting element identifier must be unique across all scripts in use at any point in time. Elements that seem like built-in elements, i.e. ones in the group `DEFAULT`, cannot be created. Note that, as stated above, both `group` and `iname` get uppercased, so `elements.allocate("CheMpaCk3", "c6")` is equivalent to `elements.allocate("CHEMPACK3", "C6")`.  
+    --  
+    -- Make the choice such that it is convenient to refer to your element via an [`elements.[group]_PT_[iname]` constant](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.group_pt_iname). While it is perfectly possible to type `elem["Ultimate Chemistry Pack v3_PT_C-6"]`, it is much more convenient to type `elem.CHEMPACK3_PT_C6`.  
+    --  
+    -- The new element is created with all the default properties, and will not be visible until you modify it to show up in the menu.  
     ---@param group string  
     ---@param name string  
     ---@return integer
+    ---@nodiscard
     function elements.allocate(group, name)
     end
 
-    --```  
-    --local myNewElement = elements.allocate("wiki", "expl")  
-    --elements.element(myNewElement, elements.element(elements.DEFAULT_PT_WATR))  
-    --elements.property(myNewElement, "Name", "EXPL")  
-    --elements.property(myNewElement, "Description", "This is an example element from the Wiki")  
-    --```  
-    --In this example, the element properties for our new element (EXPL) are copied from WATR  
-    --```  
-    --local star = elements.allocate("ELEMENT", "STAR")  
-    --elements.element(star, elements.element(elements.DEFAULT_PT_DMND))  
-    --elements.property(star, "Name", "STAR")  
-    --elements.property(star, "Description", "STAR. Enough Pressure Makes It Explode Into LAVA.")  
-    --elements.property(star, "Colour", 0xFFFFFF)  
-    --elements.property(star, "MenuSection", elem.SC_SOLIDS)  
-    --elements.property(star, "HotAir", -0.009)  
-    --elements.property(star, "Weight", 333)  
-    --elements.property(star, "Temperature", 4556)  
-    --elements.property(star, "HighPressure", 200)  
-    --elements.property(star, "HighPressureTransition", elements.DEFAULT_PT_LAVA)  
-    --local function graphics1(i, colr, colg, colb)   
-    --	return 1,ren.FIRE_ADD,255,100,155,210,255,255,255,255  
-    --end  
-    --elements.property(star, "Graphics", graphics1)  
-    --```  
-    --Another Example, from an actual script. For more info on graphics functions, see the legacy api page  
-    --```  
-    --table elements.element(number elementID)  
-    --```  
-    --Returns a table containing all of an element's properties (Name, Description, etc)  
-    ---@param elementID integer  
+    --```
+    --elemProps = elements.element(elemNumber) -- query variant  
+    --elements.element(elemNumber, elemProps) -- update variant  
+    --```
+    -- Query all or update multiple properties of an element.  
+    --  - `elemNumber`: number of the element whose properties are to be queried or update  
+    --  - `elemProps`: table that maps property names to property values  
+    --  
+    -- The keys and values of `elemProps` are the same as the `propName` and `propValue` parameters of [elements.property](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.property). The query variant returns all properties of the element in `elemProps` with the same caveats as [elements.property](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.property). The update variant accepts any subset of properties, only updates the ones present in the table, applying the same checks as [elements.property](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.property).  
+    --  
+    -- This function is commonly used to base an element off another element by first copying all properties of the source element and applying them to the new element, and then customizing the new element a bit afterwards:  
+    --```
+    --local purpleGold = elem.allocate("EXAMPLE", "PGLD")  
+    --assert(purpleGold ~= -1, "ran out of element numbers")  
+    --elem.element(purpleGold, elem.element(elem.DEFAULT_PT_GOLD))  
+    --elem.property(purpleGold, "Name", "PGLD")  
+    --elem.property(purpleGold, "Color", 0x8040FF)  
+    --```
+    ---@param elemNumber integer  
     ---@return Properties
-    function elements.element(elementID)
+    function elements.element(elemNumber)
     end
-    --Sets the properties from the given table onto the element.  
-    --These two functions are useful for copying or templating from already present elements, for example  
-    ---@param elementID integer  
-    ---@param properties Properties  
-    function elements.element(elementID, properties)
+    --```
+    --elemProps = elements.element(elemNumber) -- query variant  
+    --elements.element(elemNumber, elemProps) -- update variant  
+    --```
+    -- Query all or update multiple properties of an element.  
+    --  - `elemNumber`: number of the element whose properties are to be queried or update  
+    --  - `elemProps`: table that maps property names to property values  
+    --  
+    -- The keys and values of `elemProps` are the same as the `propName` and `propValue` parameters of [elements.property](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.property). The query variant returns all properties of the element in `elemProps` with the same caveats as [elements.property](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.property). The update variant accepts any subset of properties, only updates the ones present in the table, applying the same checks as [elements.property](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.property).  
+    --  
+    -- This function is commonly used to base an element off another element by first copying all properties of the source element and applying them to the new element, and then customizing the new element a bit afterwards:  
+    --```
+    --local purpleGold = elem.allocate("EXAMPLE", "PGLD")  
+    --assert(purpleGold ~= -1, "ran out of element numbers")  
+    --elem.element(purpleGold, elem.element(elem.DEFAULT_PT_GOLD))  
+    --elem.property(purpleGold, "Name", "PGLD")  
+    --elem.property(purpleGold, "Color", 0x8040FF)  
+    --```
+    ---@param elemNumber integer  
+    ---@param elemProps Properties  
+    function elements.element(elemNumber, elemProps)
     end
 
-
-    --```  
-    --object elements.property(number elementID, string property)  
-    --```  
-    --Gets the value of an element property  
-    ---@param elementID integer  
-    ---@param property Property|string    
+    --```
+    --propValue = elements.property(elemNumber, propName) -- query variant  
+    --elements.property(elemNumber, propName, propValue) -- update variant  
+    --elements.property(elemNumber, "Update", propValue, [runWhen]) -- special update variant for the Update property  
+    --```
+    -- Query or update a property of an element.  
+    --  - `elemNumber`: number of the element whose property is to be queried or updated  
+    --  - `propName`: string, name of the property to be queried or updated  
+    --  - `propValue`: various types, value of the property to be queried or updated  
+    --  - `runWhen`: number, specifies when the update function should be run, one of:  
+    --      - `elements.UPDATE_AFTER`: run before the built-in update function, this is the default  
+    --      - `elements.UPDATE_REPLACE`: run instead of the built-in update function  
+    --      - `elements.UPDATE_BEFORE`: run after the built-in update function  
+    --  
+    -- For more information on what properties there are to use in elements.property, and how to use them, see this page: [Element_Properties](https://powdertoy.co.uk/Wiki/W/Element_Properties.html).  
+    --  
+    -- When working with the "MenuSection" or the "Properties" property, use one of the provided [constants](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#Constants).  
+    --  
+    -- The "Identifier" property is read-only and cannot be set.  
+    --  
+    -- Several event callback functions are implemented, such as "Update" and "Graphics". To set these, use a function for `propValue`. They are not included in the tables created with elements.element, and the functions can't be returned with elements.property either. This means copying all of an elements properties using elements.element will not set event callbacks for the new element. For help on creating these, see [Element_Properties#Callback_functions](https://powdertoy.co.uk/Wiki/W/Element_Properties.html#Callback_functions).   
+    ---@param elemNumber integer
+    ---@param propName Property|string
     ---@return any
-    function elements.property(elementID, property)
+    function elements.property(elemNumber, propName)
     end
-    --```  
-    --elements.property(number elementID, string property, object value)  
-    --```  
-    --Sets the value of an element property  
-    -- replaceMethod applies only for property "Update"
-    ---@param elementID integer  
-    ---@param property Property|string  
-    ---@param value number|string|PropertyFunctions|any
-    ---@param replaceMethod ElemFuncReplace?
-    function elements.property(elementID, property, value, replaceMethod)
+    --```
+    --propValue = elements.property(elemNumber, propName) -- query variant  
+    --elements.property(elemNumber, propName, propValue) -- update variant  
+    --elements.property(elemNumber, "Update", propValue, [runWhen]) -- special update variant for the Update property  
+    --```
+    -- Query or update a property of an element.  
+    --  - `elemNumber`: number of the element whose property is to be queried or updated  
+    --  - `propName`: string, name of the property to be queried or updated  
+    --  - `propValue`: various types, value of the property to be queried or updated  
+    --  - `runWhen`: number, specifies when the update function should be run, one of:  
+    --      - `elements.UPDATE_AFTER`: run before the built-in update function, this is the default  
+    --      - `elements.UPDATE_REPLACE`: run instead of the built-in update function  
+    --      - `elements.UPDATE_BEFORE`: run after the built-in update function  
+    --  
+    -- For more information on what properties there are to use in elements.property, and how to use them, see this page: [Element_Properties](https://powdertoy.co.uk/Wiki/W/Element_Properties.html).  
+    --  
+    -- When working with the "MenuSection" or the "Properties" property, use one of the provided [constants](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#Constants).  
+    --  
+    -- The "Identifier" property is read-only and cannot be set.  
+    --  
+    -- Several event callback functions are implemented, such as "Update" and "Graphics". To set these, use a function for `propValue`. They are not included in the tables created with elements.element, and the functions can't be returned with elements.property either. This means copying all of an elements properties using elements.element will not set event callbacks for the new element. For help on creating these, see [Element_Properties#Callback_functions](https://powdertoy.co.uk/Wiki/W/Element_Properties.html#Callback_functions).   
+    ---@param elemNumber integer
+    ---@param propName Property|string
+    ---@param propValue number|string|PropertyFunctions|PropertyProperty|any
+    ---@param runWhen RunUpdateWhen
+    function elements.property(elemNumber, propName, propValue, runWhen)
+    end
+
+    --```
+    --exists = elements.exists(elemNumber)  
+    --```
+    -- Check whether a number is a real element number and refers to an element.  
+    --  - `elemNumber`: number of the element to be checked  
+    --  - `exists`: boolean, `true` if `elemNumber` refers to an element  
+    --  
+    -- If an element exists, there exists a corresponding [`elements.[group]_PT_[iname]` constant](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.group_pt_iname), and conversely, if there exists such a constant, there exists a corresponding element.   
+    ---@param elemNumber integer
+    ---@return boolean
+    function elements.exists(elemNumber)
     end
 
     --```  
     --elements.free(number elementID)  
     --```  
-    --Free a previously allocated element, so it will disappear from the game. The element id will be freed and can used later by another script. elementID must be a non-default element (e.g. you cannot free the default WATR element)  
+    -- Free a previously allocated element.  
+    --  - `elemNumber`: number of the element to be freed  
+    -- The element number is freed and can used later by another script. Built-in elements, i.e. elements in the group DEFAULT, cannot be freed. 
     ---@param elementID integer  
     function elements.free(elementID)
     end
 
-
-    --```  
-    --elements.loadDefault(number elementID)  
-    --```  
-    --Reset an element to its original state before it was modified  
-    ---@param elementID integer  
-    function elements.loadDefault(elementID)
+    --```
+    --elementNumber = elements.getByName(name)  
+    --```
+    -- Find an element by name, the [`Name` property](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.property).  
+    --  - `name`: string, the name to find the element by  
+    --  - `elemNumber`: positive number of the element name refers to, or -1 on error if no such element exists  
+    --  
+    -- This function converts a human-friendly element name to an element number, essentially the same way the PROP tool or the console works.  
+    ---@param name string
+    function elements.getByName(name)
     end
+
     --```  
     --elements.loadDefault()  
     --```  
-    --Resets all elements to the original state. This will also erase any elements created with any scripts, only the default elements will be available.  
+    -- Restore the set of elements to its initial state at startup.  
+    -- This frees all elements created and resets all properties of all built-in elements to their defaults. 
     function elements.loadDefault()
     end
 --#endregion
@@ -4126,28 +4236,28 @@ simulation.PMAPMASK = 511
 simulation.PMAPBITS = 9
 
 
-elements.TYPE_PART = 1
-elements.TYPE_LIQUID = 2
-elements.TYPE_SOLID = 4
-elements.TYPE_GAS = 8
-elements.TYPE_ENERGY = 16
+elements.TYPE_PART = 1 -- Used in powders.
+elements.TYPE_LIQUID = 2 -- Used in liquids.
+elements.TYPE_SOLID = 4 -- Used in solids / misc elements.
+elements.TYPE_GAS = 8 -- Used in gases.
+elements.TYPE_ENERGY = 16 -- Used in energy particles.
 
-elements.PROP_DRAWONCTYPE = 0
-elements.PROP_CONDUCTS = 32
-elements.PROP_BLACK = 64
-elements.PROP_NEUTPENETRATE = 128
-elements.PROP_NEUTABSORB = 256
-elements.PROP_NEUTPASS = 512
-elements.PROP_DEADLY = 1024
-elements.PROP_HOT_GLOW = 2048
-elements.PROP_LIFE = 4096
-elements.PROP_RADIOACTIVE = 8192
-elements.PROP_LIFE_DEC = 16384
-elements.PROP_LIFE_KILL = 32768
-elements.PROP_LIFE_KILL_DEC = 65536
-elements.PROP_SPARKSETTLE = 131072
-elements.PROP_NOAMBHEAT = 262144
-elements.PROP_NOCTYPEDRAW = 1048576
+elements.PROP_DRAWONCTYPE = 0 -- Set its ctype to another element if the element is drawn upon it (like what CLNE does).
+elements.PROP_CONDUCTS = 32 -- Allows an element to automatically conduct SPRK, requires PROP_LIFE_DEC.
+elements.PROP_BLACK = 64 -- Elements with this property absorb photons of any color.
+elements.PROP_NEUTPENETRATE = 128 -- Elements can be displaced by neutrons (observe behavior of wood with neutrons to see).
+elements.PROP_NEUTABSORB = 256 -- Element will absorb neutrons.
+elements.PROP_NEUTPASS = 512 -- Element will allow neutrons to pass through it.
+elements.PROP_DEADLY = 1024 -- Element will kill stickmen and fighters.
+elements.PROP_HOT_GLOW = 2048 -- Element will glow red when it approaches it's melting point.
+elements.PROP_LIFE = 4096 -- Unused.
+elements.PROP_RADIOACTIVE = 8192 -- Element will have a radioactive glow, like URAN or PLUT. Also, deadly to stickmen.
+elements.PROP_LIFE_DEC = 16384 -- The "life" property of particles will be reduced by 1 every frame.
+elements.PROP_LIFE_KILL = 32768 -- Particles will be destroyed when the "life" property is less than or equal to zero.
+elements.PROP_LIFE_KILL_DEC = 65536 -- When used with PROP_LIFE_DEC, particles will be destroyed when the "life" property is decremented to 0. If already at 0 it will be fine.
+elements.PROP_SPARKSETTLE = 131072 -- Allows sparks/embers to contact without being destroyed.
+elements.PROP_NOAMBHEAT = 262144 -- Prevents particles from exchanging heat with the air when ambient heat is enabled.
+elements.PROP_NOCTYPEDRAW = 1048576 -- When this element is drawn upon other elements, do not set ctype (like STKM for CLNE).
 
 elements.DEFAULT_PT_NONE = 0 
 elements.DEFAULT_PT_DUST = 1 
