@@ -1,0 +1,9 @@
+ {
+  "name": "The Powder Toy (TPT) Lua API",
+  "words": ["elem%.allocate", "elements%.allocate", "event%.register", "evt%.register"],
+  "settings": {
+    "runtime": {
+      "version": "LuaJIT"
+    }
+  }
+}
