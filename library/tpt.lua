@@ -2064,6 +2064,44 @@
     function simulation.floodDeco(x, y, r, g, b, a) end
 
 
+    ---@alias ColorSpace
+    ---|`sim.DECOSPACE_SRGB`
+    ---|`sim.DECOSPACE_LINEAR`
+    ---|`sim.DECOSPACE_GAMMA22`
+    ---|`sim.DECOSPACE_GAMMA18`
+    simulation.DECOSPACE_SRGB = 0
+    sim.DECOSPACE_LINEAR = 1
+    sim.DECOSPACE_GAMMA22 = 2
+    sim.DECOSPACE_GAMMA18 = 3
+    sim.NUM_DECOSPACES = 4
+    
+    --```
+    --sim.decoSpace(colorSpace)  
+    --```
+    --Controls the color space used by smudge tool.  
+    --  - `space`: The color space, can be one of these constants:  
+    --     - `DECOSPACE_SRGB`: Standard SRGB color space  
+    --     - `DECOSPACE_LINEAR`: Linear color space  
+    --     - `DECOSPACE_GAMMA22`: Gamma 2.2  
+    --     - `DECOSPACE_GAMMA18`: Gamma 1.8  
+    --     - `NUM_DECOSPACES`: The total number of color spaces  
+    ---@param colorSpace ColorSpace|number
+    function simulation.decoSpace(colorSpace)
+    end
+    --```
+    --colorSpace sim.decoSpace()  
+    --```
+    --Controls the color space used by smudge tool.  
+    --  - `space`: The color space, can be one of these constants:  
+    --     - `DECOSPACE_SRGB`: Standard SRGB color space  
+    --     - `DECOSPACE_LINEAR`: Linear color space  
+    --     - `DECOSPACE_GAMMA22`: Gamma 2.2  
+    --     - `DECOSPACE_GAMMA18`: Gamma 1.8  
+    --     - `NUM_DECOSPACES`: The total number of color spaces  
+    ---@return ColorSpace|number
+    function simulation.decoSpace()
+    end
+
     --```  
     --nil sim.clearSim()  
     --```  
@@ -2363,6 +2401,21 @@
     function simulation.ambientAirTemp(temp)
     end
 
+    --```
+    --sim.ambientHeatSim(enabled)  
+    --```
+    -- - `enabled`: Flag that specifies whether ambient heat is enabled or not.   
+    ---@param enabled boolean 
+    function simulation.ambientHeatSim(enabled)
+    end
+    --```
+    --enabled = sim.ambientHeatSim()  
+    --```
+    -- - `enabled`: Flag that specifies whether ambient heat is enabled or not.   
+    ---@return boolean
+    function simulation.ambientHeatSim()
+    end
+
 
     --```  
     --number sim.elementCount(number type)  
@@ -2447,6 +2500,51 @@
     ---@param y integer  
     ---@return integer
     function simulation.photons(x, y)
+    end
+
+    --```
+    --value sim.elecMap(x, y)  
+    --```
+    --Interface with the elec map, which is a CELL-sized map used to control powered walls like E-Wall and Detector.  
+    --  -  `value`: Elec map value. This is an integer that controls for how many frames wall electricity is active in this cell, 0 if there is no power.  
+    --  -  `x`: x position of the cell  
+    --  -  `y`: y position of the cell  
+    --  -  `w`: width (cell count) of the area to set  
+    --  -  `h`: height (cell count) of the area to set  
+    ---@param x integer
+    ---@param y integer
+    ---@return integer
+    function simulation.elecMap(x, y)
+    end
+    --```
+    --sim.elecMap(x, y, value)  
+    --```
+    --Interface with the elec map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map used to control powered walls like E-Wall and Detector.  
+    --  -  `value`: Elec map value. This is an integer that controls for how many frames wall electricity is active in this cell, 0 if there is no power.  
+    --  -  `x`: x position of the cell  
+    --  -  `y`: y position of the cell  
+    --  -  `w`: width (cell count) of the area to set  
+    --  -  `h`: height (cell count) of the area to set  
+    ---@param x integer
+    ---@param y integer
+    ---@param value integer
+    function simulation.elecMap(x, y, value)
+    end
+    --```
+    --sim.elecMap(x, y, w, h, value)  
+    --```
+    --Interface with the elec map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map used to control powered walls like E-Wall and Detector.  
+    --  -  `value`: Elec map value. This is an integer that controls for how many frames wall electricity is active in this cell, 0 if there is no power.  
+    --  -  `x`: x position of the cell  
+    --  -  `y`: y position of the cell  
+    --  -  `w`: width (cell count) of the area to set  
+    --  -  `h`: height (cell count) of the area to set  
+    ---@param x integer
+    ---@param y integer
+    ---@param w integer
+    ---@param h integer
+    ---@param value integer
+    function simulation.elecMap(x, y, w, h, value)
     end
 
     --```  
@@ -2701,6 +2799,95 @@
     function simulation.signs.new(text, x, y, justification)
     end
 
+    --```
+    --value sim.fanVelocityX(x, y)  
+    --```
+    --Interface with the fan velocity map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map used to control fan velocity.  
+    --   - value: Fan X velocity, a floating point value  
+    --   - x: x position of the cell  
+    --   - y: y position of the cell  
+    --   - w: width (cell count) of the area to set  
+    --   - h: height (cell count) of the area to set  
+    ---@param x integer
+    ---@param y integer
+    ---@return number
+    function simulation.fanVelocityX(x, y)
+    end
+    --```
+    --sim.fanVelocityX(x, y, value)  
+    --```
+    --Interface with the fan velocity map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map used to control fan velocity.  
+    --   - value: Fan X velocity, a floating point value  
+    --   - x: x position of the cell  
+    --   - y: y position of the cell  
+    --   - w: width (cell count) of the area to set  
+    --   - h: height (cell count) of the area to set  
+    ---@param x integer
+    ---@param y integer
+    ---@param value number
+    function simulation.fanVelocityX(x, y, value)
+    end
+    --```
+    --sim.fanVelocityX(x, y, w, h, value)  
+    --```
+    --Interface with the fan velocity map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map used to control fan velocity.  
+    --   - value: Fan X velocity, a floating point value  
+    --   - x: x position of the cell  
+    --   - y: y position of the cell  
+    --   - w: width (cell count) of the area to set  
+    --   - h: height (cell count) of the area to set  
+    ---@param x integer
+    ---@param y integer
+    ---@param w integer
+    ---@param h integer
+    ---@param value number
+    function simulation.fanVelocityX(x, y, w, h, value)
+    end
+
+    --```
+    --value sim.fanVelocityY(x, y)  
+    --```
+    --Interface with the fan velocity map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map used to control fan velocity.  
+    --   - value: Fan Y velocity, a floating point value  
+    --   - x: x position of the cell  
+    --   - y: y position of the cell  
+    --   - w: width (cell count) of the area to set  
+    --   - h: height (cell count) of the area to set  
+    ---@param x integer
+    ---@param y integer
+    ---@return number
+    function simulation.fanVelocityY(x, y)
+    end
+    --```
+    --sim.fanVelocityY(x, y, value)  
+    --```
+    --Interface with the fan velocity map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map used to control fan velocity.  
+    --   - value: Fan Y velocity, a floating point value  
+    --   - x: x position of the cell  
+    --   - y: y position of the cell  
+    --   - w: width (cell count) of the area to set  
+    --   - h: height (cell count) of the area to set  
+    ---@param x integer
+    ---@param y integer
+    ---@param value number
+    function simulation.fanVelocityY(x, y, value)
+    end
+    --```
+    --sim.fanVelocityY(x, y, w, h, value)  
+    --```
+    --Interface with the fan velocity map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map used to control fan velocity.  
+    --   - value: Fan Y velocity, a floating point value  
+    --   - x: x position of the cell  
+    --   - y: y position of the cell  
+    --   - w: width (cell count) of the area to set  
+    --   - h: height (cell count) of the area to set  
+    ---@param x integer
+    ---@param y integer
+    ---@param w integer
+    ---@param h integer
+    ---@param value number
+    function simulation.fanVelocityY(x, y, w, h, value)
+    end
 
 --#endregion
 
