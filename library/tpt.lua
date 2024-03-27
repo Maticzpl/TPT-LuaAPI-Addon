@@ -1533,6 +1533,13 @@
     function simulation.partChangeType(index, type)
     end
 
+    --```
+    --count = sim.partCount()
+    --```
+    --  - `count`: Total count of all particles in the sim.
+    ---@return integer
+    function simulation.partCount()
+    end
 
     --```
     --number sim.partCreate(number index, number x, number y, number type)
@@ -1745,12 +1752,17 @@
     --```
     --nil sim.gravMap(number x, number y, [number width, number height, [number value]])
     --```
+    --### **DEPRECATED IN 98.0, replaced by sim.gravityMass and sim.gravityField**<br>
     --Returns the newtonian gravity at the given coordinates in the simulation. If given a value, will set the newtonian gravity at those coordinates. Width and height refer to the rectangle of affected cells, starting with the coords. If not given, they will default to 1,1.<br>
+    ---@deprecated
     ---@param x integer  
     ---@param y integer  
     ---@return number
     function simulation.gravMap(x, y)
     end
+    --### **DEPRECATED IN 98.0, replaced by sim.gravityMass and sim.gravityField**<br>
+    --Returns the newtonian gravity at the given coordinates in the simulation. If given a value, will set the newtonian gravity at those coordinates. Width and height refer to the rectangle of affected cells, starting with the coords. If not given, they will default to 1,1.<br>
+    ---@deprecated
     ---@param x integer  
     ---@param y integer  
     ---@param width integer  
@@ -1758,10 +1770,108 @@
     ---@param value number  
     function simulation.gravMap(x, y, width, height, value)
     end
+    --### **DEPRECATED IN 98.0, replaced by sim.gravityMass and sim.gravityField**<br>
+    --Returns the newtonian gravity at the given coordinates in the simulation. If given a value, will set the newtonian gravity at those coordinates. Width and height refer to the rectangle of affected cells, starting with the coords. If not given, they will default to 1,1.<br>
+    ---@deprecated
     ---@param x integer  
     ---@param y integer  
     ---@param value number  
     function simulation.gravMap(x, y, value)
+    end
+
+    --```
+    --x-strength y-strength sim.gravityField(x, y)
+    --```
+    --Check the gravity output map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map that controls the output of Newtonian Gravity calculation.<br>
+    --  -  x-strength: X strength of the gravity field at this location<br>
+    --  -  y-strength: Y strength of the gravity field at this location<br>
+    --  -  x: x position of the cell<br>
+    --  -  y: y position of the cell<br>
+    ---@param x integer
+    ---@param y integer
+    ---@return number, number
+    function gravityField(x, y)
+    end
+
+    --```
+    --strength sim.gravityMass(x, y)
+    --```
+    --Interface with the gravity input map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map that controls the input to the Newtonian Gravity calculation. The larger the value, the greater the mass / attraction to this location.<br>
+    --  - `strength`: Strength of the input gravity at this location<br>
+    --  - `x`: x position of the cell<br>
+    --  - `y`: y position of the cell<br>
+    --  - `w`: width (cell count) of the area to set<br>
+    --  - `h`: height (cell count) of the area to set<br>
+    ---@param x integer
+    ---@param y integer
+    ---@return number
+    function simulation.gravityMass(x, y)
+    end
+    --```
+    --sim.gravityMass(x, y, strength)
+    --```
+    --Interface with the gravity input map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map that controls the input to the Newtonian Gravity calculation. The larger the value, the greater the mass / attraction to this location.<br>
+    --  - `strength`: Strength of the input gravity at this location<br>
+    --  - `x`: x position of the cell<br>
+    --  - `y`: y position of the cell<br>
+    --  - `w`: width (cell count) of the area to set<br>
+    --  - `h`: height (cell count) of the area to set<br>
+    ---@param x integer
+    ---@param y integer
+    ---@param strength number
+    function simulation.gravityMass(x, y, strength)
+    end
+    --```
+    --sim.gravityMass(x, y, w, h, strength)
+    --```
+    --Interface with the gravity input map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map that controls the input to the Newtonian Gravity calculation. The larger the value, the greater the mass / attraction to this location.<br>
+    --  - `strength`: Strength of the input gravity at this location<br>
+    --  - `x`: x position of the cell<br>
+    --  - `y`: y position of the cell<br>
+    --  - `w`: width (cell count) of the area to set<br>
+    --  - `h`: height (cell count) of the area to set<br>
+    ---@param x integer
+    ---@param y integer
+    ---@param w integer
+    ---@param h integer
+    ---@param strength number
+    function simulation.gravityMass(x, y, w, h, strength)
+    end 
+
+    --```
+    --enabled = sim.newtonianGravity()
+    --```
+    --  - `newtonianGravity`: boolean flag that specifies whether Newtonian Gravity is turned on or off.
+    ---@return boolean
+    function simulation.newtonianGravity()
+    end
+    --```
+    --sim.newtonianGravity(enabled)
+    --```
+    --  - `newtonianGravity`: boolean flag that specifies whether Newtonian Gravity is turned on or off.
+    ---@param enabled boolean
+    function simulation.newtonianGravity(enabled)
+    end
+
+    --```
+    --sim.resetSpark()
+    --```
+    -- Same effect as the ctrl+= shortcut. Removes all sparks from the simulation and resets them to .life = 0. SPRK with invalid ctypes are deleted. Also resets all wifi cooldowns. 
+    function simulation.resetSpark()
+    end
+
+    --```
+    --sim.resetGravityField()
+    --```
+    -- Resets the gravity field to 0. While this will temporarily stop all Newtonian Gravity output, any changes will regenerate the gravity map based on the gravity sources in the sim. 
+    function simulation.resetGravityField()
+    end
+
+    --```
+    --sim.resetVelocity()
+    --```
+    -- Resets the air velocity map to 0. This map controls the flow of air. Resetting this will have some effect on particles, but won't stop them in their tracks. 
+    function simulation.resetVelocity()
     end
 
 
@@ -1888,6 +1998,51 @@
     ---@param bm integer?  
     ---@return number
     function simulation.floodWalls(x, y, walltype, bm)
+    end
+
+    --```
+    --wallType sim.wallMap(x, y)
+    --```
+    --Interface with the wall map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map that specifies which walls are at what position.<br>
+    --  - `wallType`: Wall type to set, wall type will be one of the constants in [sim.walls](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Walls)<br>
+    --  - `x`: x position of the cell<br>
+    --  - `y`: y position of the cell<br>
+    --  - `w`: width (cell count) of the area to set<br>
+    --  - `h`: height (cell count) of the area to set<br>
+    ---@param x integer
+    ---@param y integer
+    ---@return WallType
+    function simulation.wallMap(x, y)
+    end
+    --```
+    --sim.wallMap(x, y, wallType)
+    --```
+    --Interface with the wall map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map that specifies which walls are at what position.<br>
+    --  - `wallType`: Wall type to set, wall type will be one of the constants in [sim.walls](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Walls)<br>
+    --  - `x`: x position of the cell<br>
+    --  - `y`: y position of the cell<br>
+    --  - `w`: width (cell count) of the area to set<br>
+    --  - `h`: height (cell count) of the area to set<br>
+    ---@param x integer
+    ---@param y integer
+    ---@param wallType WallType
+    function simulation.wallMap(x, y, wallType)
+    end
+    --```
+    --sim.wallMap(x, y, w, h, wallType)
+    --```
+    --Interface with the wall map, which is a [CELL-sized](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Constants_2) map that specifies which walls are at what position.<br>
+    --  - `wallType`: Wall type to set, wall type will be one of the constants in [sim.walls](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#Walls)<br>
+    --  - `x`: x position of the cell<br>
+    --  - `y`: y position of the cell<br>
+    --  - `w`: width (cell count) of the area to set<br>
+    --  - `h`: height (cell count) of the area to set<br>
+    ---@param x integer
+    ---@param y integer
+    ---@param w integer
+    ---@param h integer
+    ---@param wallType WallType
+    function simulation.wallMap(x, y, w, h, wallType)
     end
 
     -- TODO: Alias with all tools
@@ -2416,6 +2571,20 @@
     function simulation.ambientHeatSim()
     end
 
+    --```
+    --enabled = sim.heatSim()
+    --```
+    --  - `heatSim`: boolean flag that specifies whether heat simulation is turned on or off.
+    ---@return boolean
+    function simulation.heatSim()
+    end
+    --```
+    --sim.heatSim(enabled)
+    --```
+    --  - `heatSim`: boolean flag that specifies whether heat simulation is turned on or off.
+    ---@param enabled boolean
+    function simulation.heatSim(enabled)
+    end
 
     --```
     --number sim.elementCount(number type)
@@ -2887,6 +3056,23 @@
     ---@param h integer
     ---@param value number
     function simulation.fanVelocityY(x, y, w, h, value)
+    end
+
+    --```
+    --flag = sim.paused()
+    --```
+    --  - `flag`: Boolean flag that says whether or not the sim is paused.<br>
+    -- Checks whether or not the simulation is paused. Processing may also continue if the 'f' framerender shortcut is used, which can last for long periods of time. sim.framerender should be used to check for that<br>
+    ---@return boolean
+    function simulation.paused()
+    end
+    --```
+    --sim.paused(flag)
+    --```
+    --  - `flag`: Boolean flag that says whether or not the sim is paused.<br>
+    -- Checks whether or not the simulation is paused. Processing may also continue if the 'f' framerender shortcut is used, which can last for long periods of time. sim.framerender should be used to check for that<br>
+    ---@param flag boolean
+    function simulation.paused(flag)
     end
 
 --#endregion
