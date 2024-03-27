@@ -2275,13 +2275,13 @@
     
 
     --```
-    --nil sim.resetTemp()
+    --sim.resetTemp()
     --```
     --Resets the temperature of all particles to their spawn temperature.<br>
     function simulation.resetTemp() end
 
     --```
-    --nil sim.resetPressure()
+    --sim.resetPressure()
     --```
     --Resets the pressure map to no pressure.<br>
     function simulation.resetPressure() end
@@ -3062,7 +3062,7 @@
     --flag = sim.paused()
     --```
     --  - `flag`: Boolean flag that says whether or not the sim is paused.<br>
-    -- Checks whether or not the simulation is paused. Processing may also continue if the 'f' framerender shortcut is used, which can last for long periods of time. sim.framerender should be used to check for that<br>
+    -- Checks whether or not the simulation is paused. Processing may also continue if the 'f' framerender shortcut is used, which can last for long periods of time. [sim.framerender](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#simulation.framerender) should be used to check for that<br>
     ---@return boolean
     function simulation.paused()
     end
@@ -4181,6 +4181,14 @@
         --### aftersim<br>
         --> This event is sent once per frame, but only if the sim is unpaused or being stepped through using framestep or subframe particle debugging. It is sent after all particles have been simulated.
         aftersim = 12,
+        
+        --### beforesimdraw<br>
+        --> This event is sent once per frame, before the simulation is drawn. It is sent after pressure / velocity mode graphics are drawn (if enabled), but before all other particles or simulation graphics are drawn.
+        beforesimdraw = 13,
+
+        --### aftersimdraw<br>
+        --> This event is sent once per frame, after the simulation is drawn. All particles and graphics, such as the cursor, are already drawn. The only thing not yet rendered is the zoom window.
+        aftersimdraw = 14,
     }
 
     --TODO add mouse up reason alias
