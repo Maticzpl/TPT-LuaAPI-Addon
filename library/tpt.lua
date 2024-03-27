@@ -3786,6 +3786,27 @@
     ---@param radiusH integer  
     function graphics.fillCircle(x, y, radiusW, radiusH)
     end
+
+    --```
+    --graphics.drawPixel(number x, number y, [number r, number g, number b, [number a]])
+    --```
+    -- Draws a pixel at (x, y). Providing the color is optional, if not provided defaults to white. 
+    ---@param x integer
+    ---@param y integer
+    function graphics.drawPixel(x, y)
+    end
+    --```
+    --graphics.drawPixel(number x, number y, [number r, number g, number b, [number a]])
+    --```
+    -- Draws a pixel at (x, y). Providing the color is optional, if not provided defaults to white. 
+    ---@param x integer
+    ---@param y integer
+    ---@param r integer
+    ---@param g integer
+    ---@param b integer
+    ---@param a integer?
+    function graphics.drawPixel(x, y, r, g, b, a)
+    end
     
     --```
     --graphics.getColors(number color)
