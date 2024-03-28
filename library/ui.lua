@@ -11,7 +11,7 @@
 ---@alias TextboxCallback fun(sender: Textbox)
 
 
-
+-- The Interface API includes objects for UI components such as buttons, labels, and checkboxes and methods for access to the very primitive window manager and input events. 
 interface = {}
 
 --Component

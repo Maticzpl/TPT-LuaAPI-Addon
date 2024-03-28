@@ -4,7 +4,8 @@
 
 --- @alias HTTPHeaders { [1]: string, [2]: string }[]
 --- @alias HTTPPostParams { [1]: string, [2]: string, [3]: string? }[]
---
+
+--The HTTP API provides access to basic HTTP functionality. Depending on how TPT is built, it may only work with secure sites (ones that use TLS, i.e. HTTPS) or it may even be wholly unable to actually complete HTTP requests; see relevant #defines in Config.h. 
 http = {}
 
 ---@class HTTPRequest

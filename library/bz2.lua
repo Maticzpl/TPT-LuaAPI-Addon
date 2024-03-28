@@ -2,6 +2,13 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
+-- TODO: Change enum to alias, move bz2 declaration below all @alias annotations
+
+-- The `bz2` API provides access to the bzip2 library TPT bundles. It can be used for compressing and decompressing blocks of data, such as TPT saves.<br>
+-- Only one-shot functionality is exposed because streaming functionality is only useful for tasks that are beyond the scope of this API.<br>
+-- Unless stated otherwise, all functions raise errors if supplied with parameters that disagree with their descriptions. 
+bz2 = {}
+
 ---@enum bz2Result
 bz2 = {
     --Compression OK

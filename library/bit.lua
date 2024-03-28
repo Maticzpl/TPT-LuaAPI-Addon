@@ -2,6 +2,8 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
+-- The Bit API provides functions for performing bitwise operations on integer numbers, the Bit API is from the [LuaJIT BitOp library](http://bitop.luajit.org/index.html), documentation is copied from [here](http://bitop.luajit.org/api.html)<br>
+-- If you are unfamiliar with bitwise operations, you may want to check the Wikipedia page on the subject: [http://en.wikipedia.org/wiki/Bitwise_operation](http://en.wikipedia.org/wiki/Bitwise_operation) 
 bit = {}
 
 --```

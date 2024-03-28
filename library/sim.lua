@@ -57,6 +57,7 @@ simulation.signs = {
 
 ---@alias GOL {name: string, rulestr: string, rule: number, color1: number, color2: number}
 
+--The Simulation API allows for modifying the state and properties of particles, air and gravity 
 simulation = {}
 
 --```

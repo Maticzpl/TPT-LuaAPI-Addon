@@ -2,6 +2,7 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
+-- The File System API contains functions for creating, deleting, modifying and enumerating files and folders. 
 fileSystem = {}
 
 --```

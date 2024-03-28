@@ -124,6 +124,11 @@
 ---|3 RIGHT CLICK
 ---|integer EXTRA BUTTONS
 
+-- The Elements API contains methods and constants for listening to events. This is the API you should use if you want to handle mouse and keyboard input. Shorthand: you can use evt. instead of event. 
+event = {}
+
+-- TODO: Replace enum, move event declaration below all @alias annotations
+
 ---@enum EventType
 event = {
     --### keypress<br>

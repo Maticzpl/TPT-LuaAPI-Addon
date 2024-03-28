@@ -2,11 +2,8 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
-graphics = {
-    WIDTH = 629,
-    HEIGHT = 424,
-}
-
+-- Various methods that allow lua to draw on the simulation screen. 
+graphics = {}
 
 --```
 --number, number graphics.textSize(string text)
@@ -198,3 +195,6 @@ function graphics.setClipRect(x, y, w, h)
 end
 
 gfx = graphics
+
+graphics.WIDTH = 629
+graphics.HEIGHT = 424

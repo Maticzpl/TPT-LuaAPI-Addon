@@ -4,6 +4,8 @@
 
 --TODO: Lua annotation types maybe?
 
+-- The renderer api can be used to control how the simulation in TPT gets rendered. You can set render / display modes, and change things related to the HUD / grid mode. Some renderer related functions are in the legacy tpt.* api.<br>
+-- ren.* is an alias for renderer.* and can be used to write things shorter. 
 renderer = {
     --#### These should be used in lua graphics functions to set how particles will be drawn. Effects like fire, glowing, and flares are set here. How a particle is actually rendered depends on the current render and display modes.<br>
     PMODE           = 0x00000FFF,	    --> A bitmask which can be used to check if a particle has any PMODEs set.<br>

@@ -41,6 +41,12 @@
 ---|2 Overwrite original
 ---|3 Call before original
 
+-- *This page describes an old version of TPT's Lua API, most of which is unsuitable for new scripts. For the new API, see[ Powder Toy Lua API](https://powdertoy.co.uk/Wiki/W/Powder_Toy_Lua_API.html).*<br>
+-- You may open the Lua Console by hitting the [`] key. (Also known as the tilde [~] key, or the [¬] key) [click here to view key](http://www.bittbox.com/wp-content/uploads/2007/12/tilde_illustrator_1.jpg)<br>
+-- You may be used to this style of console commands: !set type dust metl. This can be useful, but Lua is an entire programming language that can do much more powerful things. The equivalent command in TPT's Lua is `tpt.set_property("type", "metl", "dust")` (see [Lua#tpt.set_property](https://powdertoy.co.uk/Wiki/W/Lua.html#tpt.set_property) )<br>
+-- This page describes the TPT Lua API, not the Lua language itself. But, you may research Lua on your own. If you're a beginner, look at this: [http://www.lua.org/pil/](http://www.lua.org/pil/) . If more advanced, a list of all the functions is here: [http://www.lua.org/manual/5.1/](http://www.lua.org/manual/5.1/)<br>
+-- Also, FeynmanTechnologies has written a tutorial on some of the most basic Lua features here: [https://powdertoy.co.uk/Discussions/Thread/View.html?Thread=17801](https://powdertoy.co.uk/Discussions/Thread/View.html?Thread=17801)<br>
+-- The Lua Console provides the ability to create scripts using Lua, a very simple scripting language. With the ability to script with Lua, users are now able to create simple modifications to the game without editing source code. For information on how to run scripts, see [Running Lua Scripts](https://powdertoy.co.uk/Wiki/W/Running_Lua_Scripts.html) <br>
 tpt = {}
 
 --Draw text to the screen (for one frame, only useful in scripts)<br>

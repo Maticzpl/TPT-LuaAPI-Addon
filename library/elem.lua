@@ -105,6 +105,9 @@
 
 ---@alias RunUpdateWhen `elements.UPDATE_AFTER`|`elements.UPDATE_REPLACE`|`elements.UPDATE_BEFORE`
 
+--The `elements` API contains methods and constants for creating and modifying elements.<br>
+--**The shorter alias `elem` is also available.**<br>
+-- Unless stated otherwise, all functions raise errors if supplied with parameters that disagree with their descriptions. 
 elements = {}
 
 --```
