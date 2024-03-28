@@ -23,30 +23,7 @@
 ---|17 WL_ERASEALL	
 ---|18 WL_STASIS	
 
-tpt = {
-    -- Particle type selected under LMB<br>
-    ---@type string
-    selectedl = nil,
-    -- Particle type selected under RMB<br>
-    ---@type string
-    selectedr = nil,
-    -- Particle type selected under MMB<br>
-    ---@type string
-    selecteda = nil,
-    
-    ---@type string
-    selectedreplace = nil,
-
-    --Brush X size<br>
-    ---@type integer
-    brushx = 0,
-    --Brush Y size<br>
-    ---@type integer
-    brushy = 0,
-    --Brush shape ID (0 circle, 1 square, 2 triangle)<br>
-    ---@type integer
-    brushID = 0,
-}
+tpt = {}
 
 --Draw text to the screen (for one frame, only useful in scripts)<br>
 --### **REPLACED BY `gfx.drawText`**
@@ -92,15 +69,20 @@ end
 --```
 --tpt.set_pause() == 1
 --```
+--### **REPLACED BY `sim.paused`**
+---@deprecated
 ---@param state integer  
 function tpt.set_pause(state)
 end
+---@deprecated
 ---@return integer
 function tpt.set_pause()
 end
 
 --Toggles pause.<br>
 --Returns 1 if paused after execution and 0 otherwise<br>
+--### **REPLACED BY `sim.paused`**
+---@deprecated
 ---@return integer
 function tpt.toggle_pause() end
 
@@ -149,6 +131,8 @@ end
 --```
 --tpt.set_pressure(nil,nil,nil,nil,200)
 --```
+--### **REPLACED BY `sim.pressure`**
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 ---@param width integer  
@@ -156,6 +140,7 @@ end
 ---@param value number  
 function tpt.set_pressure(x, y, width, height, value)
 end
+---@deprecated
 function tpt.set_pressure()
 end
 
@@ -180,6 +165,8 @@ end
 --```
 --tpt.set_gravity(nil, nil, nil, nil, 1000)
 --```
+--### **REPLACED BY `sim.gravityMass`, `sim.gravityField`**
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 ---@param width integer  
@@ -187,10 +174,13 @@ end
 ---@param value number?
 function tpt.set_gravity(x, y, width, height, value)
 end
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 function tpt.set_gravity(x, y)
 end
+
+--TODO: are reset functions with area args deprecated???
 
 --Thoroughly resets Newtonian gravity on a given point.<br>
 --Instead of tpt.set_gravity which only modifies `sim->gravmap`, this code modifies `sim->gravp`, `sim->gravx` and `sim->gravy`.<br>
@@ -245,9 +235,11 @@ function tpt.reset_velocity()
 end
 
 --Removes electrified wires from the simulation, resetting to the original material<br>
+--### **REPLACED BY `sim.resetSpark`**
+---@deprecated
 function tpt.reset_spark() end
 
---TODO: figure out if any of those are intengers
+--TODO: figure out if any of those are intengers, and if deprecated
 
 --Sets various properties of particles for given criteria<br>
 ---@param property string  
@@ -312,11 +304,14 @@ function tpt.get_property(property, x, y)
 end
 
 --Sets the wall at a position. Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.<br>
+--### **REPLACED BY `sim.wallMap`**
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 ---@param walltype WallType|integer  
 function tpt.set_wallmap(x, y, walltype)
 end
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 ---@param width integer  
@@ -324,6 +319,7 @@ end
 ---@param walltype WallType|integer    
 function tpt.set_wallmap(x, y, width, height, walltype)
 end
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 ---@param width integer  
@@ -335,17 +331,22 @@ function tpt.set_wallmap(x, y, width, height, walltype, fanVelocityX, fanVelocit
 end
 
 --Gets the wall at a position. Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.<br>
+--### **REPLACED BY `sim.wallMap`**
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 ---@return integer
 function tpt.get_wallmap(x,y) end
 
 --Sets the "electricity" flag for a wall at a position. This flag is usually set when walls are sparked. The value is decremented by 1 every frame, just like SPRK .life, and when it reaches 0 the wall is "unsparked". Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.<br>
+--### **REPLACED BY `sim.elecMap`**
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 ---@param walltype WallType|integer  
 function tpt.set_elecmap(x, y, walltype)
 end
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 ---@param width integer  
@@ -355,16 +356,21 @@ function tpt.set_elecmap(x, y, width, height, walltype)
 end
 
 --Gets the "electricity" flag for a wall at a position. This flag is usually set when walls are sparked. Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.<br>
+--### **REPLACED BY `sim.elecMap`**
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 function tpt.get_elecmap(x, y)
 end
 
 --Draws a pixel on the screen (for one frame, only useful in scripts)<br>
+--### **REPLACED BY `gfx.drawPixel`**
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 function tpt.drawpixel(x, y)
 end
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 ---@param red integer  
@@ -474,6 +480,8 @@ function tpt.delete(x, y)
 end
 
 --Ask the user to input some text. Returns a string of what ever the user says. The argument "text" is pre-entered text (optional).<br>
+--### **REPLACED BY `ui.beginInput`**
+---@deprecated
 ---@param title string?  
 ---@param message string?  
 ---@param text string?  
@@ -482,12 +490,16 @@ function tpt.input(title, message, text)
 end
 
 --Display an OK-Only message box with a title and message.<br>
+--### **REPLACED BY `ui.beginMessageBox`**
+---@deprecated
 ---@param title string?  
 ---@param message string?  
 function tpt.message_box(title, message)
 end
 
 --Display an confirm message box with a title and message. Returns true if the button with button_name is clicked, returns false if Cancel is clicked.<br>
+--### **REPLACED BY `ui.beginConfirm`**
+---@deprecated
 ---@param title string?  
 ---@param message string?  
 ---@param button_name string?  
@@ -541,15 +553,21 @@ function tpt.hud() end
 --Sets Newtonian Gravity on and off.<br>
 --Does the same thing as Ctrl+N in normal gameplay.<br>
 --The number argument can be either 0 or 1, where 1 will enable Newtonian Gravity, and 0 will disable Newtonian Gravity. If you don't pass in any arguments, the command will return an integer, either 0 or 1, about whether Newtonian Gravity is turned on at the given moment.<br>
+--### **REPLACED BY `sim.newtonianGravity`**
+---@deprecated
 ---@param state integer  
 function tpt.newtonian_gravity(state) end
+---@deprecated
 ---@return integer
 function tpt.newtonian_gravity() end
 
 --Toggles Ambient Heat state.<br>
 --The number argument can be either 0 or 1, where 1 will enable Ambient Heat, 0 will disable it. If you don't pass in any arguments, the command will return an integer, either 0 or 1, about whether Ambient Heat is turned on at the given moment.<br>
+--### **REPLACED BY `sim.ambientHeatSim`**
+---@deprecated
 ---@param state integer  
 function tpt.ambient_heat(state) end
+---@deprecated
 ---@return integer
 function tpt.ambient_heat() end
 
@@ -646,9 +664,12 @@ end
 --Toggles Heat Simulation.<br>
 --The number argument can be either 0 or 1, where 1 will enable heat, and 0 will disable it. If you don't pass in any arguments, the command will return an integer, either 0 or 1, about whether heat is turned on at the given moment.<br>
 --It's usually wise not to disable this, as there are practically no saves left that need the compatibility mode in order to work. Nevertheless this option exists.<br>
+--### **REPLACED BY `sim.heatSim`**
+---@deprecated
 ---@param state integer  
 function tpt.heat(state)
 end
+---@deprecated
 ---@return integer
 function tpt.heat() end
 
@@ -676,23 +697,24 @@ end
 ---@return number
 function tpt.setfpscap() end
 
---Downloads a script from the script server at starcatcher.us and saves it in the TPT's shared data folder under the provided name.<br>
---Optional argument runScript if 1, will run the file after downloading it. By default it's 0.<br>
---Optional argument confirmPrompt if 1, will prompt the user before downloading the script. By default it's 1.<br>
+--**This function is DEPRECATED in TPT 98.0 and can only be used to install script manager**<br>
+--This function rejects all input, unless the arguments are those commonly used to install script manager. It is kept only so that old installation instructions still work. Please use tpt.installScriptManager instead. 
 --```
---tpt.getscript(number scriptID, string filename)
+--tpt.getscript(1, "autorun.lua", 1) 
 --```
---```
---tpt.getscript(number scriptID, string filename, number runScript)
---```
---```
---tpt.getscript(number scriptID, string filename, number runScript, number confirmPrompt)
---```
+---@deprecated
 ---@param id integer  
 ---@param name string  
 ---@param runImmediately integer?  
 ---@param confirm integer?  
 function tpt.getscript(id, name, runImmediately, confirm) end
+
+--```
+--tpt.installScriptManager() 
+--```
+-- Downloads script manager and installs it to TPT's shared data folder as autorun.lua. It will be immediately run, and run on all subsequent launches too.
+function tpt.installScriptManager() 
+end
 
 --Changes a few special properties as to what size the game renders at.<br>
 --Scale is a multiplier by which every pixel shall get multiplied at, currently it can either be 1 (612x384) or 2 (1224x768).<br>
@@ -736,10 +758,13 @@ end
 function tpt.record(record) end
 
 --Returns an element's number. For example, it would return 28 for dmnd. If passed a number it will return the name instead.<br>
+--### **REPLACED BY `elem.getByName`**
+---@deprecated
 ---@param elementname string  
 ---@return integer
 function tpt.element(elementname)
 end
+--TODO: Is this one deprecated?
 ---@param elementid integer  
 ---@return string
 function tpt.element(elementid)
@@ -750,7 +775,6 @@ end
 ---|2 Overwrite original
 ---|3 Call before original
 
---Maybe deprecated? Idk if you can do calling before / after using anything else
 
 --Allows you to replace or add on to an element's update function.<br>
 --Write a function like normal, and then put its name into this command. Use `tpt.element("...")` or `tpt.el.dust.id` for el_number.<br>
@@ -760,6 +784,8 @@ end
 --Replace automatically defaults to 1.<br>
 --new function arguments: index, x, y, surround_space, nt<br>
 --Returns: return 1 from your function if the particle is killed.<br>
+--### **REPLACED BY `elem.property`**
+---@deprecated
 ---@param newfunction function  
 ---@param el_number integer  
 ---@param replace ElemFuncReplace?  
@@ -837,3 +863,24 @@ function tpt.setdrawcap(drawcap) end
 function tpt.perfectCircleBrush() end
 ---@param enabled boolean  
 function tpt.perfectCircleBrush(enabled) end
+
+-- Particle type selected under LMB<br>
+---@type string
+tpt.selectedl = nil
+-- Particle type selected under RMB<br>
+---@type string
+tpt.selectedr = nil
+-- Particle type selected under MMB<br>
+---@type string
+tpt.selecteda = nil
+---@type string
+tpt.selectedreplace = nil
+--Brush X size<br>
+---@type integer
+tpt.brushx = 0
+--Brush Y size<br>
+---@type integer
+tpt.brushy = 0
+--Brush shape ID (0 circle, 1 square, 2 triangle)<br>
+---@type integer
+tpt.brushID = 0
