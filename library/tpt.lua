@@ -38,22 +38,20 @@ tpt = {}
 
 --Draw text to the screen (for one frame, only useful in scripts)<br>
 --### **REPLACED BY `gfx.drawText`**
----@param x integer  
----@param y integer  
----@param text string  
+---@param x integer
+---@param y integer
+---@param text string
 ---@deprecated
-function tpt.drawtext(x, y, text)
-end
----@param x integer  
----@param y integer  
----@param text string  
----@param red   integer  
----@param green integer  
----@param blue  integer  
+function tpt.drawtext(x, y, text) end
+---@param x integer
+---@param y integer
+---@param text string
+---@param red   integer
+---@param green integer
+---@param blue  integer
 ---@param alpha integer?
 ---@deprecated
-function tpt.drawtext(x, y, text, red, green, blue, alpha)
-end
+function tpt.drawtext(x, y, text, red, green, blue, alpha) end
 
 --Create a particle at location.<br>
 --```
@@ -61,13 +59,12 @@ end
 --```
 --Returns the index of the newly created particle.<br>
 --### **REPLACED BY `sim.partCreate`**
----@param x integer  
----@param y integer  
----@param type string  
+---@param x integer
+---@param y integer
+---@param type string
 ---@return integer
 ---@deprecated
-function tpt.create(x, y, type)
-end
+function tpt.create(x, y, type) end
 
 --Sets the paused state of the game.<br>
 --The number argument is either 0 or 1, where 1 means the game will be paused, and 0 will unpause the game. If you don't pass in any arguments, the command will return an integer, either 0 or 1, about whether the game is currently paused.<br>
@@ -82,13 +79,11 @@ end
 --```
 --### **REPLACED BY `sim.paused`**
 ---@deprecated
----@param state integer  
-function tpt.set_pause(state)
-end
+---@param state integer
+function tpt.set_pause(state) end
 ---@deprecated
 ---@return integer
-function tpt.set_pause()
-end
+function tpt.set_pause() end
 
 --Toggles pause.<br>
 --Returns 1 if paused after execution and 0 otherwise<br>
@@ -108,18 +103,14 @@ function tpt.toggle_pause() end
 --```
 --tpt.set_console() == 1
 --```
----@param state integer  
-function tpt.set_console(state)
-end
+---@param state integer
+function tpt.set_console(state) end
 ---@return integer
-function tpt.set_console()
-end
-
+function tpt.set_console() end
 
 --Log a message to the console<br>
----@param text string  
-function tpt.log(text)
-end
+---@param text string
+function tpt.log(text) end
 
 --Sets or resets pressure in the pressure map to some pressure. I sometimes imagine how much I can repeat the word "pressure" inside a sentence before it becomes gibberish.<br>
 --Default values:<br>
@@ -144,16 +135,14 @@ end
 --```
 --### **REPLACED BY `sim.pressure`**
 ---@deprecated
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
----@param value number  
-function tpt.set_pressure(x, y, width, height, value)
-end
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
+---@param value number
+function tpt.set_pressure(x, y, width, height, value) end
 ---@deprecated
-function tpt.set_pressure()
-end
+function tpt.set_pressure() end
 
 --Sets Newtonian Gravity at a position or area to some value.<br>
 --Default values:<br>
@@ -178,18 +167,16 @@ end
 --```
 --### **REPLACED BY `sim.gravityMass`, `sim.gravityField`**
 ---@deprecated
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
 ---@param value number?
-function tpt.set_gravity(x, y, width, height, value)
-end
+function tpt.set_gravity(x, y, width, height, value) end
 ---@deprecated
----@param x integer  
----@param y integer  
-function tpt.set_gravity(x, y)
-end
+---@param x integer
+---@param y integer
+function tpt.set_gravity(x, y) end
 
 --TODO: are reset functions with area args deprecated???
 
@@ -210,16 +197,14 @@ end
 --```
 --tpt.reset_gravity_field(100, 100, 200, 200)
 --```
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
-function tpt.reset_gravity_field(x, y, width, height)
-end
----@param x integer  
----@param y integer  
-function tpt.reset_gravity_field(x, y)
-end
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
+function tpt.reset_gravity_field(x, y, width, height) end
+---@param x integer
+---@param y integer
+function tpt.reset_gravity_field(x, y) end
 
 --Sets velocity (both x and y) in a given region or point to 0.<br>
 --Default values:<br>
@@ -236,14 +221,12 @@ end
 --```
 --tpt.reset_velocity(100,100,1,1)
 --```
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
-function tpt.reset_velocity(x, y, width, height)
-end
-function tpt.reset_velocity()
-end
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
+function tpt.reset_velocity(x, y, width, height) end
+function tpt.reset_velocity() end
 
 --Removes electrified wires from the simulation, resetting to the original material<br>
 --### **REPLACED BY `sim.resetSpark`**
@@ -253,277 +236,244 @@ function tpt.reset_spark() end
 --TODO: figure out if any of those are intengers, and if deprecated
 
 --Sets various properties of particles for given criteria<br>
----@param property string  
----@param value any  
-function tpt.set_property(property, value)
-end
----@param property string  
----@param value any  
----@param type string  
-function tpt.set_property(property, value, type)
-end
----@param property string  
----@param value any  
----@param index number  
-function tpt.set_property(property, value, index)
-end
----@param property string  
----@param value any  
----@param index number  
----@param type string  
-function tpt.set_property(property, value, index, type)
-end
----@param property string  
----@param value any  
----@param x number  
----@param y number  
-function tpt.set_property(property, value, x, y)
-end
----@param property string  
----@param value any  
----@param x number  
----@param y number  
----@param type string  
-function tpt.set_property(property, value, x, y, type)
-end
----@param property string  
----@param value any  
----@param x number  
----@param y number  
----@param width number  
----@param height number  
-function tpt.set_property(property, value, x, y, width, height)
-end
----@param property string  
----@param value any  
----@param x number  
----@param y number  
----@param width number  
----@param height number  
----@param type string  
-function tpt.set_property(property, value, x, y, width, height, type)
-end
+---@param property string
+---@param value any
+function tpt.set_property(property, value) end
+---@param property string
+---@param value any
+---@param type string
+function tpt.set_property(property, value, type) end
+---@param property string
+---@param value any
+---@param index number
+function tpt.set_property(property, value, index) end
+---@param property string
+---@param value any
+---@param index number
+---@param type string
+function tpt.set_property(property, value, index, type) end
+---@param property string
+---@param value any
+---@param x number
+---@param y number
+function tpt.set_property(property, value, x, y) end
+---@param property string
+---@param value any
+---@param x number
+---@param y number
+---@param type string
+function tpt.set_property(property, value, x, y, type) end
+---@param property string
+---@param value any
+---@param x number
+---@param y number
+---@param width number
+---@param height number
+function tpt.set_property(property, value, x, y, width, height) end
+---@param property string
+---@param value any
+---@param x number
+---@param y number
+---@param width number
+---@param height number
+---@param type string
+function tpt.set_property(property, value, x, y, width, height, type) end
 
----@param property string  
----@param index integer  
-function tpt.get_property(property, index)
-end
----@param property string  
----@param x integer  
----@param y integer  
-function tpt.get_property(property, x, y)
-end
+---@param property string
+---@param index integer
+function tpt.get_property(property, index) end
+---@param property string
+---@param x integer
+---@param y integer
+function tpt.get_property(property, x, y) end
 
 --Sets the wall at a position. Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.<br>
 --### **REPLACED BY `sim.wallMap`**
 ---@deprecated
----@param x integer  
----@param y integer  
----@param walltype WallType|integer  
-function tpt.set_wallmap(x, y, walltype)
-end
+---@param x integer
+---@param y integer
+---@param walltype WallType|integer
+function tpt.set_wallmap(x, y, walltype) end
 ---@deprecated
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
----@param walltype WallType|integer    
-function tpt.set_wallmap(x, y, width, height, walltype)
-end
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
+---@param walltype WallType|integer
+function tpt.set_wallmap(x, y, width, height, walltype) end
 ---@deprecated
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
----@param fanVelocityX number  
----@param fanVelocityY number  
----@param walltype WallType|integer    
-function tpt.set_wallmap(x, y, width, height, walltype, fanVelocityX, fanVelocityY)
-end
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
+---@param fanVelocityX number
+---@param fanVelocityY number
+---@param walltype WallType|integer
+function tpt.set_wallmap(x, y, width, height, walltype, fanVelocityX, fanVelocityY) end
 
 --Gets the wall at a position. Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.<br>
 --### **REPLACED BY `sim.wallMap`**
 ---@deprecated
----@param x integer  
----@param y integer  
+---@param x integer
+---@param y integer
 ---@return integer
-function tpt.get_wallmap(x,y) end
+function tpt.get_wallmap(x, y) end
 
 --Sets the "electricity" flag for a wall at a position. This flag is usually set when walls are sparked. The value is decremented by 1 every frame, just like SPRK .life, and when it reaches 0 the wall is "unsparked". Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.<br>
 --### **REPLACED BY `sim.elecMap`**
 ---@deprecated
----@param x integer  
----@param y integer  
----@param walltype WallType|integer  
-function tpt.set_elecmap(x, y, walltype)
-end
+---@param x integer
+---@param y integer
+---@param walltype WallType|integer
+function tpt.set_elecmap(x, y, walltype) end
 ---@deprecated
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
----@param walltype WallType|integer    
-function tpt.set_elecmap(x, y, width, height, walltype)
-end
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
+---@param walltype WallType|integer
+function tpt.set_elecmap(x, y, width, height, walltype) end
 
 --Gets the "electricity" flag for a wall at a position. This flag is usually set when walls are sparked. Uses wall/air map coordinates. Divide the actual coordinate by 4 to get the wall coordinate. So to set the wall at (100, 200), pass 100/4 for x and 200/4 for y.<br>
 --### **REPLACED BY `sim.elecMap`**
 ---@deprecated
----@param x integer  
----@param y integer  
-function tpt.get_elecmap(x, y)
-end
+---@param x integer
+---@param y integer
+function tpt.get_elecmap(x, y) end
 
 --Draws a pixel on the screen (for one frame, only useful in scripts)<br>
 --### **REPLACED BY `gfx.drawPixel`**
 ---@deprecated
----@param x integer  
----@param y integer  
-function tpt.drawpixel(x, y)
-end
+---@param x integer
+---@param y integer
+function tpt.drawpixel(x, y) end
 ---@deprecated
----@param x integer  
----@param y integer  
----@param red integer  
----@param green integer  
----@param blue integer  
----@param alpha integer?  
-function tpt.drawpixel(x, y, red, green, blue, alpha)
-end
+---@param x integer
+---@param y integer
+---@param red integer
+---@param green integer
+---@param blue integer
+---@param alpha integer?
+function tpt.drawpixel(x, y, red, green, blue, alpha) end
 
 --Draws a rectangle on the screen (for one frame, only useful in scripts)<br>
 --### **REPLACED BY `gfx.drawRect`**
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
 ---@deprecated
-function tpt.drawrect(x, y, width, height)
-end
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
----@param red integer  
----@param green integer  
----@param blue integer  
+function tpt.drawrect(x, y, width, height) end
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
+---@param red integer
+---@param green integer
+---@param blue integer
 ---@deprecated
-function tpt.drawrect(x, y, width, height, red, green, blue)
-end
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
----@param red integer  
----@param green integer  
----@param blue integer  
----@param alpha integer  
+function tpt.drawrect(x, y, width, height, red, green, blue) end
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
+---@param red integer
+---@param green integer
+---@param blue integer
+---@param alpha integer
 ---@deprecated
-function tpt.drawrect(x, y, width, height, red, green, blue, alpha)
-end
+function tpt.drawrect(x, y, width, height, red, green, blue, alpha) end
 
 --Draws a filled in rectangle on the screen (for one frame, only useful in scripts)<br>
 --Because tpt.fillrect is slightly broken in tpt, the coordinates will be off. It fills the rectangle from (x+1, y+1) to (x+w-1, y+h-1)<br>
 --### **REPLACED BY `gfx.fillRect`**
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
 ---@deprecated
-function tpt.fillrect(x, y, width, height)
-end
----@param x integer  
----@param y integer  
----@param width integer  
----@param height integer  
----@param red integer  
----@param green integer  
----@param blue integer  
+function tpt.fillrect(x, y, width, height) end
+---@param x integer
+---@param y integer
+---@param width integer
+---@param height integer
+---@param red integer
+---@param green integer
+---@param blue integer
 ---@param alpha integer?
 ---@deprecated
-function tpt.fillrect(x, y, width, height, red, green, blue, alpha)
-end
+function tpt.fillrect(x, y, width, height, red, green, blue, alpha) end
 
 --Draws a line on the screen (for one frame, only useful in scripts). The line starts at point (x1, y1) and ends at point (x2,y2).<br>
 --### **REPLACED BY `gfx.drawLine`**
----@param x1 number  
----@param y1 number  
----@param x2 number  
----@param y2 number  
+---@param x1 number
+---@param y1 number
+---@param x2 number
+---@param y2 number
 ---@deprecated
-function tpt.drawline(x1, y1, x2, y2)
-end
----@param x1 number  
----@param y1 number  
----@param x2 number  
----@param y2 number  
----@param red integer  
----@param green integer  
----@param blue integer  
----@param alpha integer?  
+function tpt.drawline(x1, y1, x2, y2) end
+---@param x1 number
+---@param y1 number
+---@param x2 number
+---@param y2 number
+---@param red integer
+---@param green integer
+---@param blue integer
+---@param alpha integer?
 ---@deprecated
-function tpt.drawline(x1, y1, x2, y2, red, green, blue, alpha)
-end
+function tpt.drawline(x1, y1, x2, y2, red, green, blue, alpha) end
 
 --Measures (in pixels) the width of a given string. Returns a number.<br>
 --### **REPLACED BY `gfx.textSize`**
----@param text string  
+---@param text string
 ---@return integer
 ---@deprecated
-function tpt.textwidth(text)
-end
+function tpt.textwidth(text) end
 
 --Returns the current username.<br>
 ---@return string
-function tpt.get_name() 
-end
+function tpt.get_name() end
 
 --Delete a specific particle, or a particle at a location.<br>
 --### **REPLACED BY `sim.partKill`**
----@param index integer  
+---@param index integer
 ---@deprecated
-function tpt.delete(index)
-end
----@param x integer  
----@param y integer  
+function tpt.delete(index) end
+---@param x integer
+---@param y integer
 ---@deprecated
-function tpt.delete(x, y)
-end
+function tpt.delete(x, y) end
 
 --Ask the user to input some text. Returns a string of what ever the user says. The argument "text" is pre-entered text (optional).<br>
 --### **REPLACED BY `ui.beginInput`**
 ---@deprecated
----@param title string?  
----@param message string?  
----@param text string?  
+---@param title string?
+---@param message string?
+---@param text string?
 ---@return string
-function tpt.input(title, message, text)
-end
+function tpt.input(title, message, text) end
 
 --Display an OK-Only message box with a title and message.<br>
 --### **REPLACED BY `ui.beginMessageBox`**
 ---@deprecated
----@param title string?  
----@param message string?  
-function tpt.message_box(title, message)
-end
+---@param title string?
+---@param message string?
+function tpt.message_box(title, message) end
 
 --Display an confirm message box with a title and message. Returns true if the button with button_name is clicked, returns false if Cancel is clicked.<br>
 --### **REPLACED BY `ui.beginConfirm`**
 ---@deprecated
----@param title string?  
----@param message string?  
----@param button_name string?  
+---@param title string?
+---@param message string?
+---@param button_name string?
 ---@return boolean
-function tpt.confirm(title, message,button_name)
-end
+function tpt.confirm(title, message, button_name) end
 
 --Returns the number of particles currently on the screen.<br>
 --### **REPLACED BY `sim.NUM_PARTS`**
 ---@deprecated
 ---@return integer
-function tpt.get_numOfParts() 
-end
+function tpt.get_numOfParts() end
 
 --Start the iterator for receiving all indices of the particles. (Used to help get particle indices, see tpt.next_getPartIndex)<br>
 --### **REPLACED BY `sim.parts`**
@@ -534,8 +484,7 @@ function tpt.start_getPartIndex() end
 --### **REPLACED BY `sim.parts`**
 ---@return boolean
 ---@deprecated
-function tpt.next_getPartIndex()         
-end
+function tpt.next_getPartIndex() end
 
 --Get the current index iterator.<br>
 --Index code example:<br>
@@ -558,7 +507,7 @@ function tpt.getPartIndex() end
 --Does the same thing as pressing the H key normally. The number argument can be either 0 or 1, where 1 will show the HUD, and 0 will hide the HUD. If you don't pass in any arguments, the command will return an integer, either 0 or 1, about whether the HUD is visible right now.<br>
 --### **REPLACED BY `ren.hud()`**
 ---@deprecated
----@param state integer  
+---@param state integer
 function tpt.hud(state) end
 ---@deprecated
 ---@return integer
@@ -569,7 +518,7 @@ function tpt.hud() end
 --The number argument can be either 0 or 1, where 1 will enable Newtonian Gravity, and 0 will disable Newtonian Gravity. If you don't pass in any arguments, the command will return an integer, either 0 or 1, about whether Newtonian Gravity is turned on at the given moment.<br>
 --### **REPLACED BY `sim.newtonianGravity`**
 ---@deprecated
----@param state integer  
+---@param state integer
 function tpt.newtonian_gravity(state) end
 ---@deprecated
 ---@return integer
@@ -579,7 +528,7 @@ function tpt.newtonian_gravity() end
 --The number argument can be either 0 or 1, where 1 will enable Ambient Heat, 0 will disable it. If you don't pass in any arguments, the command will return an integer, either 0 or 1, about whether Ambient Heat is turned on at the given moment.<br>
 --### **REPLACED BY `sim.ambientHeatSim`**
 ---@deprecated
----@param state integer  
+---@param state integer
 function tpt.ambient_heat(state) end
 ---@deprecated
 ---@return integer
@@ -591,7 +540,7 @@ function tpt.ambient_heat() end
 --```
 --tpt.active_menu(elem.SC_EXPLOSIVE)
 --```
----@param menu integer  
+---@param menu integer
 function tpt.active_menu(menu) end
 ---@return integer
 function tpt.active_menu() end
@@ -600,17 +549,16 @@ function tpt.active_menu() end
 --boolean tpt.menu_enabled(number menuID)
 --```
 --Returns true if a menu section is enabled.<br>
----@param menuID integer  
+---@param menuID integer
 ---@return boolean
 function tpt.menu_enabled(menuID) end
 --```
 --tpt.menu_enabled(number menuID, boolean enabled)
 --```
 --If provided a boolean, will set if a menu section is enabled.<br>
----@param menuID integer  
----@param enabled boolean  
+---@param menuID integer
+---@param enabled boolean
 function tpt.menu_enabled(menuID, enabled) end
-
 
 --```
 --number tpt.num_menus()
@@ -622,21 +570,19 @@ function tpt.num_menus() end
 --```
 --number tpt.num_menus(boolean onlyEnabled)
 --```
----@param onlyEnabled boolean  
+---@param onlyEnabled boolean
 ---@return integer
 function tpt.num_menus(onlyEnabled) end
 
 --Toggle drawing decorations.<br>
 --The number argument can be either 0 or 1, where 1 will enable decorations, and 0 will disable them. If you don't pass in any arguments, the command will return an integer, either 0 or 1, about whether decorations are turned on at the given moment.<br>
 --### **REPLACED BY `ren.decorations`**
----@param state integer  
+---@param state integer
 ---@deprecated
-function tpt.decorations_enable(state)
-end
+function tpt.decorations_enable(state) end
 ---@return integer
 ---@deprecated
 function tpt.decorations_enable() end
-
 
 --Changes activated display mode.<br>
 --There's 11 display modes, detailed here https://github.com/ThePowderToy/The-Powder-Toy/blob/f54189a97f6d80181deb4f6d952ccf10f0e59ccf/src/graphics/Renderer.cpp#L2587-L2644<br>
@@ -656,23 +602,20 @@ function tpt.decorations_enable() end
 -- - 10 = Alternate Velocity
 --### **REPLACED BY `ren.useDisplayPreset()`**
 ---@deprecated
----@param display DisplayMode  
-function tpt.display_mode(display)
-end
+---@param display DisplayMode
+function tpt.display_mode(display) end
 
 --Displays an error message box.<br>
----@param text string  
-function tpt.throw_error(text)
-end
+---@param text string
+function tpt.throw_error(text) end
 
 --Toggles Heat Simulation.<br>
 --The number argument can be either 0 or 1, where 1 will enable heat, and 0 will disable it. If you don't pass in any arguments, the command will return an integer, either 0 or 1, about whether heat is turned on at the given moment.<br>
 --It's usually wise not to disable this, as there are practically no saves left that need the compatibility mode in order to work. Nevertheless this option exists.<br>
 --### **REPLACED BY `sim.heatSim`**
 ---@deprecated
----@param state integer  
-function tpt.heat(state)
-end
+---@param state integer
+function tpt.heat(state) end
 ---@deprecated
 ---@return integer
 function tpt.heat() end
@@ -680,55 +623,50 @@ function tpt.heat() end
 --Changes the strength of the games glowing effects. `tpt.setfire(1)` is default.<br>
 --### **REPLACED BY `ren.fireSize()`**
 ---@deprecated
----@param strength number  
-function tpt.setfire(strength)  
-end
+---@param strength number
+function tpt.setfire(strength) end
 
 --Sets the "debug mode". It works using bitmasks, so you can turn on multiple debug features at the same time.<br>
 --Setting 0x1 will display info on the number of particles on the screen.<br>
 --Setting 0x2 will draw a graph showing the percentages of each type of element on the screen.<br>
 --Setting 0x4 will display useful information when you draw lines using shift.<br>
 --Setting 0x8 enables subframe particle debugging. Use alt+f to step one particle at a time. Use shift+f to step up to the particle underneath the mouse. When not over a particle, it advances to the end of the frame.<br>
----@param mode integer  
-function tpt.setdebug(mode)
-end
+---@param mode integer
+function tpt.setdebug(mode) end
 
 --Changes the upper FPS limit the program will run at. This value is<br>
 --60 by default.<br>
 --Don't set it too high, it'll eat all your CPU speed and make the game too responsive! Don't also set it too low, since UI and everything related to it uses the same FPS, so you'll find buttons and stuff not working.<br>
 --If you don't pass in any arguments, it will return the current fps cap. If you set the fpscap to 2, this will uncap the framerate.<br>
----@param fpscap number  
-function tpt.setfpscap(fpscap)
-end
+---@param fpscap number
+function tpt.setfpscap(fpscap) end
 ---@return number
 function tpt.setfpscap() end
 
 --**This function is DEPRECATED in TPT 98.0 and can only be used to install script manager**<br>
---This function rejects all input, unless the arguments are those commonly used to install script manager. It is kept only so that old installation instructions still work. Please use tpt.installScriptManager instead. 
+--This function rejects all input, unless the arguments are those commonly used to install script manager. It is kept only so that old installation instructions still work. Please use tpt.installScriptManager instead.
 --```
---tpt.getscript(1, "autorun.lua", 1) 
+--tpt.getscript(1, "autorun.lua", 1)
 --```
 ---@deprecated
----@param id integer  
----@param name string  
----@param runImmediately integer?  
----@param confirm integer?  
+---@param id integer
+---@param name string
+---@param runImmediately integer?
+---@param confirm integer?
 function tpt.getscript(id, name, runImmediately, confirm) end
 
 --```
---tpt.installScriptManager() 
+--tpt.installScriptManager()
 --```
 -- Downloads script manager and installs it to TPT's shared data folder as autorun.lua. It will be immediately run, and run on all subsequent launches too.
-function tpt.installScriptManager() 
-end
+function tpt.installScriptManager() end
 
 --Changes a few special properties as to what size the game renders at.<br>
 --Scale is a multiplier by which every pixel shall get multiplied at, currently it can either be 1 (612x384) or 2 (1224x768).<br>
 --Full screen is a toggle (0 or 1) that enables "kiosk mode", which basically scales the game up to fill the screen and makes the rest of the edge black.<br>
----@param scale integer  
----@param fullscreen integer  
-function tpt.setwindowsize(scale, fullscreen)
-end
+---@param scale integer
+---@param fullscreen integer
+function tpt.setwindowsize(scale, fullscreen) end
 
 --### **REPLACED by `simulation.waterEqualisation`**<br>
 --Toggles water equalization. Returns current state.<br>
@@ -737,8 +675,7 @@ end
 --```
 ---@return integer
 ---@deprecated
-function tpt.watertest() 
-end
+function tpt.watertest() end
 
 --Takes a screenshot of the current screen, minus the menu and HUD.<br>
 --**Screenshot format:**<br>
@@ -750,8 +687,7 @@ end
 --`tpt.screenshot(1,2)` - take fullscreen screenshot in ppm format<br>
 ---@param fullscreen integer
 ---@param screenshot_format integer
-function tpt.screenshot(fullscreen,screenshot_format)
-end
+function tpt.screenshot(fullscreen, screenshot_format) end
 
 --Records each drawn frame and saves them all in a unique folder inside a folder called "recordings" in the .ppm format.<br>
 --Returns the name of the folder inside the "recordings" folder.<br>
@@ -759,22 +695,20 @@ end
 --```
 --number tpt.record(boolean record)
 --```
----@param record boolean  
+---@param record boolean
 ---@return integer
 function tpt.record(record) end
 
 --Returns an element's number. For example, it would return 28 for dmnd. If passed a number it will return the name instead.<br>
 --### **REPLACED BY `elem.getByName`**
 ---@deprecated
----@param elementname string  
+---@param elementname string
 ---@return integer
-function tpt.element(elementname)
-end
+function tpt.element(elementname) end
 --TODO: Is this one deprecated?
----@param elementid integer  
+---@param elementid integer
 ---@return string
-function tpt.element(elementid)
-end
+function tpt.element(elementid) end
 
 --Allows you to replace or add on to an element's update function.<br>
 --Write a function like normal, and then put its name into this command. Use `tpt.element("...")` or `tpt.el.dust.id` for el_number.<br>
@@ -786,11 +720,10 @@ end
 --Returns: return 1 from your function if the particle is killed.<br>
 --### **REPLACED BY `elem.property`**
 ---@deprecated
----@param newfunction function  
----@param el_number integer  
----@param replace ElemFuncReplace?  
-function tpt.element_func(newfunction, el_number, replace)
-end
+---@param newfunction function
+---@param el_number integer
+---@param replace ElemFuncReplace?
+function tpt.element_func(newfunction, el_number, replace) end
 
 --Allows you to replace an element's graphics function. Write a function like normal, and then put its name into this command. Use tpt.el.(name of element to change).id for el_number.<br>
 --
@@ -823,32 +756,28 @@ end
 --See this for a picture of what they look like:<br>
 --https://powdertoy.co.uk/Wiki/W/File:Particle_Drawing_Modes.png.html<br>
 --### **REPLACED by `elem.property`**<br>
----@param newfunction function  
----@param el_number integer  
+---@param newfunction function
+---@param el_number integer
 ---@deprecated
-function tpt.graphics_func(newfunction, el_number)
-end
+function tpt.graphics_func(newfunction, el_number) end
 
 --Returns contents of the clipboard.<br>
 --### **REPLACED by `platform.clipboardCopy`**<br>
 ---@return string
 ---@deprecated
-function tpt.get_clipboard() 
-end
+function tpt.get_clipboard() end
 
 --Copy to clipboard.<br>
 --### **REPLACED by `platform.clipboardPaste`**<br>
----@param text string  
+---@param text string
 ---@deprecated
-function tpt.set_clipboard(text)
-end
+function tpt.set_clipboard(text) end
 
 --tpt.setdrawcap<br>
 --Changes the rate that particle graphics and the UI render to the screen. This is separate from the fpscap, which only affects the simulation. The drawcap allows TPT to skip drawing every frame. This may increase the framerate in some instances.<br>
 --The default is set to the maximum refresh rate of all attached monitors.<br>
----@param drawcap integer  
+---@param drawcap integer
 function tpt.setdrawcap(drawcap) end
-
 
 --Returns true if perfect circle brush is enabled.<br>
 --If provided with a boolean, will change if its enabled.<br>
@@ -859,9 +788,9 @@ function tpt.setdrawcap(drawcap) end
 --```
 --tpt.perfectCircleBrush(boolean enabled)
 --```
----@return boolean    
+---@return boolean
 function tpt.perfectCircleBrush() end
----@param enabled boolean  
+---@param enabled boolean
 function tpt.perfectCircleBrush(enabled) end
 
 -- Particle type selected under LMB<br>

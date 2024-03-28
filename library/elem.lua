@@ -2,7 +2,6 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
-
 --Doesnt include functions
 ---@alias Properties {Weight:number?, HotAir:number?, Properties:number?, HighTemperatureTransition:number?, LowPressureTransition:number?, AirLoss:number?, Gravity:number?, Name:string?, Colour:number?, Identifier:string?, PhotonReflectWavelengths:number?, Color:number?, NewtonianGravity:number?, Diffusion:number?, Advection:number?, Hardness:number?, HighPressureTransition:number?, HighPressure:number?, Loss:number?, MenuVisible:number?, LowTemperatureTransition:number?, MenuSection:number?, Collision:number?, DefaultProperties:table?, AirDrag:number?, HighTemperature:number?, LowTemperature:number?, Enabled:number?, HeatConduct:number?, Falldown:number?, Meltable:number?, LowPressure:number?, Explosive:number?, Temperature:number?, Description:string?, Flammable:number?}
 
@@ -92,7 +91,7 @@
 
 -- `surround_space`	This is the number of particles with the same TYPE property in the Moore neighborhood surrounding the particle. Used primarily for GoL type elements.
 -- `nt`	This is the number of empty spaces in the Moore neighborhood surrounding the particle.
----@alias UpdateFunc fun(UPDATE_index:number, x:number, y:number, surround_space:number, nt:number): number|nil 
+---@alias UpdateFunc fun(UPDATE_index:number, x:number, y:number, surround_space:number, nt:number): number|nil
 
 ---@alias GraphicsFunc fun(GRAPHICS_index:number, r:number, g:number, b:number): number,number,number,number,number,number,number,number,number,number
 
@@ -107,7 +106,7 @@
 
 --The `elements` API contains methods and constants for creating and modifying elements.<br>
 --**The shorter alias `elem` is also available.**<br>
--- Unless stated otherwise, all functions raise errors if supplied with parameters that disagree with their descriptions. 
+-- Unless stated otherwise, all functions raise errors if supplied with parameters that disagree with their descriptions.
 elements = {}
 
 --```
@@ -127,12 +126,11 @@ elements = {}
 -- Make the choice such that it is convenient to refer to your element via an [`elements.[group]_PT_[iname]` constant](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.group_pt_iname). While it is perfectly possible to type `elem["Ultimate Chemistry Pack v3_PT_C-6"]`, it is much more convenient to type `elem.CHEMPACK3_PT_C6`.<br>
 --<br>
 -- The new element is created with all the default properties, and will not be visible until you modify it to show up in the menu.<br>
----@param group string  
----@param name string  
+---@param group string
+---@param name string
 ---@return integer
 ---@nodiscard
-function elements.allocate(group, name)
-end
+function elements.allocate(group, name) end
 
 --```
 --elemProps = elements.element(elemNumber) -- query variant
@@ -152,10 +150,9 @@ end
 --elem.property(purpleGold, "Name", "PGLD")
 --elem.property(purpleGold, "Color", 0x8040FF)
 --```
----@param elemNumber integer  
+---@param elemNumber integer
 ---@return Properties
-function elements.element(elemNumber)
-end
+function elements.element(elemNumber) end
 --```
 --elemProps = elements.element(elemNumber) -- query variant
 --elements.element(elemNumber, elemProps) -- update variant
@@ -174,10 +171,9 @@ end
 --elem.property(purpleGold, "Name", "PGLD")
 --elem.property(purpleGold, "Color", 0x8040FF)
 --```
----@param elemNumber integer  
----@param elemProps Properties  
-function elements.element(elemNumber, elemProps)
-end
+---@param elemNumber integer
+---@param elemProps Properties
+function elements.element(elemNumber, elemProps) end
 
 --```
 --propValue = elements.property(elemNumber, propName) -- query variant
@@ -203,8 +199,7 @@ end
 ---@param elemNumber integer
 ---@param propName Property|string
 ---@return any
-function elements.property(elemNumber, propName)
-end
+function elements.property(elemNumber, propName) end
 --```
 --propValue = elements.property(elemNumber, propName) -- query variant
 --elements.property(elemNumber, propName, propValue) -- update variant
@@ -230,8 +225,7 @@ end
 ---@param propName Property|string
 ---@param propValue number|string|PropertyFunctions|PropertyProperty|any
 ---@param runWhen RunUpdateWhen
-function elements.property(elemNumber, propName, propValue, runWhen)
-end
+function elements.property(elemNumber, propName, propValue, runWhen) end
 
 --```
 --exists = elements.exists(elemNumber)
@@ -243,8 +237,7 @@ end
 -- If an element exists, there exists a corresponding [`elements.[group]_PT_[iname]` constant](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#elements.group_pt_iname), and conversely, if there exists such a constant, there exists a corresponding element.<br>
 ---@param elemNumber integer
 ---@return boolean
-function elements.exists(elemNumber)
-end
+function elements.exists(elemNumber) end
 
 --```
 --elements.free(number elementID)
@@ -252,9 +245,8 @@ end
 -- Free a previously allocated element.<br>
 --  - `elemNumber`: number of the element to be freed<br>
 -- The element number is freed and can used later by another script. Built-in elements, i.e. elements in the group DEFAULT, cannot be freed.<br>
----@param elementID integer  
-function elements.free(elementID)
-end
+---@param elementID integer
+function elements.free(elementID) end
 
 --```
 --elementNumber = elements.getByName(name)
@@ -265,16 +257,14 @@ end
 --<br>
 -- This function converts a human-friendly element name to an element number, essentially the same way the PROP tool or the console works.<br>
 ---@param name string
-function elements.getByName(name)
-end
+function elements.getByName(name) end
 
 --```
 --elements.loadDefault()
 --```
 -- Restore the set of elements to its initial state at startup.<br>
 -- This frees all elements created and resets all properties of all built-in elements to their defaults.<br>
-function elements.loadDefault()
-end
+function elements.loadDefault() end
 
 elem = elements
 
@@ -301,196 +291,196 @@ elements.PROP_SPARKSETTLE = 131072 -- Allows sparks/embers to contact without be
 elements.PROP_NOAMBHEAT = 262144 -- Prevents particles from exchanging heat with the air when ambient heat is enabled.
 elements.PROP_NOCTYPEDRAW = 1048576 -- When this element is drawn upon other elements, do not set ctype (like STKM for CLNE).
 
-elements.DEFAULT_PT_NONE = 0 
-elements.DEFAULT_PT_DUST = 1 
-elements.DEFAULT_PT_WATR = 2 
-elements.DEFAULT_PT_OIL = 3 
-elements.DEFAULT_PT_FIRE = 4 
-elements.DEFAULT_PT_STNE = 5 
-elements.DEFAULT_PT_LAVA = 6 
-elements.DEFAULT_PT_GUN = 7 
-elements.DEFAULT_PT_NITR = 8 
-elements.DEFAULT_PT_CLNE = 9 
-elements.DEFAULT_PT_GAS = 10 
-elements["DEFAULT_PT_C-4"] = 11 
-elements.DEFAULT_PT_GOO = 12 
-elements.DEFAULT_PT_ICE = 13 
-elements.DEFAULT_PT_METL = 14 
-elements.DEFAULT_PT_SPRK = 15 
-elements.DEFAULT_PT_SNOW = 16 
-elements.DEFAULT_PT_WOOD = 17 
-elements.DEFAULT_PT_NEUT = 18 
-elements.DEFAULT_PT_PLUT = 19 
-elements.DEFAULT_PT_PLNT = 20 
-elements.DEFAULT_PT_ACID = 21 
-elements.DEFAULT_PT_VOID = 22 
-elements.DEFAULT_PT_WTRV = 23 
-elements.DEFAULT_PT_CNCT = 24 
-elements.DEFAULT_PT_DSTW = 25 
-elements.DEFAULT_PT_SALT = 26 
-elements.DEFAULT_PT_SLTW = 27 
-elements.DEFAULT_PT_DMND = 28 
-elements.DEFAULT_PT_BMTL = 29 
-elements.DEFAULT_PT_BRMT = 30 
-elements.DEFAULT_PT_PHOT = 31 
-elements.DEFAULT_PT_URAN = 32 
-elements.DEFAULT_PT_WAX = 33 
-elements.DEFAULT_PT_MWAX = 34 
-elements.DEFAULT_PT_PSCN = 35 
-elements.DEFAULT_PT_NSCN = 36 
-elements.DEFAULT_PT_LN2 = 37 
-elements.DEFAULT_PT_INSL = 38 
-elements.DEFAULT_PT_VACU = 39 
-elements.DEFAULT_PT_VENT = 40 
-elements.DEFAULT_PT_RBDM = 41 
-elements.DEFAULT_PT_LRBD = 42 
-elements.DEFAULT_PT_NTCT = 43 
-elements.DEFAULT_PT_SAND = 44 
-elements.DEFAULT_PT_GLAS = 45 
-elements.DEFAULT_PT_PTCT = 46 
-elements.DEFAULT_PT_BGLA = 47 
-elements.DEFAULT_PT_THDR = 48 
-elements.DEFAULT_PT_PLSM = 49 
-elements.DEFAULT_PT_ETRD = 50 
-elements.DEFAULT_PT_NICE = 51 
-elements.DEFAULT_PT_NBLE = 52 
-elements.DEFAULT_PT_BTRY = 53 
-elements.DEFAULT_PT_LCRY = 54 
-elements.DEFAULT_PT_STKM = 55 
-elements.DEFAULT_PT_SWCH = 56 
-elements.DEFAULT_PT_SMKE = 57 
-elements.DEFAULT_PT_DESL = 58 
-elements.DEFAULT_PT_COAL = 59 
-elements.DEFAULT_PT_LOXY = 60 
-elements.DEFAULT_PT_OXYG = 61 
-elements.DEFAULT_PT_INWR = 62 
-elements.DEFAULT_PT_YEST = 63 
-elements.DEFAULT_PT_DYST = 64 
-elements.DEFAULT_PT_THRM = 65 
-elements.DEFAULT_PT_GLOW = 66 
-elements.DEFAULT_PT_BRCK = 67 
-elements.DEFAULT_PT_CFLM = 68 
-elements.DEFAULT_PT_FIRW = 69 
-elements.DEFAULT_PT_FUSE = 70 
-elements.DEFAULT_PT_FSEP = 71 
-elements.DEFAULT_PT_AMTR = 72 
-elements.DEFAULT_PT_BCOL = 73 
-elements.DEFAULT_PT_PCLN = 74 
-elements.DEFAULT_PT_HSWC = 75 
-elements.DEFAULT_PT_IRON = 76 
-elements.DEFAULT_PT_MORT = 77 
-elements.DEFAULT_PT_LIFE = 78 
-elements.DEFAULT_PT_DLAY = 79 
-elements.DEFAULT_PT_CO2 = 80 
-elements.DEFAULT_PT_DRIC = 81 
-elements.DEFAULT_PT_BUBW = 82 
-elements.DEFAULT_PT_STOR = 83 
-elements.DEFAULT_PT_PVOD = 84 
-elements.DEFAULT_PT_CONV = 85 
-elements.DEFAULT_PT_CAUS = 86 
-elements.DEFAULT_PT_LIGH = 87 
-elements.DEFAULT_PT_TESC = 88 
-elements.DEFAULT_PT_DEST = 89 
-elements.DEFAULT_PT_SPNG = 90 
-elements.DEFAULT_PT_RIME = 91 
-elements.DEFAULT_PT_FOG = 92 
-elements.DEFAULT_PT_BCLN = 93 
-elements.DEFAULT_PT_LOVE = 94 
-elements.DEFAULT_PT_DEUT = 95 
-elements.DEFAULT_PT_WARP = 96 
-elements.DEFAULT_PT_PUMP = 97 
-elements.DEFAULT_PT_FWRK = 98 
-elements.DEFAULT_PT_PIPE = 99 
-elements.DEFAULT_PT_FRZZ = 100 
-elements.DEFAULT_PT_FRZW = 101 
-elements.DEFAULT_PT_GRAV = 102 
-elements.DEFAULT_PT_BIZR = 103 
-elements.DEFAULT_PT_BIZG = 104 
-elements.DEFAULT_PT_BIZS = 105 
-elements.DEFAULT_PT_INST = 106 
-elements.DEFAULT_PT_ISOZ = 107 
-elements.DEFAULT_PT_ISZS = 108 
-elements.DEFAULT_PT_PRTI = 109 
-elements.DEFAULT_PT_PRTO = 110 
-elements.DEFAULT_PT_PSTE = 111 
-elements.DEFAULT_PT_PSTS = 112 
-elements.DEFAULT_PT_ANAR = 113 
-elements.DEFAULT_PT_VINE = 114 
-elements.DEFAULT_PT_INVS = 115 
-elements.DEFAULT_PT_EQVE = 116 
-elements.DEFAULT_PT_SPWN2 = 117 
-elements.DEFAULT_PT_SPWN = 118 
-elements.DEFAULT_PT_SHLD = 119 
-elements.DEFAULT_PT_SHD2 = 120 
-elements.DEFAULT_PT_SHD3 = 121 
-elements.DEFAULT_PT_SHD4 = 122 
-elements.DEFAULT_PT_LOLZ = 123 
-elements.DEFAULT_PT_WIFI = 124 
-elements.DEFAULT_PT_FILT = 125 
-elements.DEFAULT_PT_ARAY = 126 
-elements.DEFAULT_PT_BRAY = 127 
-elements.DEFAULT_PT_STK2 = 128 
-elements.DEFAULT_PT_BOMB = 129 
-elements["DEFAULT_PT_C-5"] = 130 
-elements.DEFAULT_PT_SING = 131 
-elements.DEFAULT_PT_QRTZ = 132 
-elements.DEFAULT_PT_PQRT = 133 
-elements.DEFAULT_PT_EMP = 134 
-elements.DEFAULT_PT_BREL = 135 
-elements.DEFAULT_PT_ELEC = 136 
-elements.DEFAULT_PT_ACEL = 137 
-elements.DEFAULT_PT_DCEL = 138 
-elements.DEFAULT_PT_TNT = 139 
-elements.DEFAULT_PT_IGNC = 140 
-elements.DEFAULT_PT_BOYL = 141 
-elements.DEFAULT_PT_GEL = 142 
-elements.DEFAULT_PT_TRON = 143 
-elements.DEFAULT_PT_TTAN = 144 
-elements.DEFAULT_PT_EXOT = 145 
-elements.DEFAULT_PT_EMBR = 147 
-elements.DEFAULT_PT_HYGN = 148 
-elements.DEFAULT_PT_SOAP = 149 
-elements.DEFAULT_PT_BHOL = 150 
-elements.DEFAULT_PT_WHOL = 151 
-elements.DEFAULT_PT_MERC = 152 
-elements.DEFAULT_PT_PBCN = 153 
-elements.DEFAULT_PT_GPMP = 154 
-elements.DEFAULT_PT_CLST = 155 
-elements.DEFAULT_PT_WWLD = 156 
-elements.DEFAULT_PT_GBMB = 157 
-elements.DEFAULT_PT_FIGH = 158 
-elements.DEFAULT_PT_FRAY = 159 
-elements.DEFAULT_PT_RPEL = 160 
-elements.DEFAULT_PT_PPIP = 161 
-elements.DEFAULT_PT_DTEC = 162 
-elements.DEFAULT_PT_DMG = 163 
-elements.DEFAULT_PT_TSNS = 164 
-elements.DEFAULT_PT_VIBR = 165 
-elements.DEFAULT_PT_BVBR = 166 
-elements.DEFAULT_PT_CRAY = 167 
-elements.DEFAULT_PT_PSTN = 168 
-elements.DEFAULT_PT_FRME = 169 
-elements.DEFAULT_PT_GOLD = 170 
-elements.DEFAULT_PT_TUNG = 171 
-elements.DEFAULT_PT_PSNS = 172 
-elements.DEFAULT_PT_PROT = 173 
-elements.DEFAULT_PT_VIRS = 174 
-elements.DEFAULT_PT_VRSS = 175 
-elements.DEFAULT_PT_VRSG = 176 
-elements.DEFAULT_PT_GRVT = 177 
-elements.DEFAULT_PT_DRAY = 178 
-elements.DEFAULT_PT_CRMC = 179 
-elements.DEFAULT_PT_HEAC = 180 
-elements.DEFAULT_PT_SAWD = 181 
-elements.DEFAULT_PT_POLO = 182 
-elements.DEFAULT_PT_RFRG = 183 
-elements.DEFAULT_PT_RFGL = 184 
-elements.DEFAULT_PT_LSNS = 185 
-elements.DEFAULT_PT_LDTC = 186 
-elements.DEFAULT_PT_SLCN = 187 
-elements.DEFAULT_PT_PTNM = 188 
-elements.DEFAULT_PT_VSNS = 189 
-elements.DEFAULT_PT_ROCK = 190 
+elements.DEFAULT_PT_NONE = 0
+elements.DEFAULT_PT_DUST = 1
+elements.DEFAULT_PT_WATR = 2
+elements.DEFAULT_PT_OIL = 3
+elements.DEFAULT_PT_FIRE = 4
+elements.DEFAULT_PT_STNE = 5
+elements.DEFAULT_PT_LAVA = 6
+elements.DEFAULT_PT_GUN = 7
+elements.DEFAULT_PT_NITR = 8
+elements.DEFAULT_PT_CLNE = 9
+elements.DEFAULT_PT_GAS = 10
+elements["DEFAULT_PT_C-4"] = 11
+elements.DEFAULT_PT_GOO = 12
+elements.DEFAULT_PT_ICE = 13
+elements.DEFAULT_PT_METL = 14
+elements.DEFAULT_PT_SPRK = 15
+elements.DEFAULT_PT_SNOW = 16
+elements.DEFAULT_PT_WOOD = 17
+elements.DEFAULT_PT_NEUT = 18
+elements.DEFAULT_PT_PLUT = 19
+elements.DEFAULT_PT_PLNT = 20
+elements.DEFAULT_PT_ACID = 21
+elements.DEFAULT_PT_VOID = 22
+elements.DEFAULT_PT_WTRV = 23
+elements.DEFAULT_PT_CNCT = 24
+elements.DEFAULT_PT_DSTW = 25
+elements.DEFAULT_PT_SALT = 26
+elements.DEFAULT_PT_SLTW = 27
+elements.DEFAULT_PT_DMND = 28
+elements.DEFAULT_PT_BMTL = 29
+elements.DEFAULT_PT_BRMT = 30
+elements.DEFAULT_PT_PHOT = 31
+elements.DEFAULT_PT_URAN = 32
+elements.DEFAULT_PT_WAX = 33
+elements.DEFAULT_PT_MWAX = 34
+elements.DEFAULT_PT_PSCN = 35
+elements.DEFAULT_PT_NSCN = 36
+elements.DEFAULT_PT_LN2 = 37
+elements.DEFAULT_PT_INSL = 38
+elements.DEFAULT_PT_VACU = 39
+elements.DEFAULT_PT_VENT = 40
+elements.DEFAULT_PT_RBDM = 41
+elements.DEFAULT_PT_LRBD = 42
+elements.DEFAULT_PT_NTCT = 43
+elements.DEFAULT_PT_SAND = 44
+elements.DEFAULT_PT_GLAS = 45
+elements.DEFAULT_PT_PTCT = 46
+elements.DEFAULT_PT_BGLA = 47
+elements.DEFAULT_PT_THDR = 48
+elements.DEFAULT_PT_PLSM = 49
+elements.DEFAULT_PT_ETRD = 50
+elements.DEFAULT_PT_NICE = 51
+elements.DEFAULT_PT_NBLE = 52
+elements.DEFAULT_PT_BTRY = 53
+elements.DEFAULT_PT_LCRY = 54
+elements.DEFAULT_PT_STKM = 55
+elements.DEFAULT_PT_SWCH = 56
+elements.DEFAULT_PT_SMKE = 57
+elements.DEFAULT_PT_DESL = 58
+elements.DEFAULT_PT_COAL = 59
+elements.DEFAULT_PT_LOXY = 60
+elements.DEFAULT_PT_OXYG = 61
+elements.DEFAULT_PT_INWR = 62
+elements.DEFAULT_PT_YEST = 63
+elements.DEFAULT_PT_DYST = 64
+elements.DEFAULT_PT_THRM = 65
+elements.DEFAULT_PT_GLOW = 66
+elements.DEFAULT_PT_BRCK = 67
+elements.DEFAULT_PT_CFLM = 68
+elements.DEFAULT_PT_FIRW = 69
+elements.DEFAULT_PT_FUSE = 70
+elements.DEFAULT_PT_FSEP = 71
+elements.DEFAULT_PT_AMTR = 72
+elements.DEFAULT_PT_BCOL = 73
+elements.DEFAULT_PT_PCLN = 74
+elements.DEFAULT_PT_HSWC = 75
+elements.DEFAULT_PT_IRON = 76
+elements.DEFAULT_PT_MORT = 77
+elements.DEFAULT_PT_LIFE = 78
+elements.DEFAULT_PT_DLAY = 79
+elements.DEFAULT_PT_CO2 = 80
+elements.DEFAULT_PT_DRIC = 81
+elements.DEFAULT_PT_BUBW = 82
+elements.DEFAULT_PT_STOR = 83
+elements.DEFAULT_PT_PVOD = 84
+elements.DEFAULT_PT_CONV = 85
+elements.DEFAULT_PT_CAUS = 86
+elements.DEFAULT_PT_LIGH = 87
+elements.DEFAULT_PT_TESC = 88
+elements.DEFAULT_PT_DEST = 89
+elements.DEFAULT_PT_SPNG = 90
+elements.DEFAULT_PT_RIME = 91
+elements.DEFAULT_PT_FOG = 92
+elements.DEFAULT_PT_BCLN = 93
+elements.DEFAULT_PT_LOVE = 94
+elements.DEFAULT_PT_DEUT = 95
+elements.DEFAULT_PT_WARP = 96
+elements.DEFAULT_PT_PUMP = 97
+elements.DEFAULT_PT_FWRK = 98
+elements.DEFAULT_PT_PIPE = 99
+elements.DEFAULT_PT_FRZZ = 100
+elements.DEFAULT_PT_FRZW = 101
+elements.DEFAULT_PT_GRAV = 102
+elements.DEFAULT_PT_BIZR = 103
+elements.DEFAULT_PT_BIZG = 104
+elements.DEFAULT_PT_BIZS = 105
+elements.DEFAULT_PT_INST = 106
+elements.DEFAULT_PT_ISOZ = 107
+elements.DEFAULT_PT_ISZS = 108
+elements.DEFAULT_PT_PRTI = 109
+elements.DEFAULT_PT_PRTO = 110
+elements.DEFAULT_PT_PSTE = 111
+elements.DEFAULT_PT_PSTS = 112
+elements.DEFAULT_PT_ANAR = 113
+elements.DEFAULT_PT_VINE = 114
+elements.DEFAULT_PT_INVS = 115
+elements.DEFAULT_PT_EQVE = 116
+elements.DEFAULT_PT_SPWN2 = 117
+elements.DEFAULT_PT_SPWN = 118
+elements.DEFAULT_PT_SHLD = 119
+elements.DEFAULT_PT_SHD2 = 120
+elements.DEFAULT_PT_SHD3 = 121
+elements.DEFAULT_PT_SHD4 = 122
+elements.DEFAULT_PT_LOLZ = 123
+elements.DEFAULT_PT_WIFI = 124
+elements.DEFAULT_PT_FILT = 125
+elements.DEFAULT_PT_ARAY = 126
+elements.DEFAULT_PT_BRAY = 127
+elements.DEFAULT_PT_STK2 = 128
+elements.DEFAULT_PT_BOMB = 129
+elements["DEFAULT_PT_C-5"] = 130
+elements.DEFAULT_PT_SING = 131
+elements.DEFAULT_PT_QRTZ = 132
+elements.DEFAULT_PT_PQRT = 133
+elements.DEFAULT_PT_EMP = 134
+elements.DEFAULT_PT_BREL = 135
+elements.DEFAULT_PT_ELEC = 136
+elements.DEFAULT_PT_ACEL = 137
+elements.DEFAULT_PT_DCEL = 138
+elements.DEFAULT_PT_TNT = 139
+elements.DEFAULT_PT_IGNC = 140
+elements.DEFAULT_PT_BOYL = 141
+elements.DEFAULT_PT_GEL = 142
+elements.DEFAULT_PT_TRON = 143
+elements.DEFAULT_PT_TTAN = 144
+elements.DEFAULT_PT_EXOT = 145
+elements.DEFAULT_PT_EMBR = 147
+elements.DEFAULT_PT_HYGN = 148
+elements.DEFAULT_PT_SOAP = 149
+elements.DEFAULT_PT_BHOL = 150
+elements.DEFAULT_PT_WHOL = 151
+elements.DEFAULT_PT_MERC = 152
+elements.DEFAULT_PT_PBCN = 153
+elements.DEFAULT_PT_GPMP = 154
+elements.DEFAULT_PT_CLST = 155
+elements.DEFAULT_PT_WWLD = 156
+elements.DEFAULT_PT_GBMB = 157
+elements.DEFAULT_PT_FIGH = 158
+elements.DEFAULT_PT_FRAY = 159
+elements.DEFAULT_PT_RPEL = 160
+elements.DEFAULT_PT_PPIP = 161
+elements.DEFAULT_PT_DTEC = 162
+elements.DEFAULT_PT_DMG = 163
+elements.DEFAULT_PT_TSNS = 164
+elements.DEFAULT_PT_VIBR = 165
+elements.DEFAULT_PT_BVBR = 166
+elements.DEFAULT_PT_CRAY = 167
+elements.DEFAULT_PT_PSTN = 168
+elements.DEFAULT_PT_FRME = 169
+elements.DEFAULT_PT_GOLD = 170
+elements.DEFAULT_PT_TUNG = 171
+elements.DEFAULT_PT_PSNS = 172
+elements.DEFAULT_PT_PROT = 173
+elements.DEFAULT_PT_VIRS = 174
+elements.DEFAULT_PT_VRSS = 175
+elements.DEFAULT_PT_VRSG = 176
+elements.DEFAULT_PT_GRVT = 177
+elements.DEFAULT_PT_DRAY = 178
+elements.DEFAULT_PT_CRMC = 179
+elements.DEFAULT_PT_HEAC = 180
+elements.DEFAULT_PT_SAWD = 181
+elements.DEFAULT_PT_POLO = 182
+elements.DEFAULT_PT_RFRG = 183
+elements.DEFAULT_PT_RFGL = 184
+elements.DEFAULT_PT_LSNS = 185
+elements.DEFAULT_PT_LDTC = 186
+elements.DEFAULT_PT_SLCN = 187
+elements.DEFAULT_PT_PTNM = 188
+elements.DEFAULT_PT_VSNS = 189
+elements.DEFAULT_PT_ROCK = 190
 elements.DEFAULT_PT_LITH = 191
 
 --Set in `parts[i].flags`. Used by liquids and powders to speed up simulation by moving them less<br>

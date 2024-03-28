@@ -6,7 +6,7 @@
 
 -- The `bz2` API provides access to the bzip2 library TPT bundles. It can be used for compressing and decompressing blocks of data, such as TPT saves.<br>
 -- Only one-shot functionality is exposed because streaming functionality is only useful for tasks that are beyond the scope of this API.<br>
--- Unless stated otherwise, all functions raise errors if supplied with parameters that disagree with their descriptions. 
+-- Unless stated otherwise, all functions raise errors if supplied with parameters that disagree with their descriptions.
 bz2 = {}
 
 -- TODO Removed in v98?? idk, check later
@@ -35,7 +35,7 @@ bz2 = {}
 --
 --     --Decompression failed, sourceData is not valid bzip2 data
 --     decompressBad = 4,
---     
+--
 --     decompressEof = 5,
 -- }
 
@@ -86,7 +86,6 @@ function bz2.compress(sourceData, maxSize) end
 ---@param maxSize integer?
 ---@return string | nil, bz2DecompressErr, string | nil
 function bz2.decompress(sourceData, maxSize) end
-
 
 bz2.COMPRESS_NOMEM = 1
 bz2.COMPRESS_LIMIT = 2

@@ -3,7 +3,7 @@
 ---@diagnostic disable:duplicate-set-field
 
 -- The Bit API provides functions for performing bitwise operations on integer numbers, the Bit API is from the [LuaJIT BitOp library](http://bitop.luajit.org/index.html), documentation is copied from [here](http://bitop.luajit.org/api.html)<br>
--- If you are unfamiliar with bitwise operations, you may want to check the Wikipedia page on the subject: [http://en.wikipedia.org/wiki/Bitwise_operation](http://en.wikipedia.org/wiki/Bitwise_operation) 
+-- If you are unfamiliar with bitwise operations, you may want to check the Wikipedia page on the subject: [http://en.wikipedia.org/wiki/Bitwise_operation](http://en.wikipedia.org/wiki/Bitwise_operation)
 bit = {}
 
 --```
@@ -20,8 +20,7 @@ bit = {}
 --```
 ---@param input integer
 ---@return integer
-function bit.tobit(input)    
-end
+function bit.tobit(input) end
 
 --```
 --bit.tohex(number input, number length)
@@ -42,8 +41,7 @@ end
 ---@param input integer
 ---@param length integer?
 ---@return string
-function bit.tohex(input, length)    
-end
+function bit.tohex(input, length) end
 
 --```
 --bit.bnot(number input)
@@ -57,8 +55,7 @@ end
 --```
 ---@param input integer
 ---@return integer
-function bit.bnot(input)    
-end
+function bit.bnot(input) end
 
 --```
 --bit.band(number input, [number input...])
@@ -74,8 +71,7 @@ end
 --```
 ---@param ... integer
 ---@return integer
-function bit.band(...)    
-end
+function bit.band(...) end
 
 --```
 --bit.bor(number input, [number input...])
@@ -92,8 +88,7 @@ end
 
 ---@param ... integer
 ---@return integer
-function bit.bor(...)    
-end
+function bit.bor(...) end
 
 --```
 --bit.xor(number input, [number input...])
@@ -109,8 +104,7 @@ end
 --```
 ---@param ... integer
 ---@return integer
-function bit.xor(...)    
-end
+function bit.xor(...) end
 
 --```
 --bit.lshift(number input, number shift)
@@ -131,8 +125,7 @@ end
 ---@param input integer
 ---@param shift integer
 ---@return integer
-function bit.lshift(input, shift)    
-end
+function bit.lshift(input, shift) end
 
 -- ```
 -- bit.rshift(number input, number shift)
@@ -154,8 +147,7 @@ end
 ---@param input integer
 ---@param shift integer
 ---@return integer
-function bit.rshift(input, shift)    
-end
+function bit.rshift(input, shift) end
 
 -- ```
 -- bit.arshift(number input, number shift)
@@ -176,8 +168,7 @@ end
 ---@param input integer
 ---@param shift integer
 ---@return integer
-function bit.arshift(input, shift)    
-end
+function bit.arshift(input, shift) end
 
 -- ```
 -- bit.rol(number input, number bits)
@@ -196,8 +187,7 @@ end
 ---@param input integer
 ---@param bits integer
 ---@return integer
-function bit.rol(input, bits)    
-end
+function bit.rol(input, bits) end
 -- ```
 -- bit.rol(number input, number bits)
 -- ```
@@ -215,8 +205,7 @@ end
 ---@param input integer
 ---@param bits integer
 ---@return integer
-function bit.ror(input, bits)    
-end
+function bit.ror(input, bits) end
 
 -- ```
 -- bit.bswap(number input)
@@ -236,6 +225,4 @@ end
 -- ```
 ---@param input integer
 ---@return integer
-function bit.bswap(input)    
-end
-
+function bit.bswap(input) end
