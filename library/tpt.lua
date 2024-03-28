@@ -23,6 +23,24 @@
 ---|17 WL_ERASEALL	
 ---|18 WL_STASIS	
 
+---@alias DisplayMode
+---|0 Velocity
+---|1 Pressure
+---|2 Persistent
+---|3 Fire
+---|4 Blob
+---|5 Heat
+---|6 Fancy
+---|7 Nothing
+---|8 Heat Gradient
+---|9 Life Gradient
+---|10 Alternate Velocity 
+
+---@alias ElemFuncReplace
+---|1 Call after original
+---|2 Overwrite original
+---|3 Call before original
+
 tpt = {}
 
 --Draw text to the screen (for one frame, only useful in scripts)<br>
@@ -623,18 +641,6 @@ end
 ---@deprecated
 function tpt.decorations_enable() end
 
----@alias DisplayMode
----|0 Velocity
----|1 Pressure
----|2 Persistent
----|3 Fire
----|4 Blob
----|5 Heat
----|6 Fancy
----|7 Nothing
----|8 Heat Gradient
----|9 Life Gradient
----|10 Alternate Velocity 
 
 --Changes activated display mode.<br>
 --There's 11 display modes, detailed here https://github.com/ThePowderToy/The-Powder-Toy/blob/f54189a97f6d80181deb4f6d952ccf10f0e59ccf/src/graphics/Renderer.cpp#L2587-L2644<br>
@@ -769,12 +775,6 @@ end
 ---@return string
 function tpt.element(elementid)
 end
-
----@alias ElemFuncReplace
----|1 Call after original
----|2 Overwrite original
----|3 Call before original
-
 
 --Allows you to replace or add on to an element's update function.<br>
 --Write a function like normal, and then put its name into this command. Use `tpt.element("...")` or `tpt.el.dust.id` for el_number.<br>

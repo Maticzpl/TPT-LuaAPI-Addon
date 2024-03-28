@@ -2,6 +2,61 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
+---@alias PartProperty    
+---|integer
+---|"type"
+---|"life"
+---|"ctype"
+---|"x"
+---|"y"
+---|"vx"
+---|"vy"
+---|"temp"
+---|"tmp3"
+---|"tmp4"
+---|"flags"
+---|"tmp"
+---|"tmp2"
+---|"dcolour"
+
+---@alias Sign { id: integer, text: string?, x: integer?, y: integer?, justification: integer}
+
+---@enum JustModes
+simulation.signs = {
+    JUSTMODE_LEFT = 0,
+    JUSTMODE_MIDDLE = 1,
+    JUSTMODE_RIGHT = 2,
+    JUSTMODE_NONE = 3
+}
+
+-- Don't think the others can be enums cause they would redefine sim table
+
+---@alias ColorSpace
+---|`sim.DECOSPACE_SRGB`
+---|`sim.DECOSPACE_LINEAR`
+---|`sim.DECOSPACE_GAMMA22`
+---|`sim.DECOSPACE_GAMMA18`
+
+---@alias GravityMode
+---|`sim.GRAV_VERTICAL`
+---|`sim.GRAV_OFF`
+---|`sim.GRAV_RADIAL`
+---|`sim.GRAV_CUSTOM`
+
+---@alias AirMode
+---|`sim.AIR_ON`
+---|`sim.AIR_PRESSUREOFF`
+---|`sim.AIR_VELOCITYOFF`
+---|`sim.AIR_OFF`
+---|`sim.AIR_NOUPDATE`
+
+---@alias CanMoveMethod
+---|0 Bounce off the obstacle  
+---|1 Swap places with the obstacle  
+---|2 Move over the obstacle  
+
+---@alias GOL {name: string, rulestr: string, rule: number, color1: number, color2: number}
+
 simulation = {}
 
 --```
@@ -63,24 +118,6 @@ end
 function simulation.partCreate(index, x, y, type)
 end
 
----@alias PartProperty    
----|integer
----|"type"
----|"life"
----|"ctype"
----|"x"
----|"y"
----|"vx"
----|"vy"
----|"temp"
----|"tmp3"
----|"tmp4"
----|"flags"
----|"tmp"
----|"tmp2"
----|"dcolour"
----|"pavg0" DEPRECATED. USE TMP3
----|"pavg1" DEPRECATED. USE TMP4
 
 --```
 --nil sim.partProperty(number index, object field, object value)
@@ -723,16 +760,6 @@ end
 function simulation.floodDeco(x, y, r, g, b, a) end
 
 
----@alias ColorSpace
----|`sim.DECOSPACE_SRGB`
----|`sim.DECOSPACE_LINEAR`
----|`sim.DECOSPACE_GAMMA22`
----|`sim.DECOSPACE_GAMMA18`
-simulation.DECOSPACE_SRGB = 0
-sim.DECOSPACE_LINEAR = 1
-sim.DECOSPACE_GAMMA22 = 2
-sim.DECOSPACE_GAMMA18 = 3
-sim.NUM_DECOSPACES = 4
 
 --```
 --sim.decoSpace(colorSpace)
@@ -943,10 +970,6 @@ end
 function simulation.edgeMode(mode)
 end
 
----@alias GravityMode
----|0 Normal, vertical gravity
----|1 No gravity
----|2 Radial gravity  
 
 --```
 --number sim.gravityMode()
@@ -983,14 +1006,6 @@ end
 ---@return number, number
 function simulation.customGravity()        
 end
-
----@alias AirMode
----|0 Normal  
----|1 Pressure off  
----|2 Velocity off  
----|3 Velocity and pressure off  
----|4 No update   
-
 
 --```
 --number sim.airMode()
@@ -1098,11 +1113,6 @@ end
 ---@return integer
 function simulation.elementCount(type)
 end
-
----@alias CanMoveMethod
----|0 Bounce off the obstacle  
----|1 Swap places with the obstacle  
----|2 Move over the obstacle  
 
 --```
 --simulation.can_move(number movingElementID, number obstacleElementID, number method)
@@ -1303,8 +1313,6 @@ end
 ---@param flags integer  
 function simulation.replaceModeFlags(flags) end
 
----@alias GOL {name: string, rulestr: string, rule: number, color1: number, color2: number}
-
 --```
 --table sim.listCustomGol()
 --```
@@ -1442,21 +1450,7 @@ function simulation.randomSeed() end
 ---@param seed1Upper number
 function simulation.randomSeed(seed0Lower, seed0Upper, seed1Lower, seed1Upper) end
 
----@alias Sign { id: integer, text: string?, x: integer?, y: integer?, justification: integer}
----@alias JustModes
----|`sim.signs.JUSTMODE_LEFT`
----|`sim.signs.JUSTMODE_MIDDLE`
----|`sim.signs.JUSTMODE_RIGHT`
----|`sim.signs.JUSTMODE_NONE`
 
----@type Sign[]|any
-simulation.signs = nil
-simulation.signs.MAX_SIGNS = 16
-simulation.signs.JUSTMODE_LEFT = 0
-simulation.signs.JUSTMODE_MIDDLE = 1
-simulation.signs.JUSTMODE_RIGHT = 2
-simulation.signs.JUSTMODE_NONE = 3
-simulation.signs.NUM_JUSTMODES = 4
 
 -- Deletes the sign at the specified sign id.<br>
 ---@param signID integer
@@ -1685,3 +1679,9 @@ simulation.GRAV_OFF = 1
 simulation.GRAV_RADIAL = 2
 simulation.GRAV_CUSTOM = 3
 simulation.NUM_GRAVMODES = 4
+
+simulation.NUM_DECOSPACES = 4
+
+---@type Sign[]|any
+simulation.signs.MAX_SIGNS = 16
+simulation.signs.NUM_JUSTMODES = 4

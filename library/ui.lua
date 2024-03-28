@@ -2,6 +2,16 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
+---@alias ButtonCallback fun(sender: Button)
+
+---@alias SliderCallback fun(sender: Slider, value : integer)
+
+---@alias CheckboxCallback fun(sender: Checkbox, checked: boolean)
+
+---@alias TextboxCallback fun(sender: Textbox)
+
+
+
 interface = {}
 
 --Component
@@ -57,8 +67,6 @@ interface = {}
     ---@return Button
     function Button:new(x, y, width, height, text, tooltip)
     end
-
-    ---@alias ButtonCallback fun(sender: Button)
 
     --```
     --nil Button:action(function(sender) actionListener)
@@ -148,8 +156,6 @@ interface = {}
     function Slider:new(x, y, width, height, steps)
     end
 
-    ---@alias SliderCallback fun(sender: Slider, value : integer)
-
     --Sets the listener for slider actions<br>
     ---@param actionListener SliderCallback  
     function Slider:onValueChanged(actionListener)    
@@ -190,8 +196,6 @@ interface = {}
     ---@return Checkbox
     function Checkbox:new(x, y, width, height, text)
     end
-
-    ---@alias CheckboxCallback fun(sender: Checkbox, checked: boolean)
 
     --Sets the listener for checkbox actions<br>
     ---@param actionListener CheckboxCallback  
@@ -261,8 +265,6 @@ interface = {}
     ---@return Textbox
     function Textbox:new(x, y, width, height,text,placeholder)
     end
-
-    ---@alias TextboxCallback fun(sender: Textbox)
 
     --Sets the listener for text changed actions<br>
     ---@param textChangedListener TextboxCallback  

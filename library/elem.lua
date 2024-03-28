@@ -2,7 +2,6 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
-elements = {}
 
 --Doesnt include functions
 ---@alias Properties {Weight:number?, HotAir:number?, Properties:number?, HighTemperatureTransition:number?, LowPressureTransition:number?, AirLoss:number?, Gravity:number?, Name:string?, Colour:number?, Identifier:string?, PhotonReflectWavelengths:number?, Color:number?, NewtonianGravity:number?, Diffusion:number?, Advection:number?, Hardness:number?, HighPressureTransition:number?, HighPressure:number?, Loss:number?, MenuVisible:number?, LowTemperatureTransition:number?, MenuSection:number?, Collision:number?, DefaultProperties:table?, AirDrag:number?, HighTemperature:number?, LowTemperature:number?, Enabled:number?, HeatConduct:number?, Falldown:number?, Meltable:number?, LowPressure:number?, Explosive:number?, Temperature:number?, Description:string?, Flammable:number?}
@@ -105,6 +104,8 @@ elements = {}
 ---@alias PropertyFunctions UpdateFunc|GraphicsFunc|CreateFunc|ChangeTypeFunc
 
 ---@alias RunUpdateWhen `elements.UPDATE_AFTER`|`elements.UPDATE_REPLACE`|`elements.UPDATE_BEFORE`
+
+elements = {}
 
 --```
 --elemNumber = elements.allocate(group, iname)

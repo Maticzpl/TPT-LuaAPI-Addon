@@ -2,6 +2,9 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
+--- @alias HTTPHeaders { [1]: string, [2]: string }[]
+--- @alias HTTPPostParams { [1]: string, [2]: string, [3]: string? }[]
+--
 http = {}
 
 ---@class HTTPRequest
@@ -24,8 +27,6 @@ end
 function HTTPRequest:cancel()
 end
 
---- @alias HTTPHeaders { [1]: string, [2]: string }[]
---- @alias HTTPPostParams { [1]: string, [2]: string, [3]: string? }[]
 
 ---Finishes the request and returns the response body, status code, and headers. Call this only when HTTPRequest:status returns "done". Does and returns nothing if the request is dead.  
 ---Header data is returned as a collection of table objects. Each header is represented by a subtable t with t[1] containing the header name and t[2] containing the value.  

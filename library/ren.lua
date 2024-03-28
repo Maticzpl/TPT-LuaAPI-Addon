@@ -2,6 +2,8 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
+--TODO: Lua annotation types maybe?
+
 renderer = {
     --#### These should be used in lua graphics functions to set how particles will be drawn. Effects like fire, glowing, and flares are set here. How a particle is actually rendered depends on the current render and display modes.<br>
     PMODE           = 0x00000FFF,	    --> A bitmask which can be used to check if a particle has any PMODEs set.<br>
