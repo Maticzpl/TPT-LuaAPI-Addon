@@ -2,7 +2,20 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
---TODO: Lua annotation types maybe?
+---@alias DisplayMode
+---|0 Velocity
+---|1 Pressure
+---|2 Persistent
+---|3 Fire
+---|4 Blob
+---|5 Heat
+---|6 Fancy
+---|7 Nothing
+---|8 Heat Gradient
+---|9 Life Gradient
+---|10 Alternate Velocity 
+
+--TODO: Lua annotation types for stuff below maybe?
 
 -- The renderer api can be used to control how the simulation in TPT gets rendered. You can set render / display modes, and change things related to the HUD / grid mode. Some renderer related functions are in the legacy tpt.* api.<br>
 -- ren.* is an alias for renderer.* and can be used to write things shorter. 
@@ -42,7 +55,9 @@ renderer = {
     --#### These should be used in lua graphics functions to set how particles will be drawn. Effects like fire, glowing, and flares are set here. How a particle is actually rendered depends on the current render and display modes.<br>
     FIRE_ADD	    = 0x00010000,	    --> Adds a weak fire effect around an element. Does not support many colors like FIRE_BLEND does.<br>
     --#### These should be used in lua graphics functions to set how particles will be drawn. Effects like fire, glowing, and flares are set here. How a particle is actually rendered depends on the current render and display modes.<br>
-    FIRE_BLEND	    = 0x00020000,	    --> Adds a stronger fire effect around an element. All gasses have this on by default.<br>
+    FIRE_BLEND	    = 0x00020000,	    --> Adds a strong fire effect around an element. All gasses have this on by default.<br>
+    --#### These should be used in lua graphics functions to set how particles will be drawn. Effects like fire, glowing, and flares are set here. How a particle is actually rendered depends on the current render and display modes.<br>
+    FIRE_SPARK 	    = 0x00040000, 	    --> Adds a moderate fire effect around an element. Used by SPRK. 
     --#### These should be used in lua graphics functions to set how particles will be drawn. Effects like fire, glowing, and flares are set here. How a particle is actually rendered depends on the current render and display modes.<br>
     EFFECT	        = 0xFF000000,	    --> A bitmask which can be used to check if a particle has any special effects set.<br>
     --#### These should be used in lua graphics functions to set how particles will be drawn. Effects like fire, glowing, and flares are set here. How a particle is actually rendered depends on the current render and display modes.<br>
@@ -198,20 +213,6 @@ end
 function renderer.colourMode(colourMode) 
 end
 
-
---```
---number ren.decorations()
---ren.decorations(number decoSetting)
---```
---If called with no arguments, returns a 0 or a 1 representing the current deco mode setting. If a number is passed in, turns decorations on or off.<br>
----@param decoSetting integer  
-function renderer.decorations(decoSetting)
-end
----@return integer
-function renderer.decorations()
-end
-
-
 --```
 --number ren.grid()
 --ren.grid(number gridSize)
@@ -225,6 +226,66 @@ end
 function renderer.grid()
 end
 
+--```
+--renderer.hud(enabled)
+--```
+--Controls if the hud is shown or not.<br>
+--  - `enabled`: boolean flag that specifies if the HUD is enabled or not.
+---@param enabled boolean
+function renderer.hud(enabled)
+end
+--```
+--enabled = renderer.hud()
+--```
+--Controls if the hud is shown or not.<br>
+--  - `enabled`: boolean flag that specifies if the HUD is enabled or not.
+---@return boolean
+function renderer.hud()
+end
+
+--```
+--renderer.decorations(enabled)
+--```
+--Controls whether the decorations layer is enabled.<br> 
+--  - `enabled`: boolean true/false flag that specifies whether deco is on or off.
+---@param enabled boolean
+function renderer.decorations(enabled)
+end
+--```
+--enabled = renderer.decorations()
+--```
+--Controls whether the decorations layer is enabled.<br> 
+--  - `enabled`: boolean true/false flag that specifies whether deco is on or off.
+---@return boolean
+function renderer.decorations()
+end
+
+--```
+--renderer.fireSize(size)
+--```
+--Controls intensity of fire effects. The default is 1. Other values may cause glitchy graphics such as CELL borders appearing in fire effects.<br> 
+--  - `size`: floating point value that specifies the fire intensity.
+---@param size number
+function renderer.fireSize(size)
+end
+--```
+--size = renderer.fireSize()
+--```
+--Controls intensity of fire effects. The default is 1. Other values may cause glitchy graphics such as CELL borders appearing in fire effects.<br> 
+--  - `size`: floating point value that specifies the fire intensity.
+---@return number
+function renderer.fireSize()
+end
+
+--```
+--renderer.useDisplayPreset(preset)
+--```
+--Loads a standard display preset, as if you pressed a number key.<br>
+--  - `preset`: The preset to enable.<br>
+--Presets start at 0, so preset 0 is velocity display, and preset 3 is fire display. Most presets match the order of the in-game shortcuts, except for life gradient display - preset 9, and alternate velocity display - preset 10. 
+---@param preset DisplayMode
+function renderer.useDisplayPreset(preset)
+end
 
 --```
 --number ren.debugHUD()
@@ -237,7 +298,6 @@ end
 ---@return integer
 function renderer.debugHUD()
 end
-
 
 --```
 --number ren.showBrush()

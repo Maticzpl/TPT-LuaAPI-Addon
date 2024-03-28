@@ -23,19 +23,6 @@
 ---|17 WL_ERASEALL	
 ---|18 WL_STASIS	
 
----@alias DisplayMode
----|0 Velocity
----|1 Pressure
----|2 Persistent
----|3 Fire
----|4 Blob
----|5 Heat
----|6 Fancy
----|7 Nothing
----|8 Heat Gradient
----|9 Life Gradient
----|10 Alternate Velocity 
-
 ---@alias ElemFuncReplace
 ---|1 Call after original
 ---|2 Overwrite original
@@ -569,8 +556,11 @@ function tpt.getPartIndex() end
 
 --Set HUD visibility.<br>
 --Does the same thing as pressing the H key normally. The number argument can be either 0 or 1, where 1 will show the HUD, and 0 will hide the HUD. If you don't pass in any arguments, the command will return an integer, either 0 or 1, about whether the HUD is visible right now.<br>
+--### **REPLACED BY `ren.hud()`**
+---@deprecated
 ---@param state integer  
 function tpt.hud(state) end
+---@deprecated
 ---@return integer
 function tpt.hud() end
 
@@ -664,6 +654,8 @@ function tpt.decorations_enable() end
 -- - 8 = Heat Gradient
 -- - 9 = Life Gradient
 -- - 10 = Alternate Velocity
+--### **REPLACED BY `ren.useDisplayPreset()`**
+---@deprecated
 ---@param display DisplayMode  
 function tpt.display_mode(display)
 end
@@ -686,6 +678,8 @@ end
 function tpt.heat() end
 
 --Changes the strength of the games glowing effects. `tpt.setfire(1)` is default.<br>
+--### **REPLACED BY `ren.fireSize()`**
+---@deprecated
 ---@param strength number  
 function tpt.setfire(strength)  
 end
