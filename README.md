@@ -6,7 +6,7 @@ An addon for [LuaLS](https://luals.github.io/) providing completions for TPT Lua
 
 ## Usage
 ### VSCode
-1. Download Lua extension by sumneko ![](https://i.imgur.com/VkMtwQj.png)
+1. Download Lua extension by sumneko<br> ![](https://i.imgur.com/VkMtwQj.png)
 2. Open VSCode command pallete `ctrl + P`
 3. Type "Open Addon Manager"
 4. Search for "The Powder Toy (TPT) Lua API"
