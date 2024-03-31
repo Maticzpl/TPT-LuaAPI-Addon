@@ -44,7 +44,6 @@ end
 --```
 --boolean fs.isLink(string path)
 --```
---**Upcoming in version 98.0**<br>
 --Returns a boolean indicating whether "path" is a symbolic link<br>
 ---@param path string  
 ---@return boolean

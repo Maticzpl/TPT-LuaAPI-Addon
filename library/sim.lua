@@ -862,15 +862,17 @@ end
 function simulation.listStamps()
 end
 
+-- TODO: inconsitent formatting (3 dashes, space after)
+
 ---```
 ---sim.loadStamp(string filename, number x, number y, [boolean hflip, [number rotation, [boolean includePressure]]])
 ---sim.loadStamp(number id, number x, number y, [boolean hflip, [number rotation, [boolean includePressure]]])
 ---```
----# **Upcoming in version 98.0**  
---- The following changes are applied to the stamp before pasting, in this order:  
---- - if hflip is true, a horizontal flip is applied to the save (same as pressing Shift+R when pasting)  
---- - if rotation is present, this number of 90-degree counterclockwise rotations are applied to the save (same as pressing R this many times when pasting)  
---- - if the position x,y is not CELL-aligned, the stamp is pasted with its top left corner at the nearest CELL-aligned position toward negative infinity, and the difference between this position and the requested one is achieved via "nudging" (same as pressing the arrow keys a few times when pasting)
+--- Loads a stamp identified by filename or ID, and places it at position x,y. Filenames should be given without stamps/ or the .stm suffix. On success, returns 1. On failure, returns nil and the failure reason as a string.<br>
+--- The following changes are applied to the stamp before pasting, in this order:<br>
+--- - if hflip is true, a horizontal flip is applied to the save (same as pressing Shift+R when pasting<br>
+--- - if rotation is present, this number of 90-degree counterclockwise rotations are applied to the save (same as pressing R this many times when pasting)<br>
+--- - if the position x,y is not CELL-aligned, the stamp is pasted with its top left corner at the nearest CELL-aligned position toward negative infinity, and the difference between this position and the requested one is achieved via "nudging" (same as pressing the arrow keys a few times when pasting)<br>
 ---@param filenameOrId string | number
 ---@param x number
 ---@param y number
@@ -1405,7 +1407,6 @@ function simulation.historyForward() end
 ---```
 --- boolean sim.ensureDeterminism()
 ---```
----**Upcoming in version 98.0**
 ---Fetch or set ensureDeterminism flag. When this flag is set, extra data is included in saves to ensure simulation RNG state is saved, along with other items needed to guarantee proper determinism upon loading the save. 
 ---This is only useful for debugging, as different builds of the game may do things slightly differently on different machines. 
 ---Further, Newtonian gravity is not deterministic with this flag enabled even in debugging scenarios. 
@@ -1414,7 +1415,6 @@ function simulation.ensureDeterminism() end
 ---```
 --- nil sim.ensureDeterminism(boolean flag)
 ---```
----**Upcoming in version 98.0**
 ---Fetch or set ensureDeterminism flag. When this flag is set, extra data is included in saves to ensure simulation RNG state is saved, along with other items needed to guarantee proper determinism upon loading the save. 
 ---This is only useful for debugging, as different builds of the game may do things slightly differently on different machines. 
 ---Further, Newtonian gravity is not deterministic with this flag enabled even in debugging scenarios. 
@@ -1424,7 +1424,6 @@ function simulation.ensureDeterminism(flag) end
 ---```
 ---number simulation.hash()
 ---```
----**Upcoming in version 98.0**  
 ---Returns a 32-bit int represending the hash of the simulation's current state.  
 ---Nearly all state is included, including particles, air, gravity, frame count, and rng state.  
 ---Frame count's inclusion means that the hash changes every frame, even while paused).  
@@ -1434,7 +1433,6 @@ function simulation.hash() end
 ---```
 ---number seed0Lower, number seed0Upper, number seed1Lower, number seed1Upper sim.randomSeed()
 ---```
----**Upcoming in version 98.0**  
 ---Retrieve or set the seed used for the Simulation RNG. This RNG is used by TPT to generate random numbers during sim contexts. The renderer RNG and interface RNG are unaffected.  
 ---Because seeds are 64 bits, they are fetched/set in two sets of 32 bits integers.  
 ---@return number seed0Lower, number seed0Upper, number seed1Lower, number seed1Upper
@@ -1442,7 +1440,6 @@ function simulation.randomSeed() end
 ---```
 ---nil sim.randomSeed(number seed0Lower, number seed0Upper, number seed1Lower, number seed1Upper)
 ---```
----**Upcoming in version 98.0**  
 ---Retrieve or set the seed used for the Simulation RNG. This RNG is used by TPT to generate random numbers during sim contexts. The renderer RNG and interface RNG are unaffected.  
 ---Because seeds are 64 bits, they are fetched/set in two sets of 32 bits integers.  
 ---@param seed0Lower number
