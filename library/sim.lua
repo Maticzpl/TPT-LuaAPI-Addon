@@ -56,9 +56,9 @@ simulation.signs = {
 ---|2 Move over the obstacle  
 
 ---@alias Brush
----|`simulation.BRUSH_CIRCLE`
----|`simulation.BRUSH_SQUARE`
----|`simulation.BRUSH_TRIANGLE`
+---|`sim.BRUSH_CIRCLE`
+---|`sim.BRUSH_SQUARE`
+---|`sim.BRUSH_TRIANGLE`
 
 ---@alias GOL {name: string, rulestr: string, rule: number, color1: number, color2: number}
 
