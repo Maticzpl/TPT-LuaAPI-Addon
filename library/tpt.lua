@@ -103,14 +103,17 @@ function tpt.toggle_pause() end
 --```
 --tpt.set_console() == 1
 --```
+--### **REPLACED BY `interface.console`**
+---@deprecated
 ---@param state integer
 function tpt.set_console(state) end
+--### **REPLACED BY `interface.console`**
+---@deprecated
 ---@return integer
 function tpt.set_console() end
 
 --Log a message to the console<br>
----@param text string
-function tpt.log(text) end
+function tpt.log(...) end
 
 --Sets or resets pressure in the pressure map to some pressure. I sometimes imagine how much I can repeat the word "pressure" inside a sentence before it becomes gibberish.<br>
 --Default values:<br>
@@ -197,11 +200,15 @@ function tpt.set_gravity(x, y) end
 --```
 --tpt.reset_gravity_field(100, 100, 200, 200)
 --```
+--### **REPLACED BY `sim.resetGravityField`**
+---@deprecated
 ---@param x integer
 ---@param y integer
 ---@param width integer
 ---@param height integer
 function tpt.reset_gravity_field(x, y, width, height) end
+--### **REPLACED BY `sim.resetGravityField`**
+---@deprecated
 ---@param x integer
 ---@param y integer
 function tpt.reset_gravity_field(x, y) end
@@ -221,11 +228,15 @@ function tpt.reset_gravity_field(x, y) end
 --```
 --tpt.reset_velocity(100,100,1,1)
 --```
+--### **REPLACED BY `sim.resetVelocity`**
+---@deprecated
 ---@param x integer
 ---@param y integer
 ---@param width integer
 ---@param height integer
 function tpt.reset_velocity(x, y, width, height) end
+--### **REPLACED BY `sim.resetVelocity`**
+---@deprecated
 function tpt.reset_velocity() end
 
 --Removes electrified wires from the simulation, resetting to the original material<br>
@@ -233,36 +244,48 @@ function tpt.reset_velocity() end
 ---@deprecated
 function tpt.reset_spark() end
 
---TODO: figure out if any of those are intengers, and if deprecated
-
 --Sets various properties of particles for given criteria<br>
+--### **REPLACED BY `sim.partProperty`**
+---@deprecated
 ---@param property string
 ---@param value any
 function tpt.set_property(property, value) end
+--### **REPLACED BY `sim.partProperty`**
+---@deprecated
 ---@param property string
 ---@param value any
 ---@param type string
 function tpt.set_property(property, value, type) end
+--### **REPLACED BY `sim.partProperty`**
+---@deprecated
 ---@param property string
 ---@param value any
 ---@param index number
 function tpt.set_property(property, value, index) end
+--### **REPLACED BY `sim.partProperty`**
+---@deprecated
 ---@param property string
 ---@param value any
 ---@param index number
 ---@param type string
 function tpt.set_property(property, value, index, type) end
+--### **REPLACED BY `sim.partProperty`**
+---@deprecated
 ---@param property string
 ---@param value any
 ---@param x number
 ---@param y number
 function tpt.set_property(property, value, x, y) end
+--### **REPLACED BY `sim.partProperty`**
+---@deprecated
 ---@param property string
 ---@param value any
 ---@param x number
 ---@param y number
 ---@param type string
 function tpt.set_property(property, value, x, y, type) end
+--### **REPLACED BY `sim.partProperty`**
+---@deprecated
 ---@param property string
 ---@param value any
 ---@param x number
@@ -270,6 +293,8 @@ function tpt.set_property(property, value, x, y, type) end
 ---@param width number
 ---@param height number
 function tpt.set_property(property, value, x, y, width, height) end
+--### **REPLACED BY `sim.partProperty`**
+---@deprecated
 ---@param property string
 ---@param value any
 ---@param x number
@@ -279,9 +304,13 @@ function tpt.set_property(property, value, x, y, width, height) end
 ---@param type string
 function tpt.set_property(property, value, x, y, width, height, type) end
 
+--### **REPLACED BY `sim.partProperty`**
+---@deprecated
 ---@param property string
 ---@param index integer
 function tpt.get_property(property, index) end
+--### **REPLACED BY `sim.partProperty`**
+---@deprecated
 ---@param property string
 ---@param x integer
 ---@param y integer
@@ -432,6 +461,12 @@ function tpt.textwidth(text) end
 
 --Returns the current username.<br>
 ---@return string
+function tpt.getUserName() end
+
+--Returns the current username.<br>
+--### **REPLACED BY ``**
+---@deprecated
+---@return string
 function tpt.get_name() end
 
 --Delete a specific particle, or a particle at a location.<br>
@@ -540,8 +575,11 @@ function tpt.ambient_heat() end
 --```
 --tpt.active_menu(elem.SC_EXPLOSIVE)
 --```
+--### **REPLACED BY `ui.activeMenu`**
+---@deprecated
 ---@param menu integer
 function tpt.active_menu(menu) end
+---@deprecated
 ---@return integer
 function tpt.active_menu() end
 
@@ -549,6 +587,8 @@ function tpt.active_menu() end
 --boolean tpt.menu_enabled(number menuID)
 --```
 --Returns true if a menu section is enabled.<br>
+--### **REPLACED BY `ui.menuEnabled`**
+---@deprecated
 ---@param menuID integer
 ---@return boolean
 function tpt.menu_enabled(menuID) end
@@ -556,6 +596,8 @@ function tpt.menu_enabled(menuID) end
 --tpt.menu_enabled(number menuID, boolean enabled)
 --```
 --If provided a boolean, will set if a menu section is enabled.<br>
+--### **REPLACED BY `ui.menuEnabled`**
+---@deprecated
 ---@param menuID integer
 ---@param enabled boolean
 function tpt.menu_enabled(menuID, enabled) end
@@ -565,11 +607,15 @@ function tpt.menu_enabled(menuID, enabled) end
 --```
 --Returns the number of menus.<br>
 --The optional onlyEnabled boolean is true by default.<br>
+--### **REPLACED BY `ui.numMenus`**
+---@deprecated
 ---@return integer
 function tpt.num_menus() end
 --```
 --number tpt.num_menus(boolean onlyEnabled)
 --```
+--### **REPLACED BY `ui.numMenus`**
+---@deprecated
 ---@param onlyEnabled boolean
 ---@return integer
 function tpt.num_menus(onlyEnabled) end
@@ -631,17 +677,47 @@ function tpt.setfire(strength) end
 --Setting 0x2 will draw a graph showing the percentages of each type of element on the screen.<br>
 --Setting 0x4 will display useful information when you draw lines using shift.<br>
 --Setting 0x8 enables subframe particle debugging. Use alt+f to step one particle at a time. Use shift+f to step up to the particle underneath the mouse. When not over a particle, it advances to the end of the frame.<br>
+--### **REPLACED BY `tpt.debug`**
+---@deprecated
 ---@param mode integer
 function tpt.setdebug(mode) end
+
+--Sets the "debug mode". It works using bitmasks, so you can turn on multiple debug features at the same time.<br>
+--Setting 0x1 will display info on the number of particles on the screen.<br>
+--Setting 0x2 will draw a graph showing the percentages of each type of element on the screen.<br>
+--Setting 0x4 will display useful information when you draw lines using shift.<br>
+--Setting 0x8 enables subframe particle debugging. Use alt+f to step one particle at a time. Use shift+f to step up to the particle underneath the mouse. When not over a particle, it advances to the end of the frame.<br>
+---@param mode integer
+function tpt.debug(mode) end
+--Sets the "debug mode". It works using bitmasks, so you can turn on multiple debug features at the same time.<br>
+--Setting 0x1 will display info on the number of particles on the screen.<br>
+--Setting 0x2 will draw a graph showing the percentages of each type of element on the screen.<br>
+--Setting 0x4 will display useful information when you draw lines using shift.<br>
+--Setting 0x8 enables subframe particle debugging. Use alt+f to step one particle at a time. Use shift+f to step up to the particle underneath the mouse. When not over a particle, it advances to the end of the frame.<br>
+---@return integer
+function tpt.debug() end
+
+--Changes the upper FPS limit the program will run at. This value is<br>
+--60 by default.<br>
+--Don't set it too high, it'll eat all your CPU speed and make the game too responsive! Don't also set it too low, since UI and everything related to it uses the same FPS, so you'll find buttons and stuff not working.<br>
+--If you don't pass in any arguments, it will return the current fps cap. If you set the fpscap to 2, this will uncap the framerate.<br>
+--### **REPLACED BY `tpt.fpsCap`**
+---@deprecated
+---@param fpscap number
+function tpt.setfpscap(fpscap) end
+--### **REPLACED BY `tpt.fpsCap`**
+---@deprecated
+---@return number
+function tpt.setfpscap() end
 
 --Changes the upper FPS limit the program will run at. This value is<br>
 --60 by default.<br>
 --Don't set it too high, it'll eat all your CPU speed and make the game too responsive! Don't also set it too low, since UI and everything related to it uses the same FPS, so you'll find buttons and stuff not working.<br>
 --If you don't pass in any arguments, it will return the current fps cap. If you set the fpscap to 2, this will uncap the framerate.<br>
 ---@param fpscap number
-function tpt.setfpscap(fpscap) end
+function tpt.fpsCap(fpscap) end
 ---@return number
-function tpt.setfpscap() end
+function tpt.fpsCap() end
 
 --**This function is DEPRECATED in TPT 98.0 and can only be used to install script manager**<br>
 --This function rejects all input, unless the arguments are those commonly used to install script manager. It is kept only so that old installation instructions still work. Please use tpt.installScriptManager instead.
@@ -664,6 +740,8 @@ function tpt.installScriptManager() end
 --Changes a few special properties as to what size the game renders at.<br>
 --Scale is a multiplier by which every pixel shall get multiplied at, currently it can either be 1 (612x384) or 2 (1224x768).<br>
 --Full screen is a toggle (0 or 1) that enables "kiosk mode", which basically scales the game up to fill the screen and makes the rest of the edge black.<br>
+--### **REPLACED BY `ui.windowSize`**
+---@deprecated
 ---@param scale integer
 ---@param fullscreen integer
 function tpt.setwindowsize(scale, fullscreen) end
@@ -776,8 +854,25 @@ function tpt.set_clipboard(text) end
 --tpt.setdrawcap<br>
 --Changes the rate that particle graphics and the UI render to the screen. This is separate from the fpscap, which only affects the simulation. The drawcap allows TPT to skip drawing every frame. This may increase the framerate in some instances.<br>
 --The default is set to the maximum refresh rate of all attached monitors.<br>
+--### **REPLACED BY `tpt.drawCap`**
+---@deprecated
 ---@param drawcap integer
 function tpt.setdrawcap(drawcap) end
+
+--```
+--tpt.drawCap(drawCap)
+--```
+--Changes the rate that particle graphics and the UI render to the screen. This is separate from the fpscap, which only affects the simulation. The drawcap allows TPT to skip drawing every frame. This may increase the framerate in some instances.<br>
+--The default is set to the maximum refresh rate of all attached monitors.<br>
+---@param drawCap integer
+function tpt.drawCap(drawCap) end
+--```
+--drawCap = tpt.drawCap()
+--```
+--Changes the rate that particle graphics and the UI render to the screen. This is separate from the fpscap, which only affects the simulation. The drawcap allows TPT to skip drawing every frame. This may increase the framerate in some instances.<br>
+--The default is set to the maximum refresh rate of all attached monitors.<br>
+---@return integer
+function tpt.drawCap() end
 
 --Returns true if perfect circle brush is enabled.<br>
 --If provided with a boolean, will change if its enabled.<br>
@@ -788,28 +883,98 @@ function tpt.setdrawcap(drawcap) end
 --```
 --tpt.perfectCircleBrush(boolean enabled)
 --```
+--### **REPLACED by `interface.perfectCircleBrush`**<br>
+---@deprecated
 ---@return boolean
 function tpt.perfectCircleBrush() end
+--### **REPLACED by `interface.perfectCircleBrush`**<br>
+---@deprecated
 ---@param enabled boolean
 function tpt.perfectCircleBrush(enabled) end
 
+---@return string
+function tpt.compatChunk() end
+
+--### **REPLACED BY `evt.register(evt.tick, ...)`**
+---@deprecated
+function tpt.register_step(f) end
+
+--### **REPLACED BY `evt.unregister(evt.tick, ...)`**
+---@deprecated
+function tpt.unregister_step(f) end
+
+--### **REPLACED BY `evt.register(evt.mousedown, ...) and apparently other events`**
+---@deprecated
+function tpt.register_mouseclick(f) end
+
+--### **REPLACED BY `evt.unregister(evt.mousedown, ...) and apparently other events`**
+---@deprecated
+function tpt.unregister_mouseclick(f) end
+
+--### **REPLACED BY `evt.register(evt.mousedown, ...) and apparently other events`**
+---@deprecated
+function tpt.register_mouseevent(f) end
+
+--### **REPLACED BY `evt.unregister(evt.mousedown, ...) and apparently other events`**
+---@deprecated
+function tpt.unregister_mouseevent(f) end
+
+--### **REPLACED BY `evt.register(evt.keypress, ...) and apparently other events`**
+---@deprecated
+function tpt.register_keypress(f) end
+
+--### **REPLACED BY `evt.unregister(evt.keypress, ...) and apparently other events`**
+---@deprecated
+function tpt.unregister_keypress(f) end
+
+--### **REPLACED BY `tpt.log`**
+---@deprecated
+function print(...) end
+
 -- Particle type selected under LMB<br>
+--### **REPLACED by `interface.activeTool`**<br>
+---@deprecated
 ---@type string
 tpt.selectedl = nil
 -- Particle type selected under RMB<br>
+--### **REPLACED by `interface.activeTool`**<br>
+---@deprecated
 ---@type string
 tpt.selectedr = nil
 -- Particle type selected under MMB<br>
+--### **REPLACED by `interface.activeTool`**<br>
+---@deprecated
 ---@type string
 tpt.selecteda = nil
+--### **REPLACED by `interface.activeTool`**<br>
+---@deprecated
 ---@type string
 tpt.selectedreplace = nil
+
 --Brush X size<br>
+--### **REPLACED by `interface.brushRadius`**<br>
+---@deprecated
 ---@type integer
 tpt.brushx = 0
 --Brush Y size<br>
+--### **REPLACED by `interface.brushRadius`**<br>
+---@deprecated
 ---@type integer
 tpt.brushy = 0
 --Brush shape ID (0 circle, 1 square, 2 triangle)<br>
+--### **REPLACED by `interface.brushID`**<br>
+---@deprecated
 ---@type integer
 tpt.brushID = 0
+
+--### **REPLACED by `elem.property`**<br>
+---@deprecated
+tpt.el = {}
+
+--### **REPLACED by `elem.property`**<br>
+---@deprecated
+tpt.eltransition = {}
+
+--### **REPLACED by `sim.partProperty` / `sim.parts`**<br>
+---@deprecated
+tpt.parts = {}

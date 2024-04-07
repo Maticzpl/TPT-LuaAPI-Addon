@@ -141,6 +141,15 @@ function simulation.partProperty(index, field) end
 function simulation.partPosition(index) end
 
 --```
+--sim.partPosition(number index, number x, number y)
+--```
+--Get the location of the particle at the specified index<br>
+---@param index integer
+---@param x number
+---@param y number
+function simulation.partPosition(index, x, y) end
+
+--```
 --number sim.partID(number x, number y)
 --```
 --Get the index of a particle at the specified position. As of v89.3, this will return nil if there is no particle there.<br>

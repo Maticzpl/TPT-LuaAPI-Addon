@@ -45,7 +45,9 @@
 ---|"Update"
 ---|"Graphics"
 ---|"Create"
+---|"CreateAllowed"
 ---|"ChangeType"
+---|"CtypeDraw"
 
 ---@alias MenuSection
 ---|`elem.SC_WALL`
@@ -98,9 +100,13 @@
 -- `v` This is an extra numeric property passed in sim.partCreate as part of the id number (currently bits 9 and above, counting from 0). It is effectively an extra multipurpose parameter for Create functions to handle however they like.
 ---@alias CreateFunc fun(CREATE_index:number, x:number, y:number, type:number, v:number)
 
+---@alias CreateAllowedFunc fun(CREATE_ALLOWED_index:number, x:number, y:number, type:number)
+
 ---@alias ChangeTypeFunc fun(CHANGE_TYPE_index:number, x:number, y:number, type:number, new_type:number)
 
----@alias PropertyFunctions UpdateFunc|GraphicsFunc|CreateFunc|ChangeTypeFunc
+---@alias CtypeDrawFunc fun(CHANGE_TYPE_index:number, type:number, v:number)
+
+---@alias PropertyFunctions UpdateFunc|GraphicsFunc|CreateFunc|ChangeTypeFunc|CreateAllowedFunc
 
 ---@alias RunUpdateWhen `elements.UPDATE_AFTER`|`elements.UPDATE_REPLACE`|`elements.UPDATE_BEFORE`
 
@@ -264,7 +270,8 @@ function elements.getByName(name) end
 --```
 -- Restore the set of elements to its initial state at startup.<br>
 -- This frees all elements created and resets all properties of all built-in elements to their defaults.<br>
-function elements.loadDefault() end
+---@param id integer?
+function elements.loadDefault(id) end
 
 elem = elements
 
@@ -274,6 +281,7 @@ elements.TYPE_SOLID = 4 -- Used in solids / misc elements.
 elements.TYPE_GAS = 8 -- Used in gases.
 elements.TYPE_ENERGY = 16 -- Used in energy particles.
 
+---@deprecated ??? TODO: Make sure
 elements.PROP_DRAWONCTYPE = 0 -- Set its ctype to another element if the element is drawn upon it (like what CLNE does).
 elements.PROP_CONDUCTS = 32 -- Allows an element to automatically conduct SPRK, requires PROP_LIFE_DEC.
 elements.PROP_BLACK = 64 -- Elements with this property absorb photons of any color.
@@ -484,15 +492,34 @@ elements.DEFAULT_PT_ROCK = 190
 elements.DEFAULT_PT_LITH = 191
 
 --Set in `parts[i].flags`. Used by liquids and powders to speed up simulation by moving them less<br>
+--### **REPLACED BY `sim.FLAG_STAGNANT`**
+---@deprecated
 elements.FLAG_STAGNANT = 1
 --Set in `parts[i].flags`. Given to PHOT by PCLN and PBCN to fix gaps in lasers, only useable by energy particles<br>
+--### **REPLACED BY `sim.FLAG_SKIPMOVE`**
+---@deprecated
 elements.FLAG_SKIPMOVE = 2
 --Set in `parts[i].flags`. Used internally for water equalization<br>
 elements.FLAG_WATEREQUAL = nil
 --Set in `parts[i].flags`. Can be used to re-enable moving sponge<br>
+--### **REPLACED BY `sim.FLAG_MOVABLE`**
+---@deprecated
 elements.FLAG_MOVABLE = 8
 --Set in `parts[i].flags`. Re-enables deco on photons for compatibility. Defined as the same value as FLAG_MOVABLE (they only apply to different elements)<br>
+--### **REPLACED BY `sim.FLAG_PHOTDECO`**
+---@deprecated
 elements.FLAG_PHOTDECO = 8
+
+-- Deprecated missing stuff according to https://github.com/The-Powder-Toy/The-Powder-Toy/blob/master/src/lua/luascripts/compat.lua
+
+---@deprecated
+elements.ST_GAS = 0
+---@deprecated
+elements.ST_LIQUID = 0
+---@deprecated
+elements.ST_NONE = 0
+---@deprecated
+elements.ST_SOLID = 0
 
 --#### Menu Sections<br>
 elements.SC_WALL = 0

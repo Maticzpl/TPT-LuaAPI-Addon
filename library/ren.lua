@@ -198,8 +198,12 @@ function renderer.colorMode(colorMode) end
 --```
 --This function takes one optional integer and sets which colour modes the currently appIying render mode uses. If the function is called with no arguments, it returns the current colour mode as an integer as well.<br>
 --A colour mode is basically a description of how particles are drawn. The other details which are considered when particles are drawn are fire mode, pixel mode and effect mode (rare cases like portals).<br>
+--### **REPLACED BY `ren.colorMode`**
+---@deprecated
 ---@return integer
 function renderer.colourMode() end
+--### **REPLACED BY `ren.colorMode`**
+---@deprecated
 ---@param colourMode integer
 function renderer.colourMode(colourMode) end
 
@@ -273,10 +277,24 @@ function renderer.useDisplayPreset(preset) end
 --ren.debugHUD(number debugSetting)
 --```
 --If called with no arguments, returns a 0 or a 1 representing whether the debug HUD (normally set with 'd') is on or off. If a number is passed in, turns the debug HUD on or off.<br>
+--### **REPLACED BY `ren.debugHud`**
+---@deprecated
 ---@param debugSetting integer
 function renderer.debugHUD(debugSetting) end
+--### **REPLACED BY `ren.debugHud`**
+---@deprecated
 ---@return integer
 function renderer.debugHUD() end
+
+--```
+--number ren.debugHud()
+--ren.debugHud(number debugSetting)
+--```
+--If called with no arguments, returns a 0 or a 1 representing whether the debug HUD (normally set with 'd') is on or off. If a number is passed in, turns the debug HUD on or off.<br>
+---@param debugSetting integer
+function renderer.debugHud(debugSetting) end
+---@return integer
+function renderer.debugHud() end
 
 --```
 --number ren.showBrush()
