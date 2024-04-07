@@ -46,7 +46,9 @@
 ---|"Update"
 ---|"Graphics"
 ---|"Create"
+---|"CreateAllowed"
 ---|"ChangeType"
+---|"CtypeDraw"
 
 ---@alias MenuSection
 ---|`elem.SC_WALL`
@@ -99,9 +101,13 @@
 -- `v` This is an extra numeric property passed in sim.partCreate as part of the id number (currently bits 9 and above, counting from 0). It is effectively an extra multipurpose parameter for Create functions to handle however they like.
 ---@alias CreateFunc fun(CREATE_index:number, x:number, y:number, type:number, v:number)
 
+---@alias CreateAllowedFunc fun(CREATE_ALLOWED_index:number, x:number, y:number, type:number)
+
 ---@alias ChangeTypeFunc fun(CHANGE_TYPE_index:number, x:number, y:number, type:number, new_type:number)
 
----@alias PropertyFunctions UpdateFunc|GraphicsFunc|CreateFunc|ChangeTypeFunc
+---@alias CtypeDrawFunc fun(CHANGE_TYPE_index:number, type:number, v:number)
+
+---@alias PropertyFunctions UpdateFunc|GraphicsFunc|CreateFunc|ChangeTypeFunc|CreateAllowedFunc
 
 ---@alias RunUpdateWhen `elements.UPDATE_AFTER`|`elements.UPDATE_REPLACE`|`elements.UPDATE_BEFORE`
 
@@ -273,7 +279,8 @@ end
 --```
 -- Restore the set of elements to its initial state at startup.<br>
 -- This frees all elements created and resets all properties of all built-in elements to their defaults.<br>
-function elements.loadDefault()
+---@param id integer?
+function elements.loadDefault(id)
 end
 
 elem = elements
