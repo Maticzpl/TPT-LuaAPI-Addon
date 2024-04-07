@@ -649,4 +649,178 @@ end
 function interface.beginThrowError(callback)
 end
 
+--```
+-- interface.activeMenu(menuSection)
+--```
+--Gets or sets the active menu.<br>
+--  - `menuSection`: The menusection. See the reference of menusection constants in the [elements api](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#Menu_sections).
+---@param menuSection MenuSection
+function interface.activeMenu(menuSection)
+end
+--```
+-- menuSection = interface.activeMenu()
+--```
+--Gets or sets the active menu.<br>
+--  - `menuSection`: The menusection. See the reference of menusection constants in the [elements api](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#Menu_sections).
+---@return MenuSection | integer
+function interface.activeMenu()
+end
+
+
+--```
+--interface.activeTool(toolIndex, identifier)
+--```
+--Gets or sets an active element selection.<br>
+--  - `toolIndex`: The tool index. Should be between 0 and `interface.NUM_TOOLINDICES`. The indices correspond to:<br>
+--     - `0`: Left click<br>
+--     - `1`: Right click<br>
+--     - `2`: Middle click<br>
+--     - `3`: "Replace Mode" element<br>
+--  - `identifier`. The tool identifier. This is a string that uniquely identifies a tool, for example `"DEFAULT_PT_BGLA"` or `"DEFAULT_TOOL_HEAT"`.
+---@param toolIndex 0|1|2|3
+---@param identifier string
+function interface.activeTool(toolIndex, identifier)
+end
+--```
+--identifier = interface.activeTool(toolIndex)
+--```
+--Gets or sets an active element selection.<br>
+--  - `toolIndex`: The tool index. Should be between 0 and `interface.NUM_TOOLINDICES`. The indices correspond to:<br>
+--     - `0`: Left click<br>
+--     - `1`: Right click<br>
+--     - `2`: Middle click<br>
+--     - `3`: "Replace Mode" element<br>
+--  - `identifier`. The tool identifier. This is a string that uniquely identifies a tool, for example `"DEFAULT_PT_BGLA"` or `"DEFAULT_TOOL_HEAT"`.
+---@param toolIndex 0|1|2|3
+---@return string
+function interface.activeTool(toolIndex)
+end
+
+
+--```
+--interface.brushID(brushIndex)
+--```
+--Gets or set the brush index.<br>
+--  - `brushIndex`: The index of the brush to set. Should be between 0 and `sim.NUM_BRUSHES`. For default brushes, the following constants can be used:<br>
+--     - `sim.BRUSH_CIRCLE`: Circle brush<br>
+--     - `sim.BRUSH_SQUARE`: Square brush<br>
+--     - `sim.BRUSH_TRIANGLE`: Triangle brush<br>
+--     - `sim.NUM_DEFAULTBRUSHES`: Number of default brushes, excluding custom brushes
+---@param brushIndex Brush
+function interface.brushID(brushIndex)
+end
+--```
+--brushIndex = interface.brushID()
+--```
+--Gets or set the brush index.<br>
+--  - `brushIndex`: The index of the brush to set. Should be between 0 and `sim.NUM_BRUSHES`. For default brushes, the following constants can be used:<br>
+--     - `sim.BRUSH_CIRCLE`: Circle brush<br>
+--     - `sim.BRUSH_SQUARE`: Square brush<br>
+--     - `sim.BRUSH_TRIANGLE`: Triangle brush<br>
+--     - `sim.NUM_DEFAULTBRUSHES`: Number of default brushes, excluding custom brushes
+---@return number|Brush
+function interface.brushID()
+end
+
+--```
+--interface.brushRadius(w, h)
+--w, h = interface.brushRadius()
+--```
+--Gets or sets the radius of the brush<br>
+--  - `w`: Brush width<br>
+--  - `h`: Brush height
+---@param w integer
+---@param h integer
+function interface.brushRadius(w, h)
+end
+--```
+--w, h = interface.brushRadius()
+--```
+--Gets or sets the radius of the brush<br>
+--  - `w`: Brush width<br>
+--  - `h`: Brush height
+---@return integer w, integer h
+function interface.brushRadius()
+end
+
+--```
+--interface.console(shown)
+--```
+--Control or check whether the console is open<br>
+--  - `shown`: boolean true/false on whether or not the console is shown.<br>
+--If you set it to false while in the console, it will close. Scripts can also use it to open the console. This action is non-blocking, so script execution will continue. But as soon as control is returned to the engine, further Lua callbacks will stop (because no event handlers run while the console is open).
+---@param shown boolean
+function interface.console(shown)
+end
+--```
+--shown = interface.console()
+--```
+--Control or check whether the console is open<br>
+--  - `shown`: boolean true/false on whether or not the console is shown.<br>
+--If you set it to false while in the console, it will close. Scripts can also use it to open the console. This action is non-blocking, so script execution will continue. But as soon as control is returned to the engine, further Lua callbacks will stop (because no event handlers run while the console is open).
+---@return boolean
+function interface.console()
+end
+
+--```
+--interface.menuEnabled(menuSection, enabled)
+--```
+--Controls whether menusections are enabled (shown) in the UI.<br>
+--  - `menuSection`: The menusection. See the reference of menusection constants in the [elements api](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#Menu_sections).<br>
+--  - `enabled`: boolean true/false describing if the menu section is enabled.<br>
+--If using an invalid menusection, an Invalid Menu error is raised.
+---@param menuSection MenuSection
+---@param enabled boolean
+function interface.menuEnabled(menuSection, enabled)
+end
+--```
+--enabled = interface.menuEnabled(menuSection)
+--```
+--Controls whether menusections are enabled (shown) in the UI.<br>
+--  - `menuSection`: The menusection. See the reference of menusection constants in the [elements api](https://powdertoy.co.uk/Wiki/W/Lua_API:Elements.html#Menu_sections).<br>
+--  - `enabled`: boolean true/false describing if the menu section is enabled.<br>
+--If using an invalid menusection, an Invalid Menu error is raised.
+---@param menuSection MenuSection
+---@return boolean
+function interface.menuEnabled(menuSection)
+end
+
+--```
+--numMenus = interface.numMenus()
+--```
+--Returns the number of menus<br>
+--  - `numMenus`: The number of enabled menus.<br>
+--Menus that aren't enabled don't count towards this limit.
+---@return integer
+function interface.numMenus()
+end
+
+--```
+--interface.perfectCircleBrush(flag)
+--```
+--Gets / Sets the "Perfect Circle" option<br>
+--  - `flag`: boolean true / false on whether the setting is enabled or not
+---@param flag boolean
+function interface.perfectCircleBrush(flag)
+end
+--```
+--flag = interface.perfectCircleBrush()
+--```
+--Gets / Sets the "Perfect Circle" option<br>
+--  - `flag`: boolean true / false on whether the setting is enabled or not
+---@return boolean
+function interface.perfectCircleBrush()
+end
+
+--```
+--mouseX, mouseY = interface.mousePosition()
+--```
+--Returns the current mouse position<br>
+--  - `mouseX`: mouse x position<br>
+--  - `mouseY`: mouse y position<br>
+--This is the position of the mouse in the full interface, so it ignores zoom window and can be outside of sim bounds. To convert into sim coords and adjust for zoom window, see [sim.adjustCoords](https://powdertoy.co.uk/Wiki/W/Lua_API:Simulation.html#simulation.adjustCoords).
+---@return integer mouseX, integer mouseY
+function interface.mousePosition()
+end
+
 ui = interface

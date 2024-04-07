@@ -55,6 +55,11 @@ simulation.signs = {
 ---|1 Swap places with the obstacle  
 ---|2 Move over the obstacle  
 
+---@alias Brush
+---|`simulation.BRUSH_CIRCLE`
+---|`simulation.BRUSH_SQUARE`
+---|`simulation.BRUSH_TRIANGLE`
+
 ---@alias GOL {name: string, rulestr: string, rule: number, color1: number, color2: number}
 
 --The Simulation API allows for modifying the state and properties of particles, air and gravity 

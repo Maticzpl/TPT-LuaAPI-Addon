@@ -108,9 +108,13 @@ function tpt.toggle_pause() end
 --```
 --tpt.set_console() == 1
 --```
+--### **REPLACED BY `interface.console`**
+---@deprecated
 ---@param state integer  
 function tpt.set_console(state)
 end
+--### **REPLACED BY `interface.console`**
+---@deprecated
 ---@return integer
 function tpt.set_console()
 end
@@ -591,8 +595,11 @@ function tpt.ambient_heat() end
 --```
 --tpt.active_menu(elem.SC_EXPLOSIVE)
 --```
+--### **REPLACED BY `ui.activeMenu`**
+---@deprecated
 ---@param menu integer  
 function tpt.active_menu(menu) end
+---@deprecated
 ---@return integer
 function tpt.active_menu() end
 
@@ -600,6 +607,8 @@ function tpt.active_menu() end
 --boolean tpt.menu_enabled(number menuID)
 --```
 --Returns true if a menu section is enabled.<br>
+--### **REPLACED BY `ui.menuEnabled`**
+---@deprecated
 ---@param menuID integer  
 ---@return boolean
 function tpt.menu_enabled(menuID) end
@@ -607,6 +616,8 @@ function tpt.menu_enabled(menuID) end
 --tpt.menu_enabled(number menuID, boolean enabled)
 --```
 --If provided a boolean, will set if a menu section is enabled.<br>
+--### **REPLACED BY `ui.menuEnabled`**
+---@deprecated
 ---@param menuID integer  
 ---@param enabled boolean  
 function tpt.menu_enabled(menuID, enabled) end
@@ -617,11 +628,15 @@ function tpt.menu_enabled(menuID, enabled) end
 --```
 --Returns the number of menus.<br>
 --The optional onlyEnabled boolean is true by default.<br>
+--### **REPLACED BY `ui.numMenus`**
+---@deprecated
 ---@return integer
 function tpt.num_menus() end
 --```
 --number tpt.num_menus(boolean onlyEnabled)
 --```
+--### **REPLACED BY `ui.numMenus`**
+---@deprecated
 ---@param onlyEnabled boolean  
 ---@return integer
 function tpt.num_menus(onlyEnabled) end
@@ -859,28 +874,47 @@ function tpt.setdrawcap(drawcap) end
 --```
 --tpt.perfectCircleBrush(boolean enabled)
 --```
+--### **REPLACED by `interface.perfectCircleBrush`**<br>
+---@deprecated
 ---@return boolean    
 function tpt.perfectCircleBrush() end
+--### **REPLACED by `interface.perfectCircleBrush`**<br>
+---@deprecated
 ---@param enabled boolean  
 function tpt.perfectCircleBrush(enabled) end
 
 -- Particle type selected under LMB<br>
+--### **REPLACED by `interface.activeTool`**<br>
+---@deprecated
 ---@type string
 tpt.selectedl = nil
 -- Particle type selected under RMB<br>
+--### **REPLACED by `interface.activeTool`**<br>
+---@deprecated
 ---@type string
 tpt.selectedr = nil
 -- Particle type selected under MMB<br>
+--### **REPLACED by `interface.activeTool`**<br>
+---@deprecated
 ---@type string
 tpt.selecteda = nil
+--### **REPLACED by `interface.activeTool`**<br>
+---@deprecated
 ---@type string
 tpt.selectedreplace = nil
+
 --Brush X size<br>
+--### **REPLACED by `interface.brushRadius`**<br>
+---@deprecated
 ---@type integer
 tpt.brushx = 0
 --Brush Y size<br>
+--### **REPLACED by `interface.brushRadius`**<br>
+---@deprecated
 ---@type integer
 tpt.brushy = 0
 --Brush shape ID (0 circle, 1 square, 2 triangle)<br>
+--### **REPLACED by `interface.brushID`**<br>
+---@deprecated
 ---@type integer
 tpt.brushID = 0
