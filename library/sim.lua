@@ -156,6 +156,15 @@ end
 function simulation.partPosition(index)
 end
 
+--```
+--sim.partPosition(number index, number x, number y)
+--```
+--Get the location of the particle at the specified index<br>
+---@param index integer  
+---@param x number
+---@param y number
+function simulation.partPosition(index, x, y)
+end
 
 --```
 --number sim.partID(number x, number y)
