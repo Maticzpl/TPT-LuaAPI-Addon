@@ -95,6 +95,8 @@ end
 --### **REPLACED BY `sim.paused`**
 ---@deprecated
 ---@return integer
+function tpt.toggle_pause()
+end
 
 --Set the visibility state of the console.<br>
 --The number argument can be either 0 or 1, where 1 means the console will be opened, and 0 will close the console. If you don't pass in any arguments, the command will return an integer, either 0 or 1, about whether the console is currently opened.<br>
