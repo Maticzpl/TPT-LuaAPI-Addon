@@ -1,6 +1,7 @@
 ---@meta
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
+---@diagnostic disable:deprecated
 
 ---@alias ButtonCallback fun(sender: Button)
 
@@ -53,9 +54,15 @@ interface = {}
 --Button
 --#region
 
+    -- Used `ui.class(...)` to  hint at whats the new constructor thing
+
+    ---### **REPLACED BY `ui.button(...)`**
+    ---@deprecated
+    Button = nil
+
     --Extends Component, fires "action" when clicked<br>
     ---@class Button : Component
-    Button = {}
+    interface.button = {}
 
     --Extends Component, fires "action" when clicked<br>
     ---@param x integer  
@@ -65,7 +72,7 @@ interface = {}
     ---@param text string?  
     ---@param tooltip string?  
     ---@return Button
-    function Button:new(x, y, width, height, text, tooltip)
+    function interface.button(x, y, width, height, text, tooltip)
     end
 
     --```
@@ -78,34 +85,38 @@ interface = {}
     --interface.addComponent(newButton)
     --```
     ---@param actionListener ButtonCallback  
-    function Button:action(actionListener)    
+    function interface.button:action(actionListener)    
     end
 
     --Returns the button text<br>
     ---@return string
-    function Button:text()
+    function interface.button:text()
     end
     --Sets the text of the button<br>
     ---@param text string  
-    function Button:text(text)
+    function interface.button:text(text)
     end
 
     --Returns the enabled state of the button<br>
     ---@return boolean 
-    function Button:enabled()
+    function interface.button:enabled()
     end
     --Sets the enabled state of the button<br>
     ---@param enabled boolean  
-    function Button:enabled(enabled)
+    function interface.button:enabled(enabled)
     end
 --#endregion
 
 --ProgressBar
 --#region
 
+    ---### **REPLACED BY `ui.progressBar(...)`**
+    ---@deprecated
+    ProgressBar = nil
+
     --Extends Component, used to indicate progress for long running tasks<br>
     ---@class ProgressBar : Component
-    ProgressBar = {}
+    interface.progressBar = {}
 
     --Extends Component, used to indicate progress for long running tasks<br>
     ---@param x integer  
@@ -115,36 +126,40 @@ interface = {}
     ---@param progress integer  
     ---@param status string  
     ---@return ProgressBar
-    function ProgressBar:new(x, y, width, height, progress, status)
+    function interface.progressBar(x, y, width, height, progress, status)
     end
 
     --Progress ranges from 0 to 100, but a special case of -1 will change the behaviour of the progress bar to intermediate (constantly scrolling to indicate progress)<br>
     --Returns the progress value<br>
     ---@return integer
-    function ProgressBar:progress()
+    function interface.progressBar:progress()
     end
     --Sets the progress value<br>
     ---@param progress integer  
-    function ProgressBar:progress(progress)
+    function interface.progressBar:progress(progress)
     end
 
     --Status is simple a text representation of the current action being performed, for example "Working" or just a percentage<br>
     --Returns the progress bar status<br>
     ---@return string
-    function ProgressBar:status()
+    function interface.progressBar:status()
     end
     --Sets the progress bar status<br>
     ---@param status string  
-    function ProgressBar:status(status)
+    function interface.progressBar:status(status)
     end
 --#endregion
 
 --Slider
 --#region
 
+    ---### **REPLACED BY `ui.slider(...)`**
+    ---@deprecated
+    Slider = nil
+
     --Extends Component, fires "onValueChanged" when the value is changed (i.e used by the user)<br>
     ---@class Slider : Component
-    Slider = {}
+    interface.slider = {}
 
     --Extends Component, fires "onValueChanged" when the value is changed (i.e used by the user)<br>
     ---@param x integer  
@@ -153,39 +168,43 @@ interface = {}
     ---@param height integer  
     ---@param steps integer?  
     ---@return Slider
-    function Slider:new(x, y, width, height, steps)
+    function interface.slider(x, y, width, height, steps)
     end
 
     --Sets the listener for slider actions<br>
     ---@param actionListener SliderCallback  
-    function Slider:onValueChanged(actionListener)    
+    function interface.slider:onValueChanged(actionListener)    
     end
 
     --Returns the value of the slider<br>
     ---@return integer
-    function Slider:value()
+    function interface.slider:value()
     end
     --Sets the value of the slider<br>
     ---@param value integer  
-    function Slider:value(value)
+    function interface.slider:value(value)
     end
 
     --Returns the number of steps the slider has<br>
     ---@return integer
-    function Slider:steps()
+    function interface.slider:steps()
     end
     --Sets the number of steps for the slider<br>
     ---@param steps integer  
-    function Slider:steps(steps)
+    function interface.slider:steps(steps)
     end
 --#endregion
 
 --Checkbox
 --#region
 
+    ---### **REPLACED BY `ui.checkbox(...)`**
+    ---@deprecated
+    Checkbox = nil
+
     --Extends Component, fires "action" when the checkbox is checked or unchecked<br>
     ---@class Checkbox : Component
-    Checkbox = {}
+    interface.checkbox = {}
 
     --Extends Component, fires "action" when the checkbox is checked or unchecked<br>
     ---@param x integer  
@@ -194,39 +213,43 @@ interface = {}
     ---@param height integer  
     ---@param text string?  
     ---@return Checkbox
-    function Checkbox:new(x, y, width, height, text)
+    function interface.checkbox(x, y, width, height, text)
     end
 
     --Sets the listener for checkbox actions<br>
     ---@param actionListener CheckboxCallback  
-    function Checkbox:action(actionListener)
+    function interface.checkbox:action(actionListener)
     end
 
     --Returns the checkbox text<br>
     ---@return string
-    function Checkbox:text()
+    function interface.checkbox:text()
     end    
     --Sets the text of the checkbox<br>
     ---@param text string  
-    function Checkbox:text(text)
+    function interface.checkbox:text(text)
     end
 
     --Returns the checked state of the checkbox<br>
     ---@return boolean
-    function Checkbox:checked()
+    function interface.checkbox:checked()
     end
     --Sets the checked state of the checkbox<br>
     ---@param checked boolean  
-    function Checkbox:checked(checked)
+    function interface.checkbox:checked(checked)
     end
 --#endregion
 
 --Label
 --#region
 
+    ---### **REPLACED BY `ui.label(...)`**
+    ---@deprecated
+    Label = nil
+
     --Extends Component, is a simple selectable, readonly text field<br>
     ---@class Label : Component
-    Label = {}
+    interface.label = {}
 
     --Extends Component, is a simple selectable, readonly text field<br>
     ---@param x integer  
@@ -235,25 +258,29 @@ interface = {}
     ---@param height integer  
     ---@param text string?  
     ---@return Label
-    function Label:new(x, y, width, height, text)
+    function interface.label(x, y, width, height, text)
     end
 
     --Returns the label text<br>
     ---@return string
-    function Label:text()
+    function interface.label:text()
     end
     --Sets the text of the label<br>
     ---@param text string  
-    function Label:text(text)
+    function interface.label:text(text)
     end
 --#endregion
 
 --Textbox
 --#region
 
+    ---### **REPLACED BY `ui.textbox(...)`**
+    ---@deprecated
+    Textbox = nil
+
     --Extends Component, is a text input field, the placeholder text is shown if the component is no focused and contains no text<br>
     ---@class Textbox : Component
-    Textbox = {}
+    interface.textbox = {}
 
     --Extends Component, is a text input field, the placeholder text is shown if the component is no focused and contains no text<br>
     ---@param x integer  
@@ -263,39 +290,43 @@ interface = {}
     ---@param text string?
     ---@param placeholder string? 
     ---@return Textbox
-    function Textbox:new(x, y, width, height,text,placeholder)
+    function interface.textbox(x, y, width, height,text,placeholder)
     end
 
     --Sets the listener for text changed actions<br>
     ---@param textChangedListener TextboxCallback  
-    function Textbox:onTextChanged(textChangedListener)    
+    function interface.textbox:onTextChanged(textChangedListener)    
     end
 
     --Returns the text in the field<br>
     ---@return string
-    function Textbox:text()
+    function interface.textbox:text()
     end
     --Sets the text of the field<br>
     ---@param text string  
-    function Textbox:text(text)
+    function interface.textbox:text(text)
     end
 
     --Returns the readonly status of the field.<br>
     ---@return boolean
-    function Textbox:readonly()
+    function interface.textbox:readonly()
     end
     --Sets the readonly status of the field.<br>
     ---@param readonly boolean  
-    function Textbox:readonly(readonly)
+    function interface.textbox:readonly(readonly)
     end
 --#endregion
 
 --Window
 --#region
 
+    ---### **REPLACED BY `ui.window(...)`**
+    ---@deprecated
+    Window = nil
+
     --A modal form to display components, using -1 for either x or y values will centre the Window on that axis.<br>
     ---@class Window
-    Window = {}
+    interface.window = {}
 
     --A modal form to display components, using -1 for either x or y values will centre the Window on that axis.<br>
     ---@param x integer  
@@ -303,98 +334,98 @@ interface = {}
     ---@param width integer  
     ---@param height integer 
     ---@return Window 
-    function Window:new(x, y, width, height)
+    function interface.window(x, y, width, height)
     end
 
     -- Sets the window position. Both coordinates must be greater or equal to 1
     ---@param x integer
     ---@param y integer
-    function Window:position(x,y)            
+    function interface.window:position(x,y)            
     end
 
     -- Gets the window position
     ---@return integer x, integer y
-    function Window:position()            
+    function interface.window:position()            
     end
 
     -- Sets the window size. Both arguments must be greater or equal to 10
     ---@param w integer
     ---@param h integer
-    function Window:size(w,h)            
+    function interface.window:size(w,h)            
     end
 
     -- Gets the window size
     ---@return integer w, integer h
-    function Window:size()            
+    function interface.window:size()            
     end
 
     --Add a component to the window (The component must not have already been added to another Window object)
     ---@param newComponent Component  
-    function Window:addComponent(newComponent)
+    function interface.window:addComponent(newComponent)
     end
 
     --Remove a component from the window<br>
     ---@param component Component  
-    function Window:removeComponent(component)
+    function interface.window:removeComponent(component)
     end
 
     -- TODO: descriptions for callbacks below
 
     -- Triggers every frame that the window is drawn. Allows for using gfx together with ui
     ---@param listener fun()
-    function Window:onDraw(listener)            
+    function interface.window:onDraw(listener)            
     end
 
     ---@param listener fun()
-    function Window:onInitialized(listener)            
+    function interface.window:onInitialized(listener)            
     end
 
     ---@param listener fun()
-    function Window:onExit(listener)            
+    function interface.window:onExit(listener)            
     end
 
     ---@param listener fun(deltaTime :number?)
-    function Window:onTick(listener)            
+    function interface.window:onTick(listener)            
     end
 
     ---@param listener fun()
-    function Window:onFocus(listener)            
+    function interface.window:onFocus(listener)            
     end
 
     ---@param listener fun()
-    function Window:onBlur(listener)            
+    function interface.window:onBlur(listener)            
     end
 
     ---@param listener fun()
-    function Window:onTryExit(listener)            
+    function interface.window:onTryExit(listener)            
     end
     
     ---@param listener fun()
-    function Window:onTryOkay(listener)            
+    function interface.window:onTryOkay(listener)            
     end
     
     ---@param listener MouseMoveCallback
-    function Window:onMouseMove(listener)            
+    function interface.window:onMouseMove(listener)            
     end
     
     ---@param listener MouseDownCallback
-    function Window:onMouseDown(listener)            
+    function interface.window:onMouseDown(listener)            
     end
 
     ---@param listener MouseDownCallback
-    function Window:onMouseUp(listener)            
+    function interface.window:onMouseUp(listener)            
     end
 
     ---@param listener MouseWheelCallback
-    function Window:onMouseWheel(listener)            
+    function interface.window:onMouseWheel(listener)            
     end
 
     ---@param listener KeyPressCallback
-    function Window:onKeyPress(listener)            
+    function interface.window:onKeyPress(listener)            
     end
 
     ---@param listener KeyPressCallback
-    function Window:onKeyRelease(listener)            
+    function interface.window:onKeyRelease(listener)            
     end
 
 --#endregion
@@ -823,4 +854,32 @@ end
 function interface.mousePosition()
 end
 
+--Changes a few special properties as to what size the game renders at.<br>
+--Scale is a multiplier by which every pixel shall get multiplied at, currently it can either be 1 (612x384) or 2 (1224x768).<br>
+--Full screen is a toggle (0 or 1) that enables "kiosk mode", which basically scales the game up to fill the screen and makes the rest of the edge black.<br>
+---@param scale integer  
+---@param fullscreen boolean  
+function interface.windowSize(scale, fullscreen)
+end
+
 ui = interface
+
+-- Tbh no idea what those are, found in https://github.com/The-Powder-Toy/The-Powder-Toy/blob/master/src/lua/luascripts/compat.lua
+
+--### **REPLACED BY `ui.MOUSEUP_BLUR`**
+---@deprecated
+interface.MOUSE_UP_BLUR = nil
+
+interface.MOUSEUP_BLUR = nil
+
+--### **REPLACED BY `ui.MOUSEUP_DRAWEND`**
+---@deprecated
+interface.MOUSE_UP_DRAW_END = nil
+
+interface.MOUSEUP_DRAWEND  = nil
+
+--### **REPLACED BY `ui.MOUSEUP_NORMAL`**
+---@deprecated
+interface.MOUSE_UP_NORMAL = nil
+
+interface.MOUSEUP_NORMAL = nil

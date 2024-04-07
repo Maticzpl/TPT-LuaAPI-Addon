@@ -68,7 +68,6 @@ simulation = {}
 --```
 --number[] sim.partNeighbors(number x, number y, number radius, [number type])
 --```
---Returns a list of particles indexes(starting at 0) that neighbour the given coordinates that matches the given type (if it is specified) The resulting list does not contain the "origin particle"<br>
 ---@param x integer  
 ---@param y integer  
 ---@param radius integer  
@@ -81,6 +80,8 @@ end
 --number[] sim.partNeighbours(number x, number y, number radius, [number type])
 --```
 --Returns a list of particles indexes(starting at 0) that neighbour the given coordinates that matches the given type (if it is specified) The resulting list does not contain the "origin particle"<br>
+--### **REPLACED by `sim.partNeighbors`**<br>
+---@deprecated
 ---@param x integer  
 ---@param y integer  
 ---@param radius integer  
@@ -299,7 +300,7 @@ end
 --```
 --nil sim.gravMap(number x, number y, [number width, number height, [number value]])
 --```
---### **DEPRECATED IN 98.0, replaced by sim.gravityMass and sim.gravityField**<br>
+--### **DEPRECATED IN 98.0, replaced by `sim.gravityMass` and `sim.gravityField`**<br>
 --Returns the newtonian gravity at the given coordinates in the simulation. If given a value, will set the newtonian gravity at those coordinates. Width and height refer to the rectangle of affected cells, starting with the coords. If not given, they will default to 1,1.<br>
 ---@deprecated
 ---@param x integer  
@@ -307,7 +308,7 @@ end
 ---@return number
 function simulation.gravMap(x, y)
 end
---### **DEPRECATED IN 98.0, replaced by sim.gravityMass and sim.gravityField**<br>
+--### **DEPRECATED IN 98.0, replaced by `sim.gravityMass` and `sim.gravityField`**<br>
 --Returns the newtonian gravity at the given coordinates in the simulation. If given a value, will set the newtonian gravity at those coordinates. Width and height refer to the rectangle of affected cells, starting with the coords. If not given, they will default to 1,1.<br>
 ---@deprecated
 ---@param x integer  
@@ -317,7 +318,7 @@ end
 ---@param value number  
 function simulation.gravMap(x, y, width, height, value)
 end
---### **DEPRECATED IN 98.0, replaced by sim.gravityMass and sim.gravityField**<br>
+--### **DEPRECATED IN 98.0, replaced by `sim.gravityMass` and `sim.gravityField`**<br>
 --Returns the newtonian gravity at the given coordinates in the simulation. If given a value, will set the newtonian gravity at those coordinates. Width and height refer to the rectangle of affected cells, starting with the coords. If not given, they will default to 1,1.<br>
 ---@deprecated
 ---@param x integer  
@@ -731,6 +732,8 @@ end
 --number sim.decoColour()
 --```
 --Returns the currently selected decoration color.<br>
+--### **REPLACED BY `sim.decoColor`**
+---@deprecated
 ---@return integer
 function simulation.decoColour()
 end
@@ -739,6 +742,8 @@ end
 --```
 --Sets the selected decoration color to color.<br>
 --color is in the format 0xAARRGGBB<br>
+--### **REPLACED BY `sim.decoColor`**
+---@deprecated
 ---@param colour integer  
 function simulation.decoColour(colour)
 end
@@ -746,6 +751,8 @@ end
 --nil sim.decoColour(number r, number g, number b, [number a])
 --```
 --Sets the selected decoration color to r,g,b,a<br>
+--### **REPLACED BY `sim.decoColor`**
+---@deprecated
 ---@param r integer  
 ---@param g integer  
 ---@param b integer  
@@ -1041,6 +1048,8 @@ end
 --number sim.waterEqualisation()
 --```
 --Returns the current Water equalisation setting.<br>
+--### **REPLACED BY `sim.waterEqualization`**
+---@deprecated
 ---@return integer
 function simulation.waterEqualisation()
 end
@@ -1048,6 +1057,8 @@ end
 --nil sim.waterEqualisation(number setting)
 --```
 --Set the Water equalisation setting to setting.<br>
+--### **REPLACED BY `sim.waterEqualization`**
+---@deprecated
 ---@param setting integer  
 function simulation.waterEqualisation(setting)
 end    
@@ -1129,6 +1140,8 @@ end
 -- - 0 bounce off the obstacle<br>
 -- - 1 swap places with the obstacle<br>
 -- - 2 move over the obstacle<br>
+--### **REPLACED BY `sim.canMove`**
+---@deprecated
 ---@param movingElementID integer  
 ---@param obstacleElementID integer  
 ---@param method CanMoveMethod  
@@ -1137,10 +1150,33 @@ function simulation.can_move(movingElementID, obstacleElementID, method) end
 --number simulation.can_move(number movingElementID, number obstacleElementID)
 --```
 --Returns what a particle does when it hits another particle while moving, a method like above.<br>
+--### **REPLACED BY `sim.canMove`**
+---@deprecated
 ---@param movingElementID integer  
 ---@param obstacleElementID integer  
 ---@return CanMoveMethod
 function simulation.can_move(movingElementID, obstacleElementID) 
+end
+
+--```
+--simulation.canMove(number movingElementID, number obstacleElementID, number method)
+--```
+--Decides what a particle does when it hits another particle while moving. Method is one of the following:<br>
+-- - 0 bounce off the obstacle<br>
+-- - 1 swap places with the obstacle<br>
+-- - 2 move over the obstacle<br>
+---@param movingElementID integer  
+---@param obstacleElementID integer  
+---@param method CanMoveMethod  
+function simulation.canMove(movingElementID, obstacleElementID, method) end
+--```
+--number simulation.canMove(number movingElementID, number obstacleElementID)
+--```
+--Returns what a particle does when it hits another particle while moving, a method like above.<br>
+---@param movingElementID integer  
+---@param obstacleElementID integer  
+---@return CanMoveMethod
+function simulation.canMove(movingElementID, obstacleElementID) 
 end
 
 --```
@@ -1269,17 +1305,51 @@ end
 function simulation.neighbors(x, y)
 end
 
+--### **REPLACED by `sim.neighbors`**
+---@deprecated
+---@param x integer  
+---@param y integer  
+---@param rx integer  
+---@param ry integer  
+---@param type integer?  
+---@return fun(): number, number, number
+function simulation.neighbours(x, y, rx, ry, type)
+end
+--### **REPLACED by `sim.neighbors`**
+---@deprecated
+---@param x integer  
+---@param y integer  
+---@return fun(): number, number, number
+function simulation.neighbours(x, y)
+end
+
 
 --```
 --number sim.framerender()
 --sim.framerender(number frames)
 --```
 --Advances the simulation the given number of frames, even when paused. If called with no arguments, returns the number of frames currently to be rendered. Usually is 0.<br>
+--### **REPLACED BY `sim.frameRender`**
+---@deprecated
 ---@param frames integer  
 function simulation.framerender(frames)
 end
+--### **REPLACED BY `sim.frameRender`**
+---@deprecated
 ---@return integer
 function simulation.framerender()
+end
+
+--```
+--number sim.frameRender()
+--sim.frameRender(number frames)
+--```
+--Advances the simulation the given number of frames, even when paused. If called with no arguments, returns the number of frames currently to be rendered. Usually is 0.<br>
+---@param frames integer  
+function simulation.frameRender(frames)
+end
+---@return integer
+function simulation.frameRender()
 end
 
 
@@ -1287,6 +1357,8 @@ end
 --number sim.gspeed()
 --```
 --Returns the current GoL speed<br>
+--### **REPLACED BY `sim.frameRender`**
+---@deprecated
 ---@return integer
 function simulation.gspeed()
 end
@@ -1294,10 +1366,26 @@ end
 --nil sim.gspeed(number newSpeed)
 --```
 --Sets the current GoL speed. This is the number of frames between GoL updates. Default is one, larger numbers make it slower.<br>
+--### **REPLACED BY `sim.frameRender`**
+---@deprecated
 ---@param newSpeed integer  
 function simulation.gspeed(newSpeed)
 end
 
+--```
+--number sim.golSpeedRatio()
+--```
+--Returns the current GoL speed<br>
+---@return integer
+function simulation.golSpeedRatio()
+end
+--```
+--nil sim.golSpeedRatio(number newSpeed)
+--```
+--Sets the current GoL speed. This is the number of frames between GoL updates. Default is one, larger numbers make it slower.<br>
+---@param newSpeed integer  
+function simulation.golSpeedRatio(newSpeed)
+end
 
 --```
 --nil sim.takeSnapshot()
@@ -1453,7 +1541,17 @@ function simulation.randomSeed() end
 ---@param seed1Upper number
 function simulation.randomSeed(seed0Lower, seed0Upper, seed1Lower, seed1Upper) end
 
-
+--### **REPLACED BY `sim.randomSeed`**
+---@deprecated
+---@return number seed0Lower, number seed0Upper, number seed1Lower, number seed1Upper
+function simulation.randomseed() end
+--### **REPLACED BY `sim.randomSeed`**
+---@deprecated
+---@param seed0Lower number
+---@param seed0Upper number
+---@param seed1Lower number
+---@param seed1Upper number
+function simulation.randomseed(seed0Lower, seed0Upper, seed1Lower, seed1Upper) end
 
 -- Deletes the sign at the specified sign id.<br>
 ---@param signID integer

@@ -17,25 +17,25 @@ event = {
     -->> scan is the scan code. This is a number that represents the physical location of a key on a keyboard. You can find a list of scan codes here: https://wiki.libsdl.org/SDLScancodeLookup<br>
     -->> repeat is a boolean that tells whether this is a key repeat event (sent every so often when the key is held down). You may want to ignore this event when it is just a key repeat event<br>
     -->> shift / ctrl / alt are booleans that will tell you whether those modifiers are currently held<br>
-    keypress = 0,
+    KEYPRESS = 2,
 
     --### keyrelease<br>
     --> This event is sent every time a key is released<br>
     --> This event can be canceled<br>
     --> Arguments: key, scan, repeat, shift, ctrl, alt<br>
     -->> These arguments mean exactly the same thing as for keypress events. Repeat will always be false.<br>
-    keyrelease = 1,
+    KEYRELEASE = 3,
 
     --### textinput<br>
     --> This event is sent every time text is input. The text will be sent as a string, and may be more than one character or contain Unicode.<br>
     --> Arguments: text<br>
-    textinput = 2,
+    TEXTINPUT = 0,
 
     -- Not documented on the wiki<br>
     -- TODO:uhh write documentation lol
     --### textediting<br>
     --> Arguments: text<br>
-    textediting = 3,
+    TEXTEDITING = 1,
 
     --### mousedown<br>
     --> This event is sent whenever the mouse is clicked.<br>
@@ -43,7 +43,7 @@ event = {
     --> Arguments: x, y, button<br>
     -->> x and y will not be adjusted for the zoom window. See sim.adjustCoords for that. Coordinates may be outside of the simulation bounds (clicks outside the simulation area are still sent)<br>
     -->> button is the mouse button pressed. 1 is left click, 2 is middle click, 3 is right click. There may also be higher mouse buttons like 4 and 5.<br>
-    mousedown = 4,
+    MOUSEDOWN = 4,
 
     --### mouseup<br>
     --> This event is sent whenever the mouse is released. There are also other some special cases this event may be sent,<br>
@@ -51,14 +51,14 @@ event = {
     --> Arguments: x, y, button, reason<br>
     -->> x, y, and button function the same as the mousedown event<br>
     -->> reason is a number that describes what type of mouseup event this is (basically, hacks we sent mouseup events on anyway). reason 0 is for normal mouseup events. reason 1 is used when another interface is opened and a blur event is sent. This is how tpt ensures that the mouse isn't "stuck" down forever if you release the mouse after opening another interface. reason 2 is used when the mouse moves inside or outside of the zoom window. This is how tpt cancels mouse drawing with zoom windows to ensure a big line isn't drawn across the screen. The normal reason = 0 event will still be sent later.<br>
-    mouseup = 5,
+    MOUSEUP = 5,
 
     --### mousemove<br>
     --> This event is sent every time the mouse is moved. It is only sent when the mouse is inside the tpt window, unless the mouse is held, in which case it can also be sent outside of the tpt window until the mouse is released. Coordinates from outside the tpt window bounds (including negative coordinates) can be sent in that case.<br>
     --> This event can be canceled<br>
     --> Arguments: x, y, dx, dy<br>
     -->> x and y are the mouse coordinates. dx and dy are the diff from the previous coordinates to the current ones.<br>
-    mousemove = 6,
+    MOUSEMOVE = 6,
 
     --### mousewheel<br>
     --> This event is sent whenever the mousewheel is scrolled.<br>
@@ -66,35 +66,35 @@ event = {
     --> Arguments: x, y, d<br>
     -->> x and y are the mouse position where the wheel was scrolled<br>
     -->> d is the distance the mouse was scrolled. On nearly all mice this will be 1 or -1, but in certain situations it may be higher. You most likely want to treat higher values as 1 or -1 anyway. Horizontal scrolling is not supported at the moment, in the meantime d will be 0 for horizontal scrolling.<br>
-    mousewheel = 7,
+    MOUSEWHEEL = 7,
 
     --### tick<br>
     --> This event is sent once per frame. It is sent after the simulation frame finishes and everything is drawn to the screen.<br>
-    tick = 8,
+    TICK = 8,
 
     --### blur<br>
     --> This event is sent whenever a blocking interface (such as the save browser or the console) is opened. Lua scripts don't function in those interfaces, so this event can be used to detect when the lua script is about to stop receiving any events during that time.<br>
-    blur = 9,
+    BLUR = 9,
 
     --### close<br>
     --> This event is sent whenever the tpt window is about to close.<br>
-    close = 10,
+    CLOSE = 10,
 
     --### beforesim<br>
     --> This event is sent once per frame, but only if the sim is unpaused or being stepped through using framestep or subframe particle debugging. It is sent before any particle simulation or air updates have been done.
-    beforesim = 11,
+    BEFORESIM = 11,
 
     --### aftersim<br>
     --> This event is sent once per frame, but only if the sim is unpaused or being stepped through using framestep or subframe particle debugging. It is sent after all particles have been simulated.
-    aftersim = 12,
+    AFTERSIM = 12,
     
     --### beforesimdraw<br>
     --> This event is sent once per frame, before the simulation is drawn. It is sent after pressure / velocity mode graphics are drawn (if enabled), but before all other particles or simulation graphics are drawn.
-    beforesimdraw = 13,
+    BEFORESIMDRAW = 13,
 
     --### aftersimdraw<br>
     --> This event is sent once per frame, after the simulation is drawn. All particles and graphics, such as the cursor, are already drawn. The only thing not yet rendered is the zoom window.
-    aftersimdraw = 14,
+    AFTERSIMDRAW = 14,
 }
 
 --TODO add mouse up reason alias
@@ -142,3 +142,52 @@ function event.getmodifiers()
 end
 
 evt = event
+
+--### **REPLACED BY `evt.AFTERSIMDRAW`**
+---@deprecated
+event.aftersimdraw = nil
+--### **REPLACED BY `evt.AFTERSIM`**
+---@deprecated
+event.aftersim = nil
+--### **REPLACED BY `evt.BEFORESIMDRAW`**
+---@deprecated
+event.beforesimdraw = nil
+--### **REPLACED BY `evt.BEFORESIM`**
+---@deprecated
+event.beforesim = nil
+--### **REPLACED BY `evt.BLUR`**
+---@deprecated
+event.blur = nil
+--### **REPLACED BY `evt.CLOSE`**
+---@deprecated
+event.close = nil
+--### **REPLACED BY `evt.getModifiers`**
+---@deprecated
+event.getmodifiers = nil
+--### **REPLACED BY `evt.KEYPRESS`**
+---@deprecated
+event.keypress = nil
+--### **REPLACED BY `evt.KEYRELEASE`**
+---@deprecated
+event.keyrelease = nil
+--### **REPLACED BY `evt.MOUSEDOWN`**
+---@deprecated
+event.mousedown = nil
+--### **REPLACED BY `evt.MOUSEMOVE`**
+---@deprecated
+event.mousemove = nil
+--### **REPLACED BY `evt.MOUSEUP`**
+---@deprecated
+event.mouseup = nil
+--### **REPLACED BY `evt.MOUSEWHEEL`**
+---@deprecated
+event.mousewheel = nil
+--### **REPLACED BY `evt.TEXTEDITING`**
+---@deprecated
+event.textediting = nil
+--### **REPLACED BY `evt.TEXTINPUT`**
+---@deprecated
+event.textinput = nil
+--### **REPLACED BY `evt.TICK`**
+---@deprecated
+event.tick = nil

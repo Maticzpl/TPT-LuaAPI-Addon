@@ -9,35 +9,47 @@
 -- Unless stated otherwise, all functions raise errors if supplied with parameters that disagree with their descriptions. 
 bz2 = {}
 
--- TODO Removed in v98?? idk, check later
----@enum bz2Result
--- bz2 = {
---     --Compression OK
---     compressOk = 0,
---
---     --Compression failed, ran out of memory
---     compressNomem = 1,
---
---     --Compression failed, maxSize limit exceeded
---     compressLimit = 2,
---
---     --Decompression OK
---     decompressOk = 0,
---
---     --Decompression failed, ran out of memory
---     decompressNomem = 4,
---
---     --Decompression failed, maxSize limit exceeded
---     decompressLimit = 2,
---
---     --Decompression failed, sourceData does not have bzip2 header and is likely not bzip2 data
---     decompressType = 3,
---
---     --Decompression failed, sourceData is not valid bzip2 data
---     decompressBad = 4,
---     
---     decompressEof = 5,
--- }
+---@deprecated
+--Compression OK
+bz2.compressOk = 0
+
+--Compression failed, ran out of memory
+--### **REPLACED BY `bz2.COMPRESS_NOMEM`**
+---@deprecated
+bz2.compressNomem = 1
+
+--Compression failed, maxSize limit exceeded
+--### **REPLACED BY `bz2.COMPRESS_LIMIT`**
+---@deprecated
+bz2.compressLimit = 2
+
+--Decompression OK
+---@deprecated
+bz2.decompressOk = 0
+
+--Decompression failed, ran out of memory
+--### **REPLACED BY `bz2.DECOMPRESS_NOMEM`**
+---@deprecated
+bz2.decompressNomem = 4
+
+--Decompression failed, maxSize limit exceeded
+--### **REPLACED BY `bz2.DECOMPRESS_LIMIT`**
+---@deprecated
+bz2.decompressLimit = 2
+
+--Decompression failed, sourceData does not have bzip2 header and is likely not bzip2 data
+--### **REPLACED BY `bz2.DECOMPRESS_TYPE`**
+---@deprecated
+bz2.decompressType = 3
+
+--Decompression failed, sourceData is not valid bzip2 data
+--### **REPLACED BY `bz2.DECOMPRESS_BAD`**
+---@deprecated
+bz2.decompressBad = 4
+
+--### **REPLACED BY `bz2.DECOMPRESS_EOF`**
+---@deprecated
+bz2.decompressEof = 5
 
 ---@alias bz2CompressErr
 ---|`bz2.COMPRESS_NOMEM`
