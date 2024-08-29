@@ -22,7 +22,7 @@ jobs:
           if [[ $CHANGES == *"$KEYWORD"* ]]; then
               result=$(echo "$CHANGES" | grep "Lua_API" | sed -E 's/href="\/Wiki\/index\.php\?title=Lua_API:([a-zA-Z0-9_]+?)&amp;curid=([0-9]+?)&amp;diff=([0-9]+?)&amp;oldid=([0-9]+?)"/\n:!:!:Changes in \1. ID \2 \3 \4 \n/g' | grep ":!:!:Changes")
               result=$(echo "$result" | cut -c 6- | awk '!seen[$0]++')
-              TOKEN=${{ secrets.ISSUE_TOKEN }}
+              TOKEN=${{ secrets.GITHUB_TOKEN }}
               REPO=${{ github.repository }}
               declare -A issues
           
