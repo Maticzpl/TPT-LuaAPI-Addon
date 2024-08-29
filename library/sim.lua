@@ -113,7 +113,7 @@ end
 --Create a single particle at location x, y. Returns the index of the new particle, or a negative number on failure.<br>
 --Possible values for index are:<br>
 --> **-1** Normal particle creation. This is the most useful value. No particle is created if position x, y is occupied and the requested new particle type cannot pass through the particle that is already there.<br>
---> **-2** Create particle as though it was drawn by the user with the brush. Usually not useful.<br>
+--> **-2** Create particle as though it was drawn by the user with the brush (runs the Create function). Usually not useful.<br>
 --> **-3** Create particle without checking for collisions with existing particles. In most cases, this is a bad idea, since a lot of elements don't work properly when there are multiple particles in the same place. Particles may also turn into BHOL if there are too many in the same place. The exception to this is elements that have been specifically designed to cope with this (such as multiple energy particles like PHOT and NEUT in the same place).<br>
 --
 --Particle index >= 0: Overwrite an existing particle with a new particle. At the moment no collision checking is performed, so the same considerations apply as for index=-3. It is usually safe if the new particle is in the same location as the old one. This is roughly equivalent to calling `sim.partKill` then `sim.partCreate(-3, ...)`.<br>
@@ -606,7 +606,7 @@ end
 --TODO: look into if its an iterator
 
 --```
---number sim.toolBrush(number x, number y, [number rx], [number ry], [number tool], [number brush], [number strength])
+--sim.toolBrush(number x, number y, [number rx], [number ry], [number tool], [number brush], [number strength])
 --```
 --Performs the given tool (HEAT, COOL, AIR, etc) on the given coordinates with the given brush size. The brush types are 0 (circle), 1 (square) and 2 (triangle).<br>
 ---@param x integer  
@@ -616,7 +616,7 @@ end
 ---@param tool integer?  
 ---@param brush integer?  
 ---@param strength number?  
----@return number
+---@return 0
 function simulation.toolBrush(x, y, rx, ry, tool, brush, strength)
 end
 
