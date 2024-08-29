@@ -12,43 +12,69 @@
 ---@alias TextboxCallback fun(sender: Textbox)
 
 
--- The Interface API includes objects for UI components such as buttons, labels, and checkboxes and methods for access to the very primitive window manager and input events. 
+-- The Interface API includes objects for UI components such as buttons, labels, and checkboxes and methods for access to the very primitive window manager and input events.<br> 
+-- All classes in here extend Component. That means the methods in here are standard and can be used in any component type. 
 interface = {}
 
 --Component
 --#region<br>
 
+    --Component is abstract, and cannot be created directly.
     ---@class Component
     Component = {}
 
-    --Sets the visibility of the component<br>
+    --```
+    --Component:visible(flag)
+    --```
+    -- - `flag`: boolean true / false on whether the component is visible or not<br>
     ---@param visible boolean  
     function Component:visible(visible)    
     end
-    --Returns the visibility of the component<br>
+    --```
+    --flag = Component:visible()
+    --```
+    -- - `flag`: boolean true / false on whether the component is visible or not<br>
     ---@return boolean 
     function Component:visible()
     end
 
-    --Returns the width and height of the component<br>
+    --```
+    --width, height = Component:size()
+    --```
+    -- - `width`: The width of the component<br>
+    -- - `height`: The height of the component<br>
     ---@return integer, integer 
     function Component:size()
     end
-    --Sets the size of the component to be width by height<br>
+    --```
+    --Component:size(width, height)
+    --```
+    -- - `width`: The width of the component<br>
+    -- - `height`: The height of the component<br>
     ---@param width integer  
     ---@param height integer  
     function Component:size(width, height)
     end
 
-    --Sets the position of the component to be x, y<br>
+
+    --```
+    --Component:position(x, y)
+    --```
+    --  - `x`: The x coordinate of the component<br>
+    --  - `y`: The y coordinate of the component<br>
     ---@param x integer  
     ---@param y integer  
     function Component:position(x,y)    
     end
-    --Returns the x and y coord of the component<br>
+    --```
+    --x, y = Component:position()
+    --```
+    --  - `x`: The x coordinate of the component<br>
+    --  - `y`: The y coordinate of the component<br>
     ---@return integer, integer 
     function Component:position()   
     end
+
 --#endregion
 
 --Button
@@ -64,8 +90,20 @@ interface = {}
     ---@class Button : Component
     interface.button = {}
 
-    --Extends Component, fires "action" when clicked<br>
-    ---@param x integer  
+    --```
+    --button = interface.button(x, y, width, height, [text], [tooltip])
+    --```
+    --Construct a new Button<br>
+    --  - `button`: The button, see class Button documentation for details on its methods<br>
+    --  - `x`: The x position of the button. This is relative to the parent window's top left corner.<br>
+    --  - `y`: The y position of the button. This is relative to the parent window's top left corner.<br>
+    --  - `width`: The width of the button<br>
+    --  - `height`: The height of the button<br>
+    --  - `text`: The text displayed inside the button. Defaults to empty string.<br>
+    --  - `tooltip`: The tooltip. Only valid for buttons placed directly on the main screen, it will show up in the bottom right corner where element descriptions normally show. Defaults to empty string.<br>
+    --
+    --The button won't be automatically placed down, for that see Window::addComponent or ui.addComponent. You will almost certainly also want to add a callback with Button::action to set what happens when the button is clicked.<br>
+    ---@param x integer
     ---@param y integer  
     ---@param width integer  
     ---@param height integer  
@@ -76,32 +114,55 @@ interface = {}
     end
 
     --```
-    --nil Button:action(function(sender) actionListener)
+    --Button:action(callback)
     --```
-    --Sets the listener for button actions Example:<br>
+    -- - `callback`: The callback, a function which receives one argument, sender<br>
+    --   - `sender`: The button itself<br>
+    --
+    --Sets the listener for button actions. The action is triggered whenever the button is left clicked (clicked means a full mousedown + mouseup happened inside the button).<br>
+    -- Example:<br>
     --```
-    --local newButton = Button:new(10, 10, 100, 17, "Press to change text")
-    --newButton:action(function(sender) sender:text("Text changed") end)
+    --local newButton = ui.button(10, 10, 100, 17, "Times clicked: 0")
+    --local counter = 0
+    --newButton:action(function(sender)
+    --	counter = counter + 1
+    --	sender:text("Times clicked: " .. counter)
+    --end)
     --interface.addComponent(newButton)
     --```
-    ---@param actionListener ButtonCallback  
-    function interface.button:action(actionListener)    
+    ---@param callback ButtonCallback  
+    function interface.button:action(callback)    
     end
 
-    --Returns the button text<br>
+    --```
+    --text = Button:text()
+    --```
+    --  - `text`: The button text<br>
     ---@return string
     function interface.button:text()
     end
-    --Sets the text of the button<br>
+    --```
+    --Button:text(text)
+    --```
+    --  - `text`: The button text<br>
     ---@param text string  
     function interface.button:text(text)
     end
 
-    --Returns the enabled state of the button<br>
+
+    --```
+    --flag = Button:enabled()
+    --```
+    --  - `flag`: Whether or not the button is enabled<br>
+    --Controls the enabled flag of the button. Buttons that are disabled cannot be clicked, change to gray, and don't respond to mousemove events either.<br>
     ---@return boolean 
     function interface.button:enabled()
     end
-    --Sets the enabled state of the button<br>
+    --```
+    --Button:enabled(flag)
+    --```
+    --  - `flag`: Whether or not the button is enabled<br>
+    --Controls the enabled flag of the button. Buttons that are disabled cannot be clicked, change to gray, and don't respond to mousemove events either.<br>
     ---@param enabled boolean  
     function interface.button:enabled(enabled)
     end
@@ -118,7 +179,20 @@ interface = {}
     ---@class ProgressBar : Component
     interface.progressBar = {}
 
-    --Extends Component, used to indicate progress for long running tasks<br>
+
+    --```
+    --progressBar = interface.progressBar(x, y, width, height, [progress], [status])
+    --```
+    --Construct a new ProgressBar<br>
+    --  - `progressBar`: The progress bar, see class ProgressBar documentation for details on its methods<br>
+    --  - `x`: The x position of the progress bar. This is relative to the parent window's top left corner.<br>
+    --  - `y`: The y position of the progress bar. This is relative to the parent window's top left corner.<br>
+    --  - `width`: The width of the progress bar<br>
+    --  - `height`: The height of the progress bar<br>
+    --  - `progress`: The initial progress. Must be between -1 and 100. Defaults to 0. -1 is a special case which will show a constant progress animation.<br>
+    --  - `status`: The status. Will be drawn as text inside the progress bar.<br>
+    --
+    --The progress bar won't be automatically placed down, for that see Window::addComponent or ui.addComponent. Progress bars don't make any progress by default. You're responsible in your code for setting progress to a value between 0 and 100 to indicate the percentage. To show a constant scrolling animation, progress can be set to -1. This can be seen, for example, after downloading an update and it begins unpacking.<br>
     ---@param x integer  
     ---@param y integer  
     ---@param width integer  
@@ -129,22 +203,40 @@ interface = {}
     function interface.progressBar(x, y, width, height, progress, status)
     end
 
-    --Progress ranges from 0 to 100, but a special case of -1 will change the behaviour of the progress bar to intermediate (constantly scrolling to indicate progress)<br>
-    --Returns the progress value<br>
+    --```
+    --progress = ProgressBar:progress()
+    --```
+    --  - `progress`: The current progress value<br>
+    --
+    --Gets or sets the current progress. Progress ranges from 0 to 100, but a special case of <tt>-1</tt> will change the behavior of the progress bar to intermediate (constantly scrolling to indicate progress)<br>
     ---@return integer
     function interface.progressBar:progress()
     end
-    --Sets the progress value<br>
+    --```
+    --ProgressBar:progress(progress)
+    --```
+    --  - `progress`: The current progress value<br>
+    --
+    --Gets or sets the current progress. Progress ranges from 0 to 100, but a special case of <tt>-1</tt> will change the behavior of the progress bar to intermediate (constantly scrolling to indicate progress)<br>
     ---@param progress integer  
     function interface.progressBar:progress(progress)
     end
 
-    --Status is simple a text representation of the current action being performed, for example "Working" or just a percentage<br>
-    --Returns the progress bar status<br>
+    --```
+    --text = ProgressBar:status()
+    --```
+    --  - `text`: The progress bar status<br>
+    --
+    --Status is simply a text representation of the current action being performed, for example, "Working" or just a percentage<br>
     ---@return string
     function interface.progressBar:status()
     end
-    --Sets the progress bar status<br>
+    --```
+    --ProgressBar:status(text)
+    --```
+    --  - `text`: The progress bar status<br>
+    --
+    --Status is simply a text representation of the current action being performed, for example, "Working" or just a percentage<br>
     ---@param status string  
     function interface.progressBar:status(status)
     end
@@ -161,7 +253,17 @@ interface = {}
     ---@class Slider : Component
     interface.slider = {}
 
-    --Extends Component, fires "onValueChanged" when the value is changed (i.e used by the user)<br>
+    --```
+    --slider = interface.slider(x, y, width, height, steps)
+    --```
+    --Construct a new Slider<br>
+    --  - `x`: The x position of the slider. This is relative to the parent window's top left corner.<br>
+    --  - `y`: The y position of the slider. This is relative to the parent window's top left corner.<br>
+    --  - `width`: The width of the slider<br>
+    --  - `height`: The height of the slider<br>
+    --  - `steps`: The number of steps this slider has. AKA how many "notches" will it stop at while the user drags it.<br>
+    --
+    --The progress bar won't be automatically placed down, for that see Window::addComponent or ui.addComponent. For an example of a slider in TPT's ui, check the color picker in the deco editor.<br>
     ---@param x integer  
     ---@param y integer  
     ---@param width integer  
@@ -171,25 +273,44 @@ interface = {}
     function interface.slider(x, y, width, height, steps)
     end
 
-    --Sets the listener for slider actions<br>
-    ---@param actionListener SliderCallback  
-    function interface.slider:onValueChanged(actionListener)    
+    --```
+    --Slider:onValueChanged(callback)
+    --```
+    --  - `callback`: The callback, a function which receives two arguments, `sender` and `value`<br>
+    --     - `sender`: The slider itself<br>
+    --     - `value`: The value the slider was set to<br>
+    --
+    --Called whenever the slider value changes due to a change by the user. Changes made to the value from Lua don't trigger the callback.<br>
+    ---@param callback SliderCallback  
+    function interface.slider:onValueChanged(callback)    
     end
 
-    --Returns the value of the slider<br>
+    --```
+    --value = Slider:value()
+    --```
+    --  - `value`: The value of the slider, which is a number in the range [0, steps]<br>
     ---@return integer
     function interface.slider:value()
     end
-    --Sets the value of the slider<br>
+    --```
+    --Slider:value(value)
+    --```
+    --  - `value`: The value of the slider, which is a number in the range [0, steps]<br>
     ---@param value integer  
     function interface.slider:value(value)
     end
 
-    --Returns the number of steps the slider has<br>
+    --```
+    --steps = Slider:steps()
+    --```
+    --  - `steps`: The number of steps the slider has. Must be a positive number. If the current slider position is greater than the new number of steps, the slider position will be set to the new max.<br>
     ---@return integer
     function interface.slider:steps()
     end
-    --Sets the number of steps for the slider<br>
+    --```
+    --Slider:steps(steps)
+    --```
+    --  - `steps`: The number of steps the slider has. Must be a positive number. If the current slider position is greater than the new number of steps, the slider position will be set to the new max.<br>
     ---@param steps integer  
     function interface.slider:steps(steps)
     end
@@ -206,7 +327,18 @@ interface = {}
     ---@class Checkbox : Component
     interface.checkbox = {}
 
-    --Extends Component, fires "action" when the checkbox is checked or unchecked<br>
+
+    --```
+    --checkbox = interface.checkbox(x, y, width, height, [text])
+    --```
+    --Construct a new Checkbox<br>
+    --  - `x`: The x position of the checkbox. This is relative to the parent window's top left corner.<br>
+    --  - `y`: The y position of the checkbox. This is relative to the parent window's top left corner.<br>
+    --  - `width`: The width of the checkbox mouseover area<br>
+    --  - `height`: The height of the checkbox mouseover area<br>
+    --  - `text`: Text displayed to the right of the checkbox. Optional, the default is empty string.<br>
+    --
+    --The checkbox won't be automatically placed down, for that see Window::addComponent. The size of the square "checkbox" itself is always constant. `width` / `height` are instead used to control the area where mouseover events allow you to check / uncheck the box. 16 is recommended for height, for width you should ensure it's at least as wide as the text.<br>
     ---@param x integer  
     ---@param y integer  
     ---@param width integer  
@@ -216,25 +348,48 @@ interface = {}
     function interface.checkbox(x, y, width, height, text)
     end
 
-    --Sets the listener for checkbox actions<br>
-    ---@param actionListener CheckboxCallback  
-    function interface.checkbox:action(actionListener)
+    --```
+    --Checkbox:action(callback)
+    --```
+    --  - `callback`: The callback, a function which receives two arguments, `sender` and `checked`<br>
+    --     - `sender`: The checkbox itself<br>
+    --     - `checked`: A true / false flag on whether the checkbox is currently checked<br>
+    --
+    --Called whenever the checkbox state is toggled due to a change by the user.<br>
+    ---@param callback CheckboxCallback  
+    function interface.checkbox:action(callback)
     end
 
-    --Returns the checkbox text<br>
+    --```
+    --text = Checkbox:text()
+    --```
+    --  - `text`: The checkbox's text<br>
+    --
+    --Text is drawn to the right of the checkbox, see for example the options menu. The text that responds to mouseover events is part of the checkbox itself. (The text underneath is a separate Label)<br>
     ---@return string
     function interface.checkbox:text()
     end    
-    --Sets the text of the checkbox<br>
+    --```
+    --Checkbox:text(text)
+    --```
+    --  - `text`: The checkbox's text<br>
+    --
+    --Text is drawn to the right of the checkbox, see for example the options menu. The text that responds to mouseover events is part of the checkbox itself. (The text underneath is a separate Label)<br>
     ---@param text string  
     function interface.checkbox:text(text)
     end
 
-    --Returns the checked state of the checkbox<br>
+    --```
+    --flag = Checkbox:checked()
+    --```
+    --  - `flag`: The checked state of the checkbox, a boolean true / false flag<br>
     ---@return boolean
     function interface.checkbox:checked()
     end
-    --Sets the checked state of the checkbox<br>
+    --```
+    --Checkbox:checked(flag)
+    --```
+    --  - `flag`: The checked state of the checkbox, a boolean true / false flag<br>
     ---@param checked boolean  
     function interface.checkbox:checked(checked)
     end
@@ -251,21 +406,38 @@ interface = {}
     ---@class Label : Component
     interface.label = {}
 
-    --Extends Component, is a simple selectable, readonly text field<br>
+    --```
+    --label = interface.label(x, y, width, height, text)
+    --```
+    --Construct a new Label<br>
+    --  - `x`: The x position of the label. This is relative to the parent window's top left corner.<br>
+    --  - `y`: The y position of the label. This is relative to the parent window's top left corner.<br>
+    --  - `width`: The width of the label<br>
+    --  - `height`: The height of the label<br>
+    --  - `text`: Label text<br>
+    --
+    --The label won't be automatically placed down, for that see Window::addComponent. Label text that extends past the width or height of the label will be cut off at the border. For that reason, and to ensure proper text selection via mouse events, please make sure the label size fits the text being displayed.<br>
+    --Labels are horizontally centered by default. This creates problems for left-aligned text in interfaces. To properly left align text, you should get the exact width with [gfx.textSize](https://powdertoy.co.uk/Wiki/W/Lua_API:Graphics.html#graphics.textSize). For single line labels, height should be set to 16.<br>
     ---@param x integer  
     ---@param y integer  
     ---@param width integer  
     ---@param height integer  
-    ---@param text string?  
+    ---@param text string? TODO: Check if this is actually optional in source code
     ---@return Label
     function interface.label(x, y, width, height, text)
     end
 
-    --Returns the label text<br>
+    --```
+    --text = Label:text()
+    --```
+    --  - `text`: The label text<br>
     ---@return string
     function interface.label:text()
     end
-    --Sets the text of the label<br>
+    --```
+    --Label:text(text)
+    --```
+    --  - `text`: The label text<br>
     ---@param text string  
     function interface.label:text(text)
     end
@@ -282,7 +454,18 @@ interface = {}
     ---@class Textbox : Component
     interface.textbox = {}
 
-    --Extends Component, is a text input field, the placeholder text is shown if the component is no focused and contains no text<br>
+    --```
+    --textbox = interface.textbox(x, y, width, height, [text], [placeholder])
+    --```
+    --Construct a new Textbox<br>
+    --  - `x`: The x position of the textbox. This is relative to the parent window's top left corner.<br>
+    --  - `y`: The y position of the textbox. This is relative to the parent window's top left corner.<br>
+    --  - `width`: The width of the textbox<br>
+    --  - `height`: The height of the textbox<br>
+    --  - `text`: Optional default text<br>
+    --  - `placeholder`: Optional text that is shown when the textbox is both unfocused and empty. Used, for example, to show [password] in the login ui.<br>
+    --
+    --The textbox won't be automatically placed down, for that see Window::addComponent. A border will be drawn around the textbox. The text length is unrestricted, if the text typed by the user is too long, then it will scroll to the left and right. Pressing enter in a textbox will no-op, and newlines are not accepted. Limits on length and valid characters can be applied by listening to the text change event.<br>
     ---@param x integer  
     ---@param y integer  
     ---@param width integer  
@@ -293,25 +476,51 @@ interface = {}
     function interface.textbox(x, y, width, height,text,placeholder)
     end
 
-    --Sets the listener for text changed actions<br>
-    ---@param textChangedListener TextboxCallback  
-    function interface.textbox:onTextChanged(textChangedListener)    
+    --```
+    --Textbox:onTextChanged(callback)
+    --```
+    --  - `callback`: The callback, a function which receives one argument, `sender`<br>
+    --     - `sender`: The textbox itself<br>
+    --
+    --Called whenever the textbox is changed due to an action by the user. For example, typing or deleting a character, cutting or pasting text. Changes via Lua do not trigger this callback.<br>
+    ---@param callback TextboxCallback  
+    function interface.textbox:onTextChanged(callback)    
     end
 
-    --Returns the text in the field<br>
+    --```
+    --text = Textbox:text()
+    --```
+    --  - `text`: The textbox's text<br>
+    --
+    --When setting text, the old selection is cleared, the text is replaced, and the cursor is set to the end.<br>
     ---@return string
     function interface.textbox:text()
     end
-    --Sets the text of the field<br>
+    --```
+    --Textbox:text(text)
+    --```
+    --  - `text`: The textbox's text<br>
+    --
+    --When setting text, the old selection is cleared, the text is replaced, and the cursor is set to the end.<br>
     ---@param text string  
     function interface.textbox:text(text)
     end
 
-    --Returns the readonly status of the field.<br>
+    --```
+    --flag Textbox:readonly()
+    --```
+    --  - `flag`: true / false flag for the textbox's readonly flag.<br>
+    --
+    --readonly textboxes can't have their text changed in any way. The only possible user interaction is moving the cursor and text selection operations.<br>
     ---@return boolean
     function interface.textbox:readonly()
     end
-    --Sets the readonly status of the field.<br>
+    --```
+    --Textbox:readonly(flag)
+    --```
+    --  - `flag`: true / false flag for the textbox's readonly flag.<br>
+    --
+    --readonly textboxes can't have their text changed in any way. The only possible user interaction is moving the cursor and text selection operations.<br>
     ---@param readonly boolean  
     function interface.textbox:readonly(readonly)
     end
@@ -328,7 +537,18 @@ interface = {}
     ---@class Window
     interface.window = {}
 
-    --A modal form to display components, using -1 for either x or y values will centre the Window on that axis.<br>
+    --```
+    --window = interface.window(x, y, width, height)
+    --```
+    --Construct a new Window<br>
+    --  - `x`: The x position of the window. Use -1 to center it horizontally.<br>
+    --  - `y`: The y position of the window. Use -1 to center it vertically.<br>
+    --  - `width`: The width of the window. Must be at least 10.<br>
+    --  - `height`: The height of the window. Must be at least 10.<br>
+    --
+    --The window won't be automatically placed down, for that see [interface.showWindow](https://powdertoy.co.uk/Wiki/W/.html#interface.showWindow). Once the window is added, it takes focus and receives all input events, and the main TPT window is no longer active. Parent windows are drawn underneath and dimmed out. Parents windows (aka the main window) don't run any tick events either. This means all Lua scripts will stop processing until the window closes, including your own. To handle input events like mouse, keyboard, and ticks, special window event handlers need to be registered instead.<br>
+    --
+    --By default, the Window can't be closed. Clicking outside of the window and ESC normally close windows, but this behavior needs to be added manually by listening to the `onTryExit` event. Clicking the "X" button from your OS still closes the window.<br>
     ---@param x integer  
     ---@param y integer  
     ---@param width integer  
@@ -359,12 +579,22 @@ interface = {}
     function interface.window:size()            
     end
 
-    --Add a component to the window (The component must not have already been added to another Window object)
+    --```
+    --Window:addComponent(component)
+    --```
+    --  - `component`: The component to add<br>
+    --
+    --Adds a component to the window. The component must not have already been added to another Window object.<br>
     ---@param newComponent Component  
     function interface.window:addComponent(newComponent)
     end
 
-    --Remove a component from the window<br>
+    --```
+    --Window:removeComponent(component)
+    --```
+    --  - `component`: The component to remove<br>
+    --
+    --Remove a component from the window. If this component isn't part of the window, does nothing.<br>
     ---@param component Component  
     function interface.window:removeComponent(component)
     end
