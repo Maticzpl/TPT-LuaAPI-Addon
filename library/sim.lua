@@ -68,6 +68,7 @@ simulation = {}
 --```
 --number[] sim.partNeighbors(number x, number y, number radius, [number type])
 --```
+--Returns an array of indices of particles that neighbour the given coordinates and match the given type (if it is specified). The resulting array does not contain the particle at the specified position.<br> 
 ---@param x integer  
 ---@param y integer  
 ---@param radius integer  
