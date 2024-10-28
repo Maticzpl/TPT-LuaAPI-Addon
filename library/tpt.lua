@@ -652,6 +652,8 @@ function tpt.decorations_enable() end
 function tpt.display_mode(display) end
 
 --Displays an error message box.<br>
+--### **REPLACED BY `ui.beginThrowError()`**
+---@deprecated
 ---@param text string
 function tpt.throw_error(text) end
 

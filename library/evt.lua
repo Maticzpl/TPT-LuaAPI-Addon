@@ -13,10 +13,10 @@ event = {
 	--> This event is sent every time a key is pressed, and continuously re-sent if they key is held down. This event should be used if you want to have a key shortcut; The textinput event should be used instead if you want to handle text input / Unicode.<br>
 	--> This event can be canceled<br>
 	--> Arguments: key, scan, repeat, shift, ctrl, alt<br>
-	-->> key is the key code, a number that is usually the ascii value for the key, but for non-printable characters it may be a high number. You can find a list of key codes here: https://wiki.libsdl.org/SDLKeycodeLookup<br>
-	-->> scan is the scan code. This is a number that represents the physical location of a key on a keyboard. You can find a list of scan codes here: https://wiki.libsdl.org/SDLScancodeLookup<br>
-	-->> repeat is a boolean that tells whether this is a key repeat event (sent every so often when the key is held down). You may want to ignore this event when it is just a key repeat event<br>
-	-->> shift / ctrl / alt are booleans that will tell you whether those modifiers are currently held<br>
+	-->> **key** is the key code. This is a number that represents the symbol that may be printed on a key on a keyboard. The relation of these numbers to physical keys varies wildly across systems and keyboard layouts. The interface API provides constants you can use to compare this with: you can find a list of key codes [here](https://github.com/The-Powder-Toy/The-Powder-Toy/blob/master/src/lua/LuaSDLKeys.h) (the ones starting with SDLK, for example, interface.SDLK_a)<br>
+	-->> **scan** is the scan code. This is a number that represents the physical location of a key on a keyboard. You can find a list of scan codes here: https://wiki.libsdl.org/SDLScancodeLookup<br>
+	-->> **repeat** is a boolean that tells whether this is a key repeat event (sent every so often when the key is held down). You may want to ignore this event when it is just a key repeat event<br>
+	-->> **shift / ctrl / alt** are booleans that will tell you whether those modifiers are currently held<br>
 	KEYPRESS = 2,
 
 	--### keyrelease<br>
@@ -41,31 +41,31 @@ event = {
 	--> This event is sent whenever the mouse is clicked.<br>
 	--> This event can be canceled<br>
 	--> Arguments: x, y, button<br>
-	-->> x and y will not be adjusted for the zoom window. See sim.adjustCoords for that. Coordinates may be outside of the simulation bounds (clicks outside the simulation area are still sent)<br>
-	-->> button is the mouse button pressed. 1 is left click, 2 is middle click, 3 is right click. There may also be higher mouse buttons like 4 and 5.<br>
+	-->> **x and **y** will not be adjusted for the zoom window. See sim.adjustCoords for that. Coordinates may be outside of the simulation bounds (clicks outside the simulation area are still sent)<br>
+	-->> **button** is the mouse button pressed. 1 is left click, 2 is middle click, 3 is right click. There may also be higher mouse buttons like 4 and 5.<br>
 	MOUSEDOWN = 4,
 
 	--### mouseup<br>
 	--> This event is sent whenever the mouse is released. There are also other some special cases this event may be sent,<br>
 	--> This event can be canceled (only when reason = 0)<br>
 	--> Arguments: x, y, button, reason<br>
-	-->> x, y, and button function the same as the mousedown event<br>
-	-->> reason is a number that describes what type of mouseup event this is (basically, hacks we sent mouseup events on anyway). reason 0 is for normal mouseup events. reason 1 is used when another interface is opened and a blur event is sent. This is how tpt ensures that the mouse isn't "stuck" down forever if you release the mouse after opening another interface. reason 2 is used when the mouse moves inside or outside of the zoom window. This is how tpt cancels mouse drawing with zoom windows to ensure a big line isn't drawn across the screen. The normal reason = 0 event will still be sent later.<br>
+	-->> **x**, **y**, and **button** function the same as the mousedown event<br>
+	-->> **reason** is a number that describes what type of mouseup event this is (basically, hacks we sent mouseup events on anyway). reason 0 is for normal mouseup events. reason 1 is used when another interface is opened and a blur event is sent. This is how tpt ensures that the mouse isn't "stuck" down forever if you release the mouse after opening another interface. reason 2 is used when the mouse moves inside or outside of the zoom window. This is how tpt cancels mouse drawing with zoom windows to ensure a big line isn't drawn across the screen. The normal reason = 0 event will still be sent later.<br>
 	MOUSEUP = 5,
 
 	--### mousemove<br>
 	--> This event is sent every time the mouse is moved. It is only sent when the mouse is inside the tpt window, unless the mouse is held, in which case it can also be sent outside of the tpt window until the mouse is released. Coordinates from outside the tpt window bounds (including negative coordinates) can be sent in that case.<br>
 	--> This event can be canceled<br>
 	--> Arguments: x, y, dx, dy<br>
-	-->> x and y are the mouse coordinates. dx and dy are the diff from the previous coordinates to the current ones.<br>
+	-->> **x** and **y** are the mouse coordinates. **dx** and **dy** are the diff from the previous coordinates to the current ones.<br>
 	MOUSEMOVE = 6,
 
 	--### mousewheel<br>
 	--> This event is sent whenever the mousewheel is scrolled.<br>
 	--> This event can be canceled<br>
 	--> Arguments: x, y, d<br>
-	-->> x and y are the mouse position where the wheel was scrolled<br>
-	-->> d is the distance the mouse was scrolled. On nearly all mice this will be 1 or -1, but in certain situations it may be higher. You most likely want to treat higher values as 1 or -1 anyway. Horizontal scrolling is not supported at the moment, in the meantime d will be 0 for horizontal scrolling.<br>
+	-->> **x** and **y** are the mouse position where the wheel was scrolled<br>
+	-->> **d** is the distance the mouse was scrolled. On nearly all mice this will be 1 or -1, but in certain situations it may be higher. You most likely want to treat higher values as 1 or -1 anyway. Horizontal scrolling is not supported at the moment, in the meantime d will be 0 for horizontal scrolling.<br>
 	MOUSEWHEEL = 7,
 
 	--### tick<br>

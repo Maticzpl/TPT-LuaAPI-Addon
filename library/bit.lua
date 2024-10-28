@@ -2,21 +2,19 @@
 ---@diagnostic disable:lowercase-global
 ---@diagnostic disable:duplicate-set-field
 
--- The Bit API provides functions for performing bitwise operations on integer numbers, the Bit API is from the [LuaJIT BitOp library](http://bitop.luajit.org/index.html), documentation is copied from [here](http://bitop.luajit.org/api.html)<br>
+-- The Bit API provides functions for performing bitwise operations on integer numbers, the Bit API is from the [LuaJIT BitOp library](http://bitop.luajit.org/index.html), documentation for it is [here](http://bitop.luajit.org/api.html)<br>
 -- If you are unfamiliar with bitwise operations, you may want to check the Wikipedia page on the subject: [http://en.wikipedia.org/wiki/Bitwise_operation](http://en.wikipedia.org/wiki/Bitwise_operation)
 bit = {}
 
 --```
 --bit.tobit(number input)
 --```
--- Turns a number into something usable by the rest of the binary utility functions.<br>
--- It converts the number into a better form (what C deems to be a signed 32-bit int) to be used by the other bit functions. If you call one of the functions below yourself however, you do not need to use this function, as the below functions already use this in their code.
--- **Examples:**
+--Converts a 64-bit integer into a 32-bit integer by removing all bits above 32nd. You do not need to use this function, as the below functions will do this automatically. Here's some example values:<br>
 --```
--- bit.tobit(100) --> 100
--- bit.tobit(-100) --> -100
--- bit.tobit(2147483647) --> bit.tobit(2^31 - 1) = 2147483647
--- bit.tobit(2147483648) --> bit.tobit(2^31) = -2147483648
+--bit.tobit(100) --> 100
+--bit.tobit(-100) --> -100
+--bit.tobit(2147483647) --> bit.tobit(2^31 - 1) = 2147483647
+--bit.tobit(2147483648) --> bit.tobit(2^31) = -2147483648
 --```
 ---@param input integer
 ---@return integer
@@ -61,7 +59,7 @@ function bit.bnot(input) end
 --bit.band(number input, [number input...])
 --```
 --Returns the binary AND of all its arguments combined.<br>
---A binary AND is an operation that requires two numbers: the only bits that remain in the return value are ones that occur in both of the numbers. This is an easy way to pick out a single byte from a "bit string" - an integer that is actually used as a row of bits that can be used as boolean values. You can then store 32 booleans in a single int, whereas usually a single boolean is a single int!
+--A binary AND is an operation that requires two numbers: the only bits that remain in the return value are ones that occur in both of the numbers. This is an easy way to pick out a single bit from a "bit string" - an integer that is actually used as a row of bits that can be used as boolean values. You can then store 8 booleans in a single byte, whereas usually a single boolean is a single byte!
 -- **Example:**
 --```
 -- :: 0001 1001 &
@@ -111,7 +109,7 @@ function bit.xor(...) end
 --```
 -- Shifts the input bits to the left by (shift) bits, replacing empty cells with 0 and discarding overflowing cells.<br>
 -- Left shifting is something really easy to imagine: every bit just gets moved once (or more) to the left and the ends are replaced with 0. If you have a bit at the far left end it gets eaten and is lost forever. Not to worry usually though.<br>
--- Another great utilization of left shifting is that it's a really quick way of multiplying a number by two for some times. Shifting to the left by two is the same as multiplying a number by four.<br>
+-- Another great utilization of left shifting is that it's a really quick way of multiplying a number by two for some times. Shifting to the left by two is the same as multiplying a number by four. Note that this performs logical shift meaning that it will also move the *sign bit*<br>
 --```
 -- :: 0000 0010 << 2
 --  = 0000 1000
@@ -132,7 +130,7 @@ function bit.lshift(input, shift) end
 -- ```
 -- Shifts the input bits to the right by (shift) bits, replacing empty cells with 0 and discarding overflowing cells.<br>
 -- Right shifting is something really easy to imagine: every bit just gets moved once (or more) to the right and the ends are replaced with 0. If you have a bit at the far right end it gets eaten and is lost forever. Not to worry usually though.<br>
--- Another great utilization of right shifting is that it's a really quick way of dividing a number by two for some times. Shifting to the right by two is the same as dividing a number by four. Note that this will also move the sign bit. Which is what arithmetic right shift does not in fact do.
+-- Another great utilization of right shifting is that it's a really quick way of dividing a number by two for some times. Shifting to the right by two is the same as dividing a number by four. Note that this a performs logical shift meaning that it will also move the sign bit.
 -- ```
 --   1111 1111 :: >> 2
 -- = 0011 1111  1100 0000 ::
@@ -153,7 +151,7 @@ function bit.rshift(input, shift) end
 -- bit.arshift(number input, number shift)
 -- ```
 -- Shifts the input bits to the right by (shift) bits, copying over the sign bit for the new bits added from the left.<br>
--- So the solution to our right shifting problem is that we need to add ones instead of zeros to the left side if we shift from the right. This keeps the sign right in place and still allows us to shift all we want.<br>
+-- This keeps the sign right in place and still allows us to shift all we want.<br>
 -- ```
 --   1001 1001  0000 0000 :: >>> 2
 -- = 1110 0110  0100 0000 ::
@@ -210,9 +208,9 @@ function bit.ror(input, bits) end
 -- ```
 -- bit.bswap(number input)
 -- ```
--- Swaps the byte order of the argument.
+-- Swaps the *byte order* of the argument.
 --<br>
--- In a few places, TPT uses weird reverse-byte-order numbers, such as TPT saves in the OPS 1 format. This function makes things easier and just flips the bytes for you.
+-- In some places, TPT uses low-endian (least significant byte on the left) instead of usually used big-endian (most significant byte on the left) order of bytes, such as in TPT saves in the OPS 1 format. This function makes things easier and just flips the byte order for you.
 -- ```
 --   0110 1010 0101 1001
 -- = 1001 0101 1010 0110
