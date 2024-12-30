@@ -74,7 +74,7 @@
 ---|`elem.TYPE_GAS`
 ---|`elem.TYPE_ENERGY`
 ---|`elem.PROP_CONDUCTS`
----|`elem.PROP_BLACK`
+---|`elem.PROP_PHOTPASS`
 ---|`elem.PROP_NEUTPENETRATE`
 ---|`elem.PROP_NEUTABSORB`
 ---|`elem.PROP_NEUTPASS`
@@ -87,7 +87,6 @@
 ---|`elem.PROP_LIFE_KILL_DEC`
 ---|`elem.PROP_SPARKSETTLE`
 ---|`elem.PROP_NOAMBHEAT`
----|`elem.PROP_DRAWONCTYPE`
 ---|`elem.PROP_NOCTYPEDRAW `
 
 --TODO: Figure out if any of those are ints
@@ -291,10 +290,10 @@ elements.TYPE_SOLID = 4 -- Used in solids / misc elements.
 elements.TYPE_GAS = 8 -- Used in gases.
 elements.TYPE_ENERGY = 16 -- Used in energy particles.
 
----@deprecated ??? TODO: Make sure
+---@deprecated
 elements.PROP_DRAWONCTYPE = 0 -- Set its ctype to another element if the element is drawn upon it (like what CLNE does).
 elements.PROP_CONDUCTS = 32 -- Allows an element to automatically conduct SPRK, requires PROP_LIFE_DEC.
-elements.PROP_BLACK = 64 -- Elements with this property absorb photons of any color.
+elements.PROP_PHOTPASS = 64 -- Allow photons to pass through this element.
 elements.PROP_NEUTPENETRATE = 128 -- Elements can be displaced by neutrons (observe behavior of wood with neutrons to see).
 elements.PROP_NEUTABSORB = 256 -- Element will absorb neutrons.
 elements.PROP_NEUTPASS = 512 -- Element will allow neutrons to pass through it.
@@ -564,3 +563,5 @@ elements.SC_TOOL = 13
 
 --#### Menu Sections<br>
 elements.SC_DECO = 15
+
+elements.NUM_MENUSECTIONS = 16
